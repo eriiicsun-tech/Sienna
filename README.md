@@ -1,25 +1,10 @@
-# Sienna Space v3.2
+# Sienna Space v3.3
 
-This is the full stable package.
+Changes:
+- Swimming renamed to Artistic Swimming
+- Added Geography and History
+- Sofia notes, Artistic Swimming notes, and Calendar now stand out like sticky notes
 
-Includes:
-- fixed password support
-- no redirect loop
-- Sofia naming
-- prettier design
-- cross-device sync with Cloudflare KV
-- delete buttons
-- calendar date fix
-
-## Passwords accepted
-- iamazing (new preferred)
-- iamamazing (temporary compatibility)
-
-## Cloudflare setup still required
-Environment variables:
-- OPENAI_API_KEY
-Optional:
-- OPENAI_MODEL = gpt-4.1-mini
-
-KV binding:
-- PLANNER_KV
+Data safety:
+- Existing synced data is preserved because the KV key is unchanged: planner_state_v3
+- Existing local browser data is also preserved because the local storage key is unchanged: sienna-space-local-cache-v32
