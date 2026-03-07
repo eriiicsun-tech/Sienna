@@ -1,16 +1,25 @@
-# Password hotfix
+# Sienna Space v3.2
 
-Use this package to replace these files in your GitHub repo:
+This is the full stable package.
 
-- functions/api/login.js
-- functions/api/load.js
-- functions/api/save.js
-- functions/api/ai-assist.js
+Includes:
+- fixed password support
+- no redirect loop
+- Sofia naming
+- prettier design
+- cross-device sync with Cloudflare KV
+- delete buttons
+- calendar date fix
 
-New preferred password:
-- iamazing
+## Passwords accepted
+- iamazing (new preferred)
+- iamamazing (temporary compatibility)
 
-Temporary backward-compatible password:
-- iamamazing
+## Cloudflare setup still required
+Environment variables:
+- OPENAI_API_KEY
+Optional:
+- OPENAI_MODEL = gpt-4.1-mini
 
-After uploading these files to GitHub, Cloudflare should redeploy automatically.
+KV binding:
+- PLANNER_KV
