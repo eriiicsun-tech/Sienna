@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sienna Space</title>
+  <style>
+    :root{
+      --bg1:#fff5fb; --bg2:#f4fbff; --card:#ffffffee; --line:#eadff1; --text:#2b2a3a; --muted:#766f86;
+      --pink:#ff8fc7; --pink-soft:#ffe2f1; --violet:#9b7cff; --violet-soft:#efe8ff; --sky:#70d9ff;
+      --mint:#73d7b8; --amber-soft:#fff1dc; --shadow:0 16px 40px rgba(113, 90, 140, 0.12);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, #ffe2f1 0%, transparent 28%),
+        radial-gradient(circle at top right, #e5f9ff 0%, transparent 28%),
+        linear-gradient(180deg,var(--bg1),var(--bg2));
+      min-height:100vh;
+    }
+    .stars::before{
+      content:""; position:fixed; inset:0; pointer-events:none; opacity:.35;
+      background-image:
+        radial-gradient(circle, #ffffff 1px, transparent 1.5px),
+        radial-gradient(circle, #ffd3ea 1px, transparent 1.5px),
+        radial-gradient(circle, #d9f7ff 1px, transparent 1.5px);
+      background-size:100px 100px,140px 140px,180px 180px;
+      background-position:0 0,30px 40px,70px 20px;
+    }
+    .hidden{display:none !important}
+    .app{max-width:1120px; margin:0 auto; padding:14px}
+    .screen{
+      background:rgba(255,255,255,.72); backdrop-filter:blur(18px);
+      border:1px solid rgba(255,255,255,.7); box-shadow:var(--shadow); border-radius:32px; overflow:hidden;
+    }
+    .hero{position:relative; padding:20px 18px 16px; background:linear-gradient(100deg, rgba(255,231,243,.96), rgba(241,237,255,.96), rgba(230,249,255,.96)); border-bottom:1px solid rgba(233,225,241,.8)}
+    .sparkles{position:absolute; right:12px; top:10px; font-size:24px; opacity:.75}
+    .eyebrow{font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--muted)}
+    h1{margin:8px 0 0; font-size:32px; line-height:1.02}
+    .sub{margin-top:8px; color:#5f5a73; font-size:14px; line-height:1.6; max-width:700px}
+    .hero-grid{display:grid; gap:10px; grid-template-columns:1fr 1fr; margin-top:14px}
+    .mini{border:1px solid rgba(255,255,255,.72); background:rgba(255,255,255,.75); padding:12px; border-radius:18px}
+    .mini .label{font-size:11px; color:var(--muted)}
+    .mini .value{margin-top:4px; font-size:13px; font-weight:800}
+    .toolbar{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
+    .content{display:grid; gap:14px; padding:14px}
+    .left,.right{display:grid; gap:14px}
+    .card{background:var(--card); border:1px solid rgba(234,223,241,.95); border-radius:26px; padding:14px; box-shadow:0 8px 24px rgba(122, 98, 152, 0.05)}
+    .card h2{margin:0; font-size:20px}
+    .card-sub{margin-top:4px; color:var(--muted); font-size:13px; line-height:1.55}
+    .stack{display:grid; gap:10px}
+    .row{display:grid; gap:10px}
+    input,textarea,select,button{font:inherit}
+    input[type=text],input[type=password],input[type=date],textarea,select{
+      width:100%; border:1px solid var(--line); border-radius:18px; padding:12px 14px; background:#fff; color:var(--text); outline:none;
+    }
+    textarea{min-height:88px; resize:vertical}
+    .btn{border:none; border-radius:18px; padding:11px 14px; cursor:pointer; font-weight:800; transition:.15s ease}
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:linear-gradient(135deg,var(--pink),#ff75ab); color:#fff}
+    .btn-violet{background:linear-gradient(135deg,var(--violet),#8b5fff); color:#fff}
+    .btn-sky{background:linear-gradient(135deg,var(--sky),#4ecfff); color:#114053}
+    .btn-soft{background:#fff; color:#5c5770; border:1px solid var(--line)}
+    .btn-danger{background:#fff0f3; color:#c0395a; border:1px solid #ffd0db}
+    .btn-small{padding:8px 10px; border-radius:14px; font-size:12px}
+    .chips{display:flex; gap:8px; overflow:auto; padding-bottom:2px; scrollbar-width:none}
+    .chips::-webkit-scrollbar{display:none}
+    .chip{white-space:nowrap; border:1px solid var(--line); background:#fff; color:#675f78; border-radius:999px; padding:8px 12px; font-size:12px; cursor:pointer}
+    .chip.active{background:#2c2840; color:#fff; border-color:#2c2840}
+    .taglist{display:flex; flex-wrap:wrap; gap:8px}
+    .tag{font-size:11px; font-weight:800; padding:6px 10px; border-radius:999px; border:1px solid transparent}
+    .urgent{background:#ffe5eb; color:#c23d62; border-color:#ffc4d2}
+    .this-week{background:var(--amber-soft); color:#b06c10; border-color:#ffdca4}
+    .done{background:#e6faf3; color:#19845f; border-color:#c7f1e1}
+    .needs-practice{background:var(--violet-soft); color:#7651de; border-color:#ddd2ff}
+    .task,.note-item,.event-item{border:1px solid var(--line); border-radius:20px; padding:12px; background:#fff}
+    .task{display:grid; grid-template-columns:auto 1fr auto; gap:10px; align-items:start}
+    .check{width:26px; height:26px; border-radius:999px; border:2px solid #d2cada; background:#fff; cursor:pointer; position:relative; margin-top:2px}
+    .check.checked{background:var(--mint); border-color:var(--mint)}
+    .check.checked::after{content:""; position:absolute; left:7px; top:3px; width:6px; height:12px; border:solid #fff; border-width:0 2px 2px 0; transform:rotate(45deg)}
+    .task.done-item .task-title{color:#a8a0b6; text-decoration:line-through}
+    .pill{display:inline-block; border-radius:999px; padding:5px 9px; font-size:11px; font-weight:800; background:#f4f1f8; color:#655f74; margin-right:6px}
+    .pill.subject{background:#e8f8ff; color:#12739f}
+    .task-title{font-size:14px; font-weight:800; margin-top:6px}
+    .task-note{font-size:13px; line-height:1.55; color:#675f78; margin-top:4px}
+    .empty{border:1px dashed var(--line); border-radius:18px; padding:18px; text-align:center; color:var(--muted); font-size:13px; background:rgba(255,255,255,.55)}
+    .ai-box{border:1px solid var(--line); border-radius:20px; padding:12px; background:linear-gradient(180deg,#fff,#fbfbff)}
+    .ai-title{font-size:13px; font-weight:900}
+    .ai-output{margin-top:8px; white-space:pre-wrap; font-size:13px; line-height:1.65; color:#4b4560}
+    .status{display:flex; align-items:center; gap:8px; font-size:12px; color:var(--muted)}
+    .dot{width:8px; height:8px; border-radius:999px; background:#cfc7db}
+    .dot.ok{background:#53c79d}
+    .dot.warn{background:#ffb84d}
+    .subject-box{border:1px solid var(--line); border-radius:20px; padding:12px; background:#fbfbff}
+    .subject-title{font-size:18px; font-weight:900}
+    .subject-notes{margin-top:6px; font-size:13px; line-height:1.55; color:#675f78}
+    .focus-items{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+    .focus-pill{border:1px solid var(--line); background:#fff; border-radius:999px; padding:8px 11px; font-size:12px}
+    .calendar-top{display:flex; justify-content:space-between; align-items:center; gap:8px}
+    .calendar-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:6px; margin-top:10px}
+    .dow{font-size:11px; color:#9a92ab; text-align:center; font-weight:800}
+    .day{min-height:66px; border:1px solid var(--line); border-radius:15px; padding:6px; background:#fff; display:flex; flex-direction:column; gap:4px; cursor:pointer}
+    .day.other{opacity:.35}
+    .day.today{border-color:#534d69}
+    .day.has-event{background:#fff7ef}
+    .day-number{font-size:12px; font-weight:800}
+    .event-dot{width:8px; height:8px; border-radius:999px; background:#ffab3d}
+    .login-wrap{min-height:100vh; display:grid; place-items:center; padding:18px}
+    .login-card{width:min(440px,100%); background:rgba(255,255,255,.8); border:1px solid rgba(255,255,255,.75); box-shadow:var(--shadow); backdrop-filter:blur(18px); border-radius:30px; padding:18px}
+    .login-art{font-size:34px; text-align:center; margin:6px 0 8px}
+    .center{text-align:center}
+    @media (min-width: 860px){.app{padding:20px}.content{grid-template-columns:1.05fr .95fr}.row{grid-template-columns:1fr 1fr}.hero{padding:22px 22px 18px}}
+  </style>
+</head>
+<body class="stars">
+  <div id="loginScreen" class="login-wrap">
+    <div class="login-card">
+      <div class="login-art">🌷✨🩰</div>
+      <div class="center eyebrow">welcome to sienna space</div>
+      <h1 class="center" style="font-size:30px">Hello Sienna</h1>
+      <div class="sub center" style="max-width:none">A calm little organiser for school, Sofia, swimming, cello, and important dates.</div>
+      <div class="stack" style="margin-top:14px">
+        <input id="passwordInput" type="password" placeholder="Enter password" />
+        <button id="loginBtn" class="btn btn-primary">Unlock</button>
+        <div id="loginError" class="center" style="font-size:13px;color:#c23d62;min-height:18px"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="appScreen" class="app hidden">
+    <div class="screen">
+      <div class="hero">
+        <div class="sparkles">🌷✨💫</div>
+        <div class="eyebrow">siennasun.com.au</div>
+        <h1>Sienna Space</h1>
+        <div class="sub">Keep it simple: a few tasks, clear training notes, and only the important dates.</div>
+        <div class="hero-grid">
+          <div class="mini"><div class="label">School</div><div class="value">North Sydney Girls High School</div></div>
+          <div class="mini"><div class="label">Big goal</div><div class="value">Stay organised without feeling overloaded</div></div>
+        </div>
+        <div class="toolbar">
+          <div class="status"><span id="syncDot" class="dot"></span><span id="syncText">Not synced yet</span></div>
+          <button id="syncNowBtn" class="btn btn-soft btn-small">Sync now</button>
+          <button id="logoutBtn" class="btn btn-soft btn-small">Lock</button>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="left">
+          <section class="card">
+            <h2>Today</h2>
+            <div class="card-sub">Add only what matters today or this week.</div>
+            <div class="stack" style="margin-top:12px">
+              <input id="newTaskTitle" type="text" placeholder="Add a task" />
+              <div class="row">
+                <select id="newTaskCategory">
+                  <option>School</option>
+                  <option>Ballet</option>
+                  <option>Swimming</option>
+                  <option>Cello</option>
+                  <option>Sofia</option>
+                </select>
+                <select id="newTaskSubject">
+                  <option>English</option>
+                  <option>Mathematics</option>
+                  <option>Japanese</option>
+                  <option>Science</option>
+                  <option>Music</option>
+                </select>
+              </div>
+              <textarea id="newTaskNote" placeholder="Optional note"></textarea>
+              <div class="taglist" id="newTaskTags"></div>
+              <button id="addTaskBtn" class="btn btn-primary">Add task</button>
+            </div>
+          </section>
+
+          <section class="card">
+            <h2>Task list</h2>
+            <div class="card-sub">Keep this short. Use AI only when it helps.</div>
+            <div class="stack" style="margin-top:12px">
+              <input id="taskSearch" type="text" placeholder="Search tasks" />
+              <div class="chips" id="categoryChips"></div>
+              <div class="chips" id="tagChips"></div>
+
+              <div class="ai-box">
+                <div class="ai-title">AI: today’s top 3 priorities</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+                  <button id="prioritiesBtn" class="btn btn-violet btn-small">Suggest priorities</button>
+                  <button id="clearPrioritiesBtn" class="btn btn-soft btn-small">Clear</button>
+                </div>
+                <div id="prioritiesOutput" class="ai-output"></div>
+              </div>
+
+              <div id="taskList" class="stack"></div>
+            </div>
+          </section>
+
+          <section class="card">
+            <h2>School</h2>
+            <div class="card-sub">Use this for bigger homework, revision, or tests.</div>
+            <div id="subjectChips" class="chips" style="margin-top:12px"></div>
+            <div class="subject-box" style="margin-top:12px">
+              <div id="subjectTitle" class="subject-title"></div>
+              <div id="subjectNotes" class="subject-notes"></div>
+              <div id="subjectHomework" class="focus-items"></div>
+
+              <div class="ai-box" style="margin-top:12px">
+                <div class="ai-title">AI: break school task into smaller steps</div>
+                <textarea id="schoolBreakdownInput" placeholder="Example: Science test next Tuesday on cells and ecosystems"></textarea>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+                  <button id="schoolBreakdownBtn" class="btn btn-violet btn-small">Break into steps</button>
+                  <button id="schoolBreakdownClearBtn" class="btn btn-soft btn-small">Clear</button>
+                </div>
+                <div id="schoolBreakdownOutput" class="ai-output"></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="right">
+          <section class="card">
+            <h2>Sofia notes</h2>
+            <div class="card-sub">Write only the main corrections from each lesson.</div>
+            <div class="stack" style="margin-top:12px">
+              <textarea id="sofiaInput" placeholder="Write Sofia notes here..."></textarea>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button id="saveSofiaBtn" class="btn btn-primary btn-small">Save note</button>
+                <button id="sofiaGoalsBtn" class="btn btn-violet btn-small">AI: next lesson goals</button>
+                <button id="sofiaGoalsClearBtn" class="btn btn-soft btn-small">Clear</button>
+              </div>
+              <div class="ai-box">
+                <div id="sofiaGoalsOutput" class="ai-output"></div>
+              </div>
+              <div id="sofiaList" class="stack"></div>
+            </div>
+          </section>
+
+          <section class="card">
+            <h2>Swimming notes</h2>
+            <div class="card-sub">Write what improved and what still needs work.</div>
+            <div class="stack" style="margin-top:12px">
+              <textarea id="swimInput" placeholder="Write swimming notes here..."></textarea>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button id="saveSwimBtn" class="btn btn-primary btn-small">Save note</button>
+                <button id="swimFocusBtn" class="btn btn-sky btn-small">AI: next training focus</button>
+                <button id="swimFocusClearBtn" class="btn btn-soft btn-small">Clear</button>
+              </div>
+              <div class="ai-box">
+                <div id="swimFocusOutput" class="ai-output"></div>
+              </div>
+              <div id="swimList" class="stack"></div>
+            </div>
+          </section>
+
+          <section class="card">
+            <h2>Calendar</h2>
+            <div class="card-sub">Tap a day, then add an important date below.</div>
+            <div class="stack" style="margin-top:12px">
+              <div class="calendar-top">
+                <button id="prevMonthBtn" class="btn btn-soft btn-small">←</button>
+                <div id="calendarMonthLabel" style="font-weight:900"></div>
+                <button id="nextMonthBtn" class="btn btn-soft btn-small">→</button>
+              </div>
+              <div>
+                <div id="calendarHeader" class="calendar-grid"></div>
+                <div id="calendarGrid" class="calendar-grid"></div>
+              </div>
+              <input id="eventDate" type="date" />
+              <input id="eventTitle" type="text" placeholder="Important date title" />
+              <div class="row">
+                <select id="eventType">
+                  <option>School</option>
+                  <option>Ballet</option>
+                  <option>Swimming</option>
+                  <option>Cello</option>
+                  <option>Family</option>
+                </select>
+                <button id="addEventBtn" class="btn btn-primary">Add date</button>
+              </div>
+              <div id="eventList" class="stack"></div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+(() => {
+  const STORAGE_KEY = "sienna-space-local-cache-v32";
+  const SUBJECTS = ["English","Mathematics","Japanese","Science","Music"];
+  const CATEGORIES = ["All","School","Ballet","Swimming","Cello","Sofia"];
+  const TAGS = [
+    { key:"urgent", label:"Urgent", cls:"urgent" },
+    { key:"this week", label:"This Week", cls:"this-week" },
+    { key:"done", label:"Done", cls:"done" },
+    { key:"needs practice", label:"Needs Practice", cls:"needs-practice" }
+  ];
+  const SUBJECT_DATA = {
+    English: { homework:["Reading response","Vocabulary review"], notes:"Essays, reading, spelling, and assessment prep." },
+    Mathematics: { homework:["Revision set","Topic review"], notes:"Homework, weak topics, and test reminders." },
+    Japanese: { homework:["Vocabulary practice","Sentence writing"], notes:"Vocab, oral practice, and class tasks." },
+    Science: { homework:["Class summary","Experiment review"], notes:"Definitions, diagrams, and quiz revision." },
+    Music: { homework:["Theory task","Class preparation"], notes:"Performance tasks and music reminders." }
+  };
+
+  let saveTimer = null;
+  let isAuthenticated = false;
+  let plannerPassword = "";
+  let remoteLoaded = false;
+
+  const now = new Date();
+  const defaultState = {
+    tasks: [],
+    sofiaNotes: [],
+    swimNotes: [],
+    events: [
+      { id: 1, date: "2026-04-14", title: "Australian National Championships starts", type: "Swimming" },
+      { id: 2, date: "2026-04-19", title: "Australian National Championships ends", type: "Swimming" }
+    ],
+    filters: { category:"All", tag:"All", search:"" },
+    activeSubject: "English",
+    newTaskTags: ["this week"],
+    aiOutputs: { priorities:"", sofiaGoals:"", swimFocus:"", schoolBreakdown:"" },
+    calendar: { year: now.getFullYear(), month: now.getMonth() },
+    meta: { updatedAt: null }
+  };
+
+  let state = loadLocalState();
+
+  function byId(id){ return document.getElementById(id); }
+  function escapeHtml(str=""){
+    return String(str).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+  }
+  function tagMeta(tag){ return TAGS.find(t => t.key === tag) || { key:tag, label:tag, cls:"" }; }
+  function localDateString(year, monthIndex, day){
+    const m = String(monthIndex + 1).padStart(2, "0");
+    const d = String(day).padStart(2, "0");
+    return `${year}-${m}-${d}`;
+  }
+  function formatDate(dateStr){
+    const [y,m,d] = dateStr.split("-").map(Number);
+    const dt = new Date(y, m - 1, d);
+    return dt.toLocaleDateString(undefined, { day:"numeric", month:"short", year:"numeric" });
+  }
+  function setSyncStatus(kind, text){
+    const dot = byId("syncDot");
+    const label = byId("syncText");
+    if (!dot || !label) return;
+    dot.className = "dot" + (kind === "ok" ? " ok" : kind === "warn" ? " warn" : "");
+    label.textContent = text;
+  }
+  function touchMeta(){ state.meta.updatedAt = new Date().toISOString(); }
+  function loadLocalState(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return structuredClone(defaultState);
+      const parsed = JSON.parse(raw);
+      return {
+        ...structuredClone(defaultState),
+        ...parsed,
+        filters: { ...defaultState.filters, ...(parsed.filters || {}) },
+        aiOutputs: { ...defaultState.aiOutputs, ...(parsed.aiOutputs || {}) },
+        calendar: { ...defaultState.calendar, ...(parsed.calendar || {}) },
+        meta: { ...defaultState.meta, ...(parsed.meta || {}) }
+      };
+    }catch{
+      return structuredClone(defaultState);
+    }
+  }
+  function saveLocalState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  function queueRemoteSave(){
+    if(!remoteLoaded || !isAuthenticated) return;
+    saveLocalState();
+    setSyncStatus("warn", "Saving...");
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveRemoteState, 450);
+  }
+  async function saveRemoteState(){
+    if(!isAuthenticated) return;
+    try{
+      touchMeta();
+      saveLocalState();
+      const res = await fetch("/api/save", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json", "x-planner-password": plannerPassword },
+        body: JSON.stringify({ state })
+      });
+      const data = await res.json().catch(() => ({}));
+      if(!res.ok) throw new Error(data.error || "Save failed.");
+      setSyncStatus("ok", "Synced");
+    }catch{
+      setSyncStatus("warn", "Saved on this device only");
+    }
+  }
+  async function loadRemoteState(){
+    try{
+      setSyncStatus("", "Loading...");
+      const res = await fetch("/api/load", { headers:{ "x-planner-password": plannerPassword } });
+      const data = await res.json().catch(() => ({}));
+      if(!res.ok) throw new Error(data.error || "Load failed.");
+      if(data.state){
+        state = {
+          ...structuredClone(defaultState),
+          ...data.state,
+          filters: { ...defaultState.filters, ...(data.state.filters || {}) },
+          aiOutputs: { ...defaultState.aiOutputs, ...(data.state.aiOutputs || {}) },
+          calendar: { ...defaultState.calendar, ...(data.state.calendar || {}) },
+          meta: { ...defaultState.meta, ...(data.state.meta || {}) }
+        };
+      }
+      saveLocalState();
+      remoteLoaded = true;
+      setSyncStatus("ok", "Synced");
+      renderAll();
+    }catch{
+      remoteLoaded = true;
+      saveLocalState();
+      setSyncStatus("warn", "Using local copy");
+      renderAll();
+    }
+  }
+  async function requireAuthAndCall(path, payload){
+    const res = await fetch(path, {
+      method:"POST",
+      headers:{ "Content-Type":"application/json", "x-planner-password": plannerPassword },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json().catch(() => ({}));
+    if(!res.ok) throw new Error(data.error || "Request failed.");
+    return data;
+  }
+  async function callAI(systemPrompt, userPrompt){
+    const data = await requireAuthAndCall("/api/ai-assist", { system: systemPrompt, input: userPrompt });
+    return data.output_text || "No output returned.";
+  }
+
+  function renderNewTaskTags(){
+    const wrap = byId("newTaskTags");
+    wrap.innerHTML = "";
+    TAGS.filter(t => t.key !== "done").forEach(tag => {
+      const active = state.newTaskTags.includes(tag.key);
+      const btn = document.createElement("button");
+      btn.className = "chip" + (active ? " active" : "");
+      btn.textContent = tag.label;
+      btn.onclick = () => {
+        if(active) state.newTaskTags = state.newTaskTags.filter(x => x !== tag.key);
+        else state.newTaskTags.push(tag.key);
+        saveLocalState(); renderNewTaskTags();
+      };
+      wrap.appendChild(btn);
+    });
+  }
+  function renderFilterChips(){
+    const catWrap = byId("categoryChips");
+    catWrap.innerHTML = "";
+    CATEGORIES.forEach(cat => {
+      const btn = document.createElement("button");
+      btn.className = "chip" + (state.filters.category === cat ? " active" : "");
+      btn.textContent = cat;
+      btn.onclick = () => { state.filters.category = cat; saveLocalState(); renderFilterChips(); renderTasks(); };
+      catWrap.appendChild(btn);
+    });
+
+    const tagWrap = byId("tagChips");
+    tagWrap.innerHTML = "";
+    const all = document.createElement("button");
+    all.className = "chip" + (state.filters.tag === "All" ? " active" : "");
+    all.textContent = "All Tags";
+    all.onclick = () => { state.filters.tag = "All"; saveLocalState(); renderFilterChips(); renderTasks(); };
+    tagWrap.appendChild(all);
+    TAGS.forEach(tag => {
+      const btn = document.createElement("button");
+      btn.className = "chip" + (state.filters.tag === tag.key ? " active" : "");
+      btn.textContent = tag.label;
+      btn.onclick = () => { state.filters.tag = tag.key; saveLocalState(); renderFilterChips(); renderTasks(); };
+      tagWrap.appendChild(btn);
+    });
+  }
+  function renderTasks(){
+    byId("taskSearch").value = state.filters.search;
+    const list = byId("taskList");
+    list.innerHTML = "";
+    const filtered = state.tasks.filter(task => {
+      const catOk = state.filters.category === "All" || task.category === state.filters.category;
+      const tagOk = state.filters.tag === "All" || task.tags.includes(state.filters.tag);
+      const q = state.filters.search.trim().toLowerCase();
+      const searchOk = !q || [task.title, task.note, task.category, task.subject].join(" ").toLowerCase().includes(q);
+      return catOk && tagOk && searchOk;
+    });
+    if(!filtered.length){ list.innerHTML = '<div class="empty">No tasks yet. Start with 3 to 5 tasks only.</div>'; return; }
+
+    filtered.forEach(task => {
+      const wrap = document.createElement("div");
+      wrap.className = "task" + (task.done ? " done-item" : "");
+      wrap.innerHTML = `
+        <button class="check ${task.done ? "checked" : ""}" aria-label="toggle task"></button>
+        <div>
+          <div><span class="pill">${escapeHtml(task.category)}</span>${task.subject ? `<span class="pill subject">${escapeHtml(task.subject)}</span>` : ""}</div>
+          <div class="task-title">${escapeHtml(task.title)}</div>
+          ${task.note ? `<div class="task-note">${escapeHtml(task.note)}</div>` : ""}
+          <div class="taglist" style="margin-top:8px">${task.tags.map(tag => { const meta = tagMeta(tag); return `<span class="tag ${meta.cls}">${escapeHtml(meta.label)}</span>`; }).join("")}</div>
+          ${task.category === "School" ? `<div style="margin-top:8px"><button class="btn btn-soft btn-small school-ai-btn">AI: break into steps</button></div>` : ""}
+        </div>
+        <button class="btn btn-danger btn-small delete-task-btn">Delete</button>
+      `;
+      wrap.querySelector(".check").onclick = () => {
+        task.done = !task.done;
+        if(task.done && !task.tags.includes("done")) task.tags.push("done");
+        if(!task.done) task.tags = task.tags.filter(t => t !== "done");
+        touchMeta(); queueRemoteSave(); renderTasks();
+      };
+      const schoolBtn = wrap.querySelector(".school-ai-btn");
+      if(schoolBtn) schoolBtn.onclick = async () => {
+        byId("schoolBreakdownInput").value = `${task.subject ? task.subject + ": " : ""}${task.title}${task.note ? ". " + task.note : ""}`;
+        await runSchoolBreakdown();
+      };
+      wrap.querySelector(".delete-task-btn").onclick = () => {
+        state.tasks = state.tasks.filter(t => t.id !== task.id);
+        touchMeta(); queueRemoteSave(); renderTasks();
+      };
+      list.appendChild(wrap);
+    });
+  }
+  function renderSubjects(){
+    const wrap = byId("subjectChips");
+    wrap.innerHTML = "";
+    SUBJECTS.forEach(subject => {
+      const btn = document.createElement("button");
+      btn.className = "chip" + (state.activeSubject === subject ? " active" : "");
+      btn.textContent = subject;
+      btn.onclick = () => { state.activeSubject = subject; saveLocalState(); renderSubjects(); renderActiveSubject(); };
+      wrap.appendChild(btn);
+    });
+    renderActiveSubject();
+  }
+  function renderActiveSubject(){
+    const info = SUBJECT_DATA[state.activeSubject];
+    byId("subjectTitle").textContent = state.activeSubject;
+    byId("subjectNotes").textContent = info.notes;
+    byId("subjectHomework").innerHTML = info.homework.map(item => `<span class="focus-pill">${escapeHtml(item)}</span>`).join("");
+  }
+  function renderNotes(){
+    const makeList = (containerId, arr, key) => {
+      const el = byId(containerId);
+      el.innerHTML = "";
+      if(!arr.length){ el.innerHTML = `<div class="empty">No ${key} notes yet.</div>`; return; }
+      arr.forEach(note => {
+        const item = document.createElement("div");
+        item.className = "note-item";
+        item.innerHTML = `<div style="font-size:13px;font-weight:900">${escapeHtml(note.title)}</div><div style="font-size:13px;line-height:1.6;color:#675f78;margin-top:4px">${escapeHtml(note.content)}</div><div style="margin-top:8px"><button class="btn btn-danger btn-small">Delete</button></div>`;
+        item.querySelector("button").onclick = () => {
+          if(key === "sofia") state.sofiaNotes = state.sofiaNotes.filter(n => n.id !== note.id);
+          else state.swimNotes = state.swimNotes.filter(n => n.id !== note.id);
+          touchMeta(); queueRemoteSave(); renderNotes();
+        };
+        el.appendChild(item);
+      });
+    };
+    makeList("sofiaList", state.sofiaNotes, "sofia");
+    makeList("swimList", state.swimNotes, "swimming");
+  }
+  function renderAIOutputs(){
+    byId("prioritiesOutput").textContent = state.aiOutputs.priorities || "";
+    byId("sofiaGoalsOutput").textContent = state.aiOutputs.sofiaGoals || "";
+    byId("swimFocusOutput").textContent = state.aiOutputs.swimFocus || "";
+    byId("schoolBreakdownOutput").textContent = state.aiOutputs.schoolBreakdown || "";
+  }
+  function eventsForDate(dateStr){ return state.events.filter(e => e.date === dateStr); }
+  function renderCalendar(){
+    const year = state.calendar.year;
+    const month = state.calendar.month;
+    const first = new Date(year, month, 1);
+    const startDay = first.getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const prevDays = new Date(year, month, 0).getDate();
+    const todayLocal = new Date();
+    const todayStr = localDateString(todayLocal.getFullYear(), todayLocal.getMonth(), todayLocal.getDate());
+
+    byId("calendarMonthLabel").textContent = first.toLocaleDateString(undefined, { month:"long", year:"numeric" });
+    byId("calendarHeader").innerHTML = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(d => `<div class="dow">${d}</div>`).join("");
+
+    const grid = byId("calendarGrid");
+    grid.innerHTML = "";
+
+    for(let i = 0; i < 42; i++){
+      let dayNum, cellDate, other = false;
+      if(i < startDay){
+        dayNum = prevDays - startDay + i + 1;
+        const d = new Date(year, month - 1, dayNum);
+        cellDate = localDateString(d.getFullYear(), d.getMonth(), d.getDate());
+        other = true;
+      } else if(i >= startDay + daysInMonth){
+        dayNum = i - (startDay + daysInMonth) + 1;
+        const d = new Date(year, month + 1, dayNum);
+        cellDate = localDateString(d.getFullYear(), d.getMonth(), d.getDate());
+        other = true;
+      } else {
+        dayNum = i - startDay + 1;
+        cellDate = localDateString(year, month, dayNum);
+      }
+      const hasEvent = eventsForDate(cellDate).length > 0;
+      const cell = document.createElement("div");
+      cell.className = "day" + (other ? " other" : "") + (cellDate === todayStr ? " today" : "") + (hasEvent ? " has-event" : "");
+      cell.innerHTML = `<div class="day-number">${dayNum}</div>${hasEvent ? '<div class="event-dot"></div>' : ""}`;
+      cell.onclick = () => { byId("eventDate").value = cellDate; byId("eventTitle").focus(); };
+      grid.appendChild(cell);
+    }
+
+    const list = byId("eventList");
+    list.innerHTML = "";
+    const monthPrefix = `${year}-${String(month + 1).padStart(2, "0")}`;
+    const shown = state.events.filter(e => e.date.startsWith(monthPrefix)).sort((a,b) => a.date.localeCompare(b.date));
+    if(!shown.length){ list.innerHTML = '<div class="empty">No important dates in this month yet.</div>'; return; }
+    shown.forEach(event => {
+      const el = document.createElement("div");
+      el.className = "event-item";
+      el.innerHTML = `<div style="font-size:11px;color:#9a92ab;font-weight:900">${escapeHtml(formatDate(event.date))} · ${escapeHtml(event.type)}</div><div style="font-size:13px;font-weight:900;margin-top:2px">${escapeHtml(event.title)}</div><div style="margin-top:8px"><button class="btn btn-danger btn-small">Delete</button></div>`;
+      el.querySelector("button").onclick = () => { state.events = state.events.filter(e => e.id !== event.id); touchMeta(); queueRemoteSave(); renderCalendar(); };
+      list.appendChild(el);
+    });
+  }
+
+  async function withAI(buttonId, outputKey, fn){
+    const btn = byId(buttonId);
+    const old = btn.textContent;
+    btn.disabled = true; btn.textContent = "Working...";
+    try{
+      state.aiOutputs[outputKey] = String(await fn()).trim();
+      saveLocalState();
+    }catch(err){
+      state.aiOutputs[outputKey] = "AI error: " + err.message;
+      saveLocalState();
+    }finally{
+      renderAIOutputs();
+      btn.disabled = false; btn.textContent = old;
+    }
+  }
+  async function runPriorities(){
+    const openTasks = state.tasks.filter(t => !t.done);
+    return withAI("prioritiesBtn", "priorities", async () => {
+      const system = `You are assisting a busy year-7 student planner. Return exactly 3 priorities.
+Rules:
+- Calm, practical, age-appropriate.
+- Prefer urgent tasks, time-sensitive school items, Sofia corrections, and tasks tagged "this week".
+- Keep each line short.
+Format:
+1. task — short reason
+2. ...
+3. ...`;
+      const user = `Current unfinished tasks:\n${openTasks.map((t,i) => `${i+1}. [${t.category}${t.subject ? " / " + t.subject : ""}] ${t.title} | tags: ${t.tags.join(", ") || "none"} | note: ${t.note || "none"}`).join("\n") || "No unfinished tasks."}`;
+      return await callAI(system, user);
+    });
+  }
+  async function runSofiaGoals(){
+    return withAI("sofiaGoalsBtn", "sofiaGoals", async () => {
+      const current = byId("sofiaInput").value.trim();
+      const latest = state.sofiaNotes[0]?.content || "";
+      const source = current || latest;
+      if(!source) throw new Error("Please write or save a Sofia note first.");
+      const system = `Turn ballet lesson notes into next-lesson goals for a student.
+Rules:
+- 3 to 5 clear goals.
+- Short, encouraging, concrete.
+- Use these headings only: Main goals, What to remember, At-home practice.`;
+      return await callAI(system, source);
+    });
+  }
+  async function runSwimFocus(){
+    return withAI("swimFocusBtn", "swimFocus", async () => {
+      const current = byId("swimInput").value.trim();
+      const latest = state.swimNotes[0]?.content || "";
+      const source = current || latest;
+      if(!source) throw new Error("Please write or save a swimming note first.");
+      const system = `Turn artistic swimming training notes into a focused next-session plan.
+Rules:
+- Use these headings only: What improved, Next training focus, One confidence reminder.
+- Keep it supportive and brief.`;
+      return await callAI(system, source);
+    });
+  }
+  async function runSchoolBreakdown(){
+    return withAI("schoolBreakdownBtn", "schoolBreakdown", async () => {
+      const text = byId("schoolBreakdownInput").value.trim();
+      if(!text) throw new Error("Please enter a school task first.");
+      const system = `Break a school task into smaller steps for a year-7 student.
+Rules:
+- 4 to 7 steps.
+- Keep each step short and doable.
+- Include one first step and one final check step.`;
+      return await callAI(system, text);
+    });
+  }
+  function renderAll(){
+    renderNewTaskTags();
+    renderFilterChips();
+    renderTasks();
+    renderSubjects();
+    renderNotes();
+    renderAIOutputs();
+    renderCalendar();
+    byId("newTaskCategory").dispatchEvent(new Event("change"));
+  }
+  async function attemptLogin(){
+    const password = byId("passwordInput").value;
+    byId("loginError").textContent = "";
+    try{
+      const res = await fetch("/api/login", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ password })
+      });
+      const data = await res.json().catch(() => ({}));
+      if(!res.ok) throw new Error(data.error || "Wrong password.");
+      plannerPassword = password;
+      sessionStorage.setItem("siennaPlannerPassword", password);
+      isAuthenticated = true;
+      byId("loginScreen").classList.add("hidden");
+      byId("appScreen").classList.remove("hidden");
+      await loadRemoteState();
+    }catch(err){
+      byId("loginError").textContent = err.message;
+    }
+  }
+  function bind(){
+    byId("loginBtn").onclick = attemptLogin;
+    byId("passwordInput").addEventListener("keydown", e => { if(e.key === "Enter") attemptLogin(); });
+    byId("logoutBtn").onclick = () => { sessionStorage.removeItem("siennaPlannerPassword"); location.reload(); };
+    byId("syncNowBtn").onclick = async () => { await saveRemoteState(); await loadRemoteState(); };
+
+    byId("newTaskCategory").onchange = e => {
+      const isSchool = e.target.value === "School";
+      byId("newTaskSubject").disabled = !isSchool;
+      byId("newTaskSubject").style.opacity = isSchool ? "1" : ".55";
+    };
+    byId("addTaskBtn").onclick = () => {
+      const title = byId("newTaskTitle").value.trim();
+      const category = byId("newTaskCategory").value;
+      const subject = category === "School" ? byId("newTaskSubject").value : "";
+      const note = byId("newTaskNote").value.trim();
+      if(!title) return;
+      state.tasks.unshift({ id: Date.now(), title, category, subject, note, tags: [...state.newTaskTags], done: false });
+      byId("newTaskTitle").value = "";
+      byId("newTaskNote").value = "";
+      byId("newTaskCategory").value = "School";
+      byId("newTaskSubject").value = "English";
+      state.newTaskTags = ["this week"];
+      touchMeta(); queueRemoteSave(); renderNewTaskTags(); renderTasks(); byId("newTaskCategory").dispatchEvent(new Event("change"));
+    };
+    byId("taskSearch").oninput = e => { state.filters.search = e.target.value; saveLocalState(); renderTasks(); };
+
+    byId("saveSofiaBtn").onclick = () => {
+      const text = byId("sofiaInput").value.trim();
+      if(!text) return;
+      state.sofiaNotes.unshift({ id: Date.now(), title: "Lesson note", content: text });
+      byId("sofiaInput").value = "";
+      touchMeta(); queueRemoteSave(); renderNotes();
+    };
+    byId("saveSwimBtn").onclick = () => {
+      const text = byId("swimInput").value.trim();
+      if(!text) return;
+      state.swimNotes.unshift({ id: Date.now(), title: "Training note", content: text });
+      byId("swimInput").value = "";
+      touchMeta(); queueRemoteSave(); renderNotes();
+    };
+    byId("addEventBtn").onclick = () => {
+      const date = byId("eventDate").value;
+      const title = byId("eventTitle").value.trim();
+      const type = byId("eventType").value;
+      if(!date || !title) return;
+      state.events.push({ id: Date.now(), date, title, type });
+      byId("eventTitle").value = "";
+      touchMeta(); queueRemoteSave(); renderCalendar();
+    };
+    byId("prevMonthBtn").onclick = () => {
+      state.calendar.month -= 1;
+      if(state.calendar.month < 0){ state.calendar.month = 11; state.calendar.year -= 1; }
+      saveLocalState(); renderCalendar();
+    };
+    byId("nextMonthBtn").onclick = () => {
+      state.calendar.month += 1;
+      if(state.calendar.month > 11){ state.calendar.month = 0; state.calendar.year += 1; }
+      saveLocalState(); renderCalendar();
+    };
+
+    byId("clearPrioritiesBtn").onclick = () => { state.aiOutputs.priorities = ""; saveLocalState(); renderAIOutputs(); };
+    byId("sofiaGoalsClearBtn").onclick = () => { state.aiOutputs.sofiaGoals = ""; saveLocalState(); renderAIOutputs(); };
+    byId("swimFocusClearBtn").onclick = () => { state.aiOutputs.swimFocus = ""; saveLocalState(); renderAIOutputs(); };
+    byId("schoolBreakdownClearBtn").onclick = () => { state.aiOutputs.schoolBreakdown = ""; saveLocalState(); renderAIOutputs(); };
+
+    byId("prioritiesBtn").onclick = runPriorities;
+    byId("sofiaGoalsBtn").onclick = runSofiaGoals;
+    byId("swimFocusBtn").onclick = runSwimFocus;
+    byId("schoolBreakdownBtn").onclick = runSchoolBreakdown;
+  }
+  async function boot(){
+    bind();
+    const savedPassword = sessionStorage.getItem("siennaPlannerPassword");
+    if(savedPassword){
+      byId("passwordInput").value = savedPassword;
+      await attemptLogin();
+    }
+  }
+  boot();
+})();
+</script>
+</body>
+</html>
