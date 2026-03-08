@@ -3,52 +3,413 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sienna Quest</title>
+  <title>Sienna Quest v2</title>
   <style>
-    :root{--bg1:#fff7fb;--bg2:#eef9ff;--card:#ffffffee;--line:#eadff1;--text:#2d2b3a;--muted:#7a7388;--pink:#ff8fc7;--violet:#9b7cff;--sky:#72d7ff;--shadow:0 18px 42px rgba(117,90,145,.12);--soft-pink:#fff0f7;--soft-blue:#ecf8ff;--soft-violet:#f4eeff;--soft-yellow:#fff6de}
+    :root{
+      --bg1:#fff7fb;
+      --bg2:#eefaff;
+      --card:#ffffffee;
+      --line:#eddff1;
+      --text:#2d2b3a;
+      --muted:#7c758b;
+      --pink:#ff91c8;
+      --pink-soft:#fff0f7;
+      --violet:#9b7cff;
+      --violet-soft:#f3eeff;
+      --blue:#77d8ff;
+      --blue-soft:#eef9ff;
+      --green:#6fd6b2;
+      --green-soft:#ecfbf5;
+      --yellow:#ffbe63;
+      --yellow-soft:#fff7e8;
+      --shadow:0 16px 42px rgba(116, 89, 144, 0.12);
+    }
+
     *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--text);background:radial-gradient(circle at top left,#ffe3f1 0%,transparent 26%),radial-gradient(circle at top right,#dff7ff 0%,transparent 28%),linear-gradient(180deg,var(--bg1),var(--bg2));min-height:100vh}
-    .stars::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.35;background-image:radial-gradient(circle,#fff 1px,transparent 1.5px),radial-gradient(circle,#ffd7eb 1px,transparent 1.5px),radial-gradient(circle,#dcf7ff 1px,transparent 1.5px);background-size:100px 100px,140px 140px,180px 180px;background-position:0 0,30px 40px,70px 20px}
-    .hidden{display:none!important}
-    .wrap{max-width:980px;margin:0 auto;padding:16px}
-    .shell{background:rgba(255,255,255,.72);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.7);border-radius:34px;box-shadow:var(--shadow);overflow:hidden}
-    .hero{position:relative;padding:20px 18px 18px;background:linear-gradient(105deg, rgba(255,233,244,.96), rgba(242,238,255,.96), rgba(230,249,255,.96));border-bottom:1px solid rgba(233,225,241,.8)}
-    .sparkles{position:absolute;right:12px;top:10px;font-size:26px;opacity:.8}
-    .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
-    h1{margin:8px 0 0;font-size:34px;line-height:1.03}
-    .sub{margin-top:8px;color:#605b73;font-size:14px;line-height:1.6;max-width:760px}
-    .hero-grid{display:grid;gap:10px;grid-template-columns:1fr 1fr;margin-top:14px}
-    .mini{border:1px solid rgba(255,255,255,.72);background:rgba(255,255,255,.75);padding:12px;border-radius:18px}
-    .mini .label{font-size:11px;color:var(--muted)}
-    .mini .value{margin-top:4px;font-size:13px;font-weight:800}
-    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
-    .status{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
-    .dot{width:8px;height:8px;border-radius:999px;background:#d3cadd}.dot.ok{background:#53c79d}.dot.warn{background:#ffbf66}
-    .content{padding:14px;display:grid;gap:14px}
-    .card{background:var(--card);border:1px solid rgba(234,223,241,.95);border-radius:26px;padding:14px;box-shadow:0 8px 24px rgba(122,98,152,.05)}
-    .card h2{margin:0;font-size:20px}.card-sub{margin-top:4px;color:var(--muted);font-size:13px;line-height:1.55}
-    .quest-top{display:grid;gap:10px}
-    .progress{height:12px;border-radius:999px;background:#f1edf8;overflow:hidden;border:1px solid var(--line)}
-    .progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--pink),var(--violet),var(--sky));transition:width .25s ease}
-    .pill-row,.chips{display:flex;flex-wrap:wrap;gap:8px}
-    .pill,.chip{display:inline-block;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:800;background:#f5f2f8;color:#655f74}
-    .pill.level{background:#ede7ff;color:#6d4be0}.pill.subject{background:#e8f8ff;color:#12739f}.chip{border:1px solid var(--line);background:#fff}
-    .sticky{position:relative;border-radius:26px;box-shadow:0 12px 24px rgba(122,98,152,.08)}
-    .sticky::before{content:"";position:absolute;top:12px;right:16px;width:48px;height:16px;border-radius:8px;background:rgba(255,255,255,.72);transform:rotate(-6deg);box-shadow:0 2px 8px rgba(80,80,110,.08)}
-    .pink{background:linear-gradient(180deg,#fff8fc,var(--soft-pink))}.blue{background:linear-gradient(180deg,#f7fdff,var(--soft-blue))}.violet{background:linear-gradient(180deg,#fbf9ff,var(--soft-violet))}.yellow{background:linear-gradient(180deg,#fffdf6,var(--soft-yellow))}
-    .stack{display:grid;gap:10px}
-    .challenge-title{font-size:18px;font-weight:900}
-    .challenge-text{white-space:pre-wrap;font-size:14px;line-height:1.7;color:#4d4760}
-    textarea,input[type=password]{width:100%;border:1px solid var(--line);border-radius:18px;padding:12px 14px;background:#fff;color:var(--text);outline:none;font:inherit}
-    textarea{min-height:120px;resize:vertical}
-    .btn{border:none;border-radius:18px;padding:11px 14px;cursor:pointer;font-weight:800;transition:.15s ease;font:inherit}
-    .btn:hover{transform:translateY(-1px)}.btn-primary{background:linear-gradient(135deg,var(--pink),#ff75ab);color:#fff}.btn-violet{background:linear-gradient(135deg,var(--violet),#8b5fff);color:#fff}.btn-soft{background:#fff;color:#5c5770;border:1px solid var(--line)}.btn-small{padding:8px 10px;border-radius:14px;font-size:12px}
-    .btn-row,.nav-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.nav-row{justify-content:space-between}
-    .feedback{border:1px solid var(--line);border-radius:18px;padding:12px;background:#fff;white-space:pre-wrap;font-size:13px;line-height:1.65;color:#4d4760}
-    .score-box{display:grid;grid-template-columns:1fr 1fr;gap:10px}.score-card{border:1px solid var(--line);border-radius:20px;padding:12px;background:#fff}.score-label{font-size:12px;color:var(--muted)}.score-value{margin-top:4px;font-size:22px;font-weight:900}
-    .login-wrap{min-height:100vh;display:grid;place-items:center;padding:18px}.login-card{width:min(440px,100%);background:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.75);box-shadow:var(--shadow);backdrop-filter:blur(18px);border-radius:30px;padding:18px}.login-art{font-size:34px;text-align:center;margin:6px 0 8px}.center{text-align:center}
-    .empty{border:1px dashed var(--line);border-radius:18px;padding:18px;text-align:center;color:var(--muted);font-size:13px;background:rgba(255,255,255,.55)}
-    @media (min-width:860px){.wrap{padding:20px}.content{grid-template-columns:1.05fr .95fr}.hero{padding:22px 22px 18px}}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, #ffe4f1 0%, transparent 28%),
+        radial-gradient(circle at top right, #def7ff 0%, transparent 28%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      min-height:100vh;
+    }
+
+    .stars::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.35;
+      background-image:
+        radial-gradient(circle,#fff 1px,transparent 1.5px),
+        radial-gradient(circle,#ffd5ea 1px,transparent 1.5px),
+        radial-gradient(circle,#d9f7ff 1px,transparent 1.5px);
+      background-size:100px 100px,140px 140px,180px 180px;
+      background-position:0 0,30px 40px,70px 20px;
+    }
+
+    .hidden{display:none !important}
+
+    .login-wrap{
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:18px;
+    }
+
+    .login-card,
+    .app-shell{
+      width:min(980px, 100%);
+      background:rgba(255,255,255,.76);
+      backdrop-filter:blur(18px);
+      border:1px solid rgba(255,255,255,.75);
+      box-shadow:var(--shadow);
+      border-radius:32px;
+      overflow:hidden;
+    }
+
+    .login-card{
+      max-width:430px;
+      padding:18px;
+    }
+
+    .login-art{
+      font-size:34px;
+      text-align:center;
+      margin:6px 0 8px;
+    }
+
+    .center{text-align:center}
+
+    .eyebrow{
+      font-size:11px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+
+    h1{
+      margin:8px 0 0;
+      font-size:32px;
+      line-height:1.02;
+    }
+
+    .sub{
+      margin-top:8px;
+      color:#605b73;
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .hero{
+      position:relative;
+      padding:20px 18px 18px;
+      background:linear-gradient(105deg, rgba(255,233,244,.96), rgba(242,238,255,.96), rgba(230,249,255,.96));
+      border-bottom:1px solid rgba(233,225,241,.8);
+    }
+
+    .sparkles{
+      position:absolute;
+      right:12px;
+      top:10px;
+      font-size:24px;
+      opacity:.8;
+    }
+
+    .content{
+      padding:14px;
+      display:grid;
+      gap:14px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid rgba(237,223,241,.95);
+      border-radius:26px;
+      padding:14px;
+      box-shadow:0 8px 22px rgba(122,98,152,.05);
+    }
+
+    .sticky{
+      position:relative;
+    }
+
+    .sticky::before{
+      content:"";
+      position:absolute;
+      top:12px;
+      right:16px;
+      width:48px;
+      height:16px;
+      border-radius:8px;
+      background:rgba(255,255,255,.72);
+      transform:rotate(-6deg);
+      box-shadow:0 2px 8px rgba(80,80,110,.08);
+    }
+
+    .pink{background:linear-gradient(180deg,#fff8fc,var(--pink-soft))}
+    .violet{background:linear-gradient(180deg,#fbf9ff,var(--violet-soft))}
+    .blue{background:linear-gradient(180deg,#f7fdff,var(--blue-soft))}
+    .green{background:linear-gradient(180deg,#f7fffb,var(--green-soft))}
+    .yellow{background:linear-gradient(180deg,#fffdf8,var(--yellow-soft))}
+
+    .stack{display:grid; gap:10px}
+
+    input, textarea, button{
+      font:inherit;
+    }
+
+    input[type="password"], textarea{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:12px 14px;
+      background:#fff;
+      color:var(--text);
+      outline:none;
+    }
+
+    textarea{
+      min-height:120px;
+      resize:vertical;
+    }
+
+    .btn{
+      border:none;
+      border-radius:18px;
+      padding:11px 14px;
+      cursor:pointer;
+      font-weight:800;
+      transition:.15s ease;
+    }
+
+    .btn:hover{transform:translateY(-1px)}
+
+    .btn-primary{
+      background:linear-gradient(135deg,var(--pink),#ff74ac);
+      color:#fff;
+    }
+
+    .btn-violet{
+      background:linear-gradient(135deg,var(--violet),#8b5fff);
+      color:#fff;
+    }
+
+    .btn-blue{
+      background:linear-gradient(135deg,var(--blue),#58ccff);
+      color:#16384a;
+    }
+
+    .btn-soft{
+      background:#fff;
+      color:#5c5770;
+      border:1px solid var(--line);
+    }
+
+    .btn-small{
+      padding:8px 10px;
+      border-radius:14px;
+      font-size:12px;
+    }
+
+    .toolbar{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top:12px;
+    }
+
+    .status{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .dot{
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:#d4cadf;
+    }
+
+    .dot.ok{background:#53c79d}
+    .dot.warn{background:#ffbe63}
+
+    .hero-mini{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .mini{
+      border:1px solid rgba(255,255,255,.72);
+      background:rgba(255,255,255,.75);
+      padding:12px;
+      border-radius:18px;
+    }
+
+    .mini .label{
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    .mini .value{
+      margin-top:4px;
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .chips{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .chip{
+      display:inline-block;
+      border-radius:999px;
+      padding:7px 11px;
+      font-size:12px;
+      font-weight:800;
+      background:#fff;
+      border:1px solid var(--line);
+      color:#655f74;
+    }
+
+    .chip.subject{
+      background:#e9f8ff;
+      color:#12739f;
+    }
+
+    .chip.level{
+      background:#eee8ff;
+      color:#6d4be0;
+    }
+
+    .chip.reward{
+      background:#fff5dc;
+      color:#a66b00;
+    }
+
+    .progress{
+      height:12px;
+      border-radius:999px;
+      background:#f1edf8;
+      overflow:hidden;
+      border:1px solid var(--line);
+    }
+
+    .progress-bar{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,var(--pink),var(--violet),var(--blue));
+      transition:width .25s ease;
+    }
+
+    .question-title{
+      font-size:22px;
+      font-weight:900;
+      margin-top:6px;
+    }
+
+    .question-text{
+      margin-top:10px;
+      white-space:pre-wrap;
+      font-size:15px;
+      line-height:1.75;
+      color:#4d4760;
+    }
+
+    .feedback{
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:12px;
+      background:#fff;
+      white-space:pre-wrap;
+      font-size:13px;
+      line-height:1.65;
+      color:#4d4760;
+    }
+
+    .score-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .score-card{
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:12px;
+      background:#fff;
+    }
+
+    .score-label{
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .score-value{
+      margin-top:4px;
+      font-size:24px;
+      font-weight:900;
+    }
+
+    .reward-box{
+      border:1px dashed #ffd5e7;
+      border-radius:20px;
+      padding:14px;
+      background:#fff9fc;
+      text-align:center;
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .map-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .map-item{
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:12px;
+      background:#fff;
+      cursor:pointer;
+    }
+
+    .map-item.active{
+      border-color:#8b5fff;
+      box-shadow:0 0 0 3px rgba(139,95,255,.08);
+    }
+
+    .muted{color:var(--muted)}
+
+    .badge{
+      font-size:20px;
+      margin-right:6px;
+    }
+
+    @media (min-width: 860px){
+      .wrap{
+        max-width:980px;
+        margin:0 auto;
+        padding:20px;
+      }
+      .content{
+        grid-template-columns:1.1fr .9fr;
+      }
+      .hero{
+        padding:22px 22px 18px;
+      }
+    }
   </style>
 </head>
 <body class="stars">
@@ -57,7 +418,7 @@
       <div class="login-art">🗺️✨📚</div>
       <div class="center eyebrow">welcome to sienna quest</div>
       <h1 class="center" style="font-size:30px">Quest Time</h1>
-      <div class="sub center" style="max-width:none">Smart challenge mode for Sienna — mostly Year 8 to Year 9 thinking, with Year 7 basics mixed in.</div>
+      <div class="sub center">更可爱、更简洁的单题挑战模式。每次一道题，连续作对会有奖励。</div>
       <div class="stack" style="margin-top:14px">
         <input id="passwordInput" type="password" placeholder="Enter password" />
         <button id="loginBtn" class="btn btn-primary">Unlock Quest</button>
@@ -67,71 +428,110 @@
   </div>
 
   <div id="appScreen" class="wrap hidden">
-    <div class="shell">
+    <div class="app-shell">
       <div class="hero">
         <div class="sparkles">🗺️✨🏆</div>
         <div class="eyebrow">siennasun.com.au / quest</div>
-        <h1>Sienna Quest</h1>
-        <div class="sub">One quest a day. A mix of Year 7 foundations, Year 8–9 challenge work, and one creative thinking task.</div>
-        <div class="hero-grid">
-          <div class="mini"><div class="label">Difficulty mix</div><div class="value">Year 7 basics + Year 8–9 challenge</div></div>
-          <div class="mini"><div class="label">Quest style</div><div class="value">One card at a time, with feedback and XP</div></div>
+        <h1>Sienna Quest v2</h1>
+        <div class="sub">每次只做一道题。系统会尽量避开最近做过的题目，让每天的 Quest 更有新鲜感。</div>
+
+        <div class="hero-mini">
+          <div class="mini">
+            <div class="label">Difficulty mix</div>
+            <div class="value">Year 7 basics + Year 8–9 challenge</div>
+          </div>
+          <div class="mini">
+            <div class="label">Quest style</div>
+            <div class="value">One question at a time + streak rewards</div>
+          </div>
         </div>
+
         <div class="toolbar">
-          <div class="status"><span id="statusDot" class="dot"></span><span id="statusText">Waiting</span></div>
+          <div class="status">
+            <span id="statusDot" class="dot"></span>
+            <span id="statusText">Waiting</span>
+          </div>
           <button id="newQuestBtn" class="btn btn-soft btn-small">Generate new quest</button>
           <button id="logoutBtn" class="btn btn-soft btn-small">Lock</button>
         </div>
       </div>
 
       <div class="content">
-        <div class="card">
-          <div class="quest-top">
-            <div>
-              <h2 id="questTitle">Today's Quest</h2>
-              <div id="questIntro" class="card-sub">Generate a quest to begin.</div>
-            </div>
-            <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
-            <div class="nav-row">
+        <div class="stack">
+          <div class="card">
+            <div class="stack">
+              <div>
+                <h2 id="questTitle">Today's Quest</h2>
+                <div id="questIntro" class="card-sub">Generate a quest to begin.</div>
+              </div>
+
+              <div class="progress">
+                <div id="progressBar" class="progress-bar"></div>
+              </div>
+
               <div class="chips">
                 <span id="questDateChip" class="chip">No quest yet</span>
-                <span id="currentStepChip" class="chip">Step 0 / 0</span>
-              </div>
-              <div class="chips">
+                <span id="stepChip" class="chip">Step 0 / 0</span>
                 <span id="xpChip" class="chip">XP 0</span>
+                <span id="streakChip" class="chip reward">Streak 0</span>
               </div>
             </div>
           </div>
-          <div id="challengeWrap" class="stack" style="margin-top:14px"></div>
-          <div class="nav-row" style="margin-top:14px">
-            <button id="prevBtn" class="btn btn-soft">← Previous</button>
-            <button id="nextBtn" class="btn btn-primary">Next →</button>
+
+          <div id="questionCard" class="card sticky pink">
+            <div class="chips">
+              <span id="subjectChip" class="chip subject">Subject</span>
+              <span id="levelChip" class="chip level">Level</span>
+              <span id="questionXpChip" class="chip">XP 0</span>
+            </div>
+
+            <div id="questionTitle" class="question-title">Question</div>
+            <div id="questionText" class="question-text">Generate a quest to begin.</div>
+
+            <textarea id="answerBox" placeholder="Write your answer here..." style="margin-top:12px"></textarea>
+
+            <div class="toolbar">
+              <button id="checkBtn" class="btn btn-violet">Check with AI</button>
+              <button id="saveBtn" class="btn btn-soft">Save draft</button>
+            </div>
+
+            <div id="feedbackBox" class="feedback" style="margin-top:12px">No feedback yet.</div>
+
+            <div class="toolbar" style="justify-content:space-between">
+              <button id="prevBtn" class="btn btn-soft">← Previous</button>
+              <button id="nextBtn" class="btn btn-primary">Next →</button>
+            </div>
           </div>
         </div>
 
         <div class="stack">
-          <div class="card sticky pink">
+          <div class="card sticky blue">
             <h2>Quest score</h2>
-            <div class="card-sub">Feedback updates after each checked answer.</div>
-            <div class="score-box" style="margin-top:12px">
-              <div class="score-card"><div class="score-label">Completed cards</div><div id="completedCount" class="score-value">0</div></div>
-              <div class="score-card"><div class="score-label">XP earned</div><div id="xpTotal" class="score-value">0</div></div>
+            <div class="card-sub">每次 AI 批改后会更新。</div>
+            <div class="score-grid" style="margin-top:12px">
+              <div class="score-card">
+                <div class="score-label">Completed</div>
+                <div id="completedValue" class="score-value">0</div>
+              </div>
+              <div class="score-card">
+                <div class="score-label">Total XP</div>
+                <div id="totalXpValue" class="score-value">0</div>
+              </div>
             </div>
           </div>
-          <div class="card sticky blue">
-            <h2>Quest map</h2>
-            <div class="card-sub">Cards unlock in order, just like a little journey.</div>
-            <div id="mapWrap" class="stack" style="margin-top:12px"></div>
+
+          <div class="card sticky green">
+            <h2>Reward zone</h2>
+            <div class="card-sub">连续作对会有奖励。</div>
+            <div id="rewardBox" class="reward-box" style="margin-top:12px">
+              🌱 Start your streak by getting the first question right.
+            </div>
           </div>
+
           <div class="card sticky yellow">
-            <h2>How this quest works</h2>
-            <div class="card-sub">You do not need to be perfect. Try your best, explain your thinking, and improve after feedback.</div>
-            <div class="feedback" style="margin-top:12px">Structure:
-1. Year 7 warm-up
-2. Year 8–9 challenge
-3. Year 8–9 challenge
-4. Science / Geography / History reasoning
-5. Creative stretch task</div>
+            <h2>Quest map</h2>
+            <div class="card-sub">整套 Quest 一共 5 题，但每次只显示一道。</div>
+            <div id="mapWrap" class="map-list" style="margin-top:12px"></div>
           </div>
         </div>
       </div>
@@ -139,24 +539,230 @@
   </div>
 
 <script>
-(()=> {
-  const PASSWORD_STORAGE="siennaPlannerPassword";
-  const QUEST_PREFIX="sienna-quest-v1-";
-  const PROGRESS_PREFIX="sienna-quest-progress-v1-";
-  let plannerPassword=""; let questData=null; let progress=null; let currentIndex=0;
-  function byId(id){return document.getElementById(id)}
-  function todayKey(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`}
-  function setStatus(kind,text){byId("statusDot").className="dot"+(kind==="ok"?" ok":kind==="warn"?" warn":"");byId("statusText").textContent=text}
-  function localQuestKey(){return QUEST_PREFIX+todayKey()}
-  function localProgressKey(){return PROGRESS_PREFIX+todayKey()}
-  function saveProgress(){localStorage.setItem(localProgressKey(),JSON.stringify(progress))}
-  function loadProgress(){const raw=localStorage.getItem(localProgressKey());if(raw){try{return JSON.parse(raw)}catch{}}return {answers:{},feedback:{},xpByCard:{},checked:{}}}
-  async function callLogin(password){const res=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password})});const data=await res.json().catch(()=>({}));if(!res.ok) throw new Error(data.error||"Wrong password.");return data}
-  async function callAI(systemPrompt,userPrompt){const res=await fetch("/api/ai-assist",{method:"POST",headers:{"Content-Type":"application/json","x-planner-password":plannerPassword},body:JSON.stringify({system:systemPrompt,input:userPrompt})});const data=await res.json().catch(()=>({}));if(!res.ok) throw new Error(data.error||"AI request failed.");return data.output_text||"No output returned."}
-  function fallbackQuest(){return {date:todayKey(),title:"The Sharp Thinker Quest",intro:"A smart mixed quest for Sienna: Year 7 basics, Year 8–9 challenge work, and one creative stretch task.",cards:[{id:"warmup",subject:"Mathematics",level:"Year 7 foundation",xp:10,color:"pink",title:"Fraction warm-up",prompt:"A recipe uses 3/4 cup of sugar. Sienna wants to make half the recipe.\n\nHow much sugar is needed?\nA) 3/8\nB) 1/2\nC) 3/2\nD) 6/8\n\nThen explain why in one or two sentences.",answer_type:"short response",teacher_notes:"Correct result is 3/8. Good answers explain that half of 3/4 is found by multiplying by 1/2."},{id:"algebra",subject:"Mathematics",level:"Year 8–9 challenge",xp:20,color:"blue",title:"Algebra thinking",prompt:"Solve for x:\n\n3x + 7 = 2x + 19\n\nThen find the value of 2x + 5.",answer_type:"worked solution",teacher_notes:"x = 12, then 2x + 5 = 29. Good answers show the rearrangement."},{id:"history",subject:"History",level:"Year 8–9 challenge",xp:20,color:"violet",title:"Cause and consequence",prompt:"Why do historians care about primary sources?\n\nWrite 2 or 3 sentences explaining one strength and one limitation of primary sources.",answer_type:"short paragraph",teacher_notes:"Strong responses mention closeness to the event, but also bias, missing context, or limited perspective."},{id:"science",subject:"Science",level:"Year 8–9 reasoning",xp:20,color:"yellow",title:"Density mystery",prompt:"Three cubes are placed in water.\n\nCube A sinks.\nCube B floats halfway.\nCube C floats high on the surface.\n\nWhich cube has the highest density? Explain why in one or two sentences.",answer_type:"short response",teacher_notes:"Cube A has the highest density. Strong responses connect sinking with density greater than water."},{id:"creative",subject:"Creative thinking",level:"Stretch task",xp:30,color:"pink",title:"Explorer writing",prompt:"Imagine you discovered a new island in the Pacific Ocean.\n\nWrite 4 to 6 sentences describing:\n- the environment\n- the climate\n- one unusual animal\n- one challenge for explorers",answer_type:"creative writing",teacher_notes:"Reward imagination, clear detail, and strong descriptive writing."}]}}
-  function normalizeQuest(raw){if(!raw||!raw.cards||!Array.isArray(raw.cards)||!raw.cards.length) return fallbackQuest(); const palette=["pink","blue","violet","yellow","pink"]; return {date:raw.date||todayKey(),title:raw.title||"Today's Quest",intro:raw.intro||"A mixed challenge quest for Sienna.",cards:raw.cards.slice(0,5).map((c,i)=>({id:c.id||`card-${i+1}`,subject:c.subject||"Challenge",level:c.level||"Mixed",xp:Number(c.xp||[10,20,20,20,30][i]||20),color:c.color||palette[i],title:c.title||`Challenge ${i+1}`,prompt:c.prompt||"No question provided.",answer_type:c.answer_type||"written answer",teacher_notes:c.teacher_notes||""}))}}
-  function parseQuestJson(text){try{return JSON.parse(text)}catch{} const match=text.match(/\{[\s\S]*\}$/); if(match){try{return JSON.parse(match[0])}catch{}} return fallbackQuest()}
-  async function generateQuest(force=false){const existing=localStorage.getItem(localQuestKey()); if(existing && !force){try{questData=normalizeQuest(JSON.parse(existing));progress=loadProgress();setStatus("ok","Loaded today's quest");renderAll();return}catch{}} setStatus("","Generating quest..."); const system=`Create a daily learning quest for a very bright Year 7 student in Australia.
+(() => {
+  const PASSWORD_STORAGE = "siennaPlannerPassword";
+  const QUEST_PREFIX = "sienna-quest-v2-";
+  const PROGRESS_PREFIX = "sienna-quest-progress-v2-";
+  const RECENT_QUESTS_KEY = "sienna-quest-recent-history-v2";
+
+  let plannerPassword = "";
+  let questData = null;
+  let progress = null;
+  let currentIndex = 0;
+
+  function byId(id){ return document.getElementById(id); }
+
+  function todayKey(){
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  }
+
+  function localQuestKey(){ return QUEST_PREFIX + todayKey(); }
+  function localProgressKey(){ return PROGRESS_PREFIX + todayKey(); }
+
+  function setStatus(kind, text){
+    byId("statusDot").className = "dot" + (kind === "ok" ? " ok" : kind === "warn" ? " warn" : "");
+    byId("statusText").textContent = text;
+  }
+
+  function saveProgress(){
+    localStorage.setItem(localProgressKey(), JSON.stringify(progress));
+  }
+
+  function loadProgress(){
+    const raw = localStorage.getItem(localProgressKey());
+    if(raw){
+      try { return JSON.parse(raw); } catch {}
+    }
+    return {
+      answers: {},
+      feedback: {},
+      xpByCard: {},
+      checked: {},
+      correctStreak: 0,
+      maxStreak: 0
+    };
+  }
+
+  function loadRecentQuestHistory(){
+    const raw = localStorage.getItem(RECENT_QUESTS_KEY);
+    if(raw){
+      try {
+        const arr = JSON.parse(raw);
+        if(Array.isArray(arr)) return arr;
+      } catch {}
+    }
+    return [];
+  }
+
+  function saveRecentQuestHistory(arr){
+    localStorage.setItem(RECENT_QUESTS_KEY, JSON.stringify(arr.slice(0, 8)));
+  }
+
+  function summariseQuestForHistory(q){
+    if(!q || !q.cards) return null;
+    return {
+      date: q.date || todayKey(),
+      title: q.title || "",
+      cards: q.cards.map(c => ({
+        subject: c.subject || "",
+        title: c.title || "",
+        prompt: (c.prompt || "").slice(0, 220)
+      }))
+    };
+  }
+
+  function updateRecentQuestHistory(q){
+    const item = summariseQuestForHistory(q);
+    if(!item) return;
+    const existing = loadRecentQuestHistory().filter(x => x.date !== item.date);
+    existing.unshift(item);
+    saveRecentQuestHistory(existing);
+  }
+
+  async function callLogin(password){
+    const res = await fetch("/api/login", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ password })
+    });
+    const data = await res.json().catch(() => ({}));
+    if(!res.ok) throw new Error(data.error || "Wrong password.");
+    return data;
+  }
+
+  async function callAI(systemPrompt, userPrompt){
+    const res = await fetch("/api/ai-assist", {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "x-planner-password": plannerPassword
+      },
+      body: JSON.stringify({
+        system: systemPrompt,
+        input: userPrompt
+      })
+    });
+    const data = await res.json().catch(() => ({}));
+    if(!res.ok) throw new Error(data.error || "AI request failed.");
+    return data.output_text || "No output returned.";
+  }
+
+  function fallbackQuest(){
+    return {
+      date: todayKey(),
+      title: "The Clever Explorer Quest",
+      intro: "A smart mixed quest for Sienna: Year 7 foundations, Year 8–9 challenge work, and one creative stretch task.",
+      cards: [
+        {
+          id: "warmup",
+          subject: "Mathematics",
+          level: "Year 7 foundation",
+          xp: 10,
+          title: "Fraction warm-up",
+          prompt: "A recipe uses 3/4 cup of sugar. Sienna wants to make half the recipe.\n\nHow much sugar is needed?\nA) 3/8\nB) 1/2\nC) 3/2\nD) 6/8\n\nThen explain why in one or two sentences.",
+          answer_type: "short response",
+          teacher_notes: "Correct result is 3/8. Good answers explain that half of 3/4 is found by multiplying by 1/2."
+        },
+        {
+          id: "algebra",
+          subject: "Mathematics",
+          level: "Year 8–9 challenge",
+          xp: 20,
+          title: "Algebra thinking",
+          prompt: "Solve for x:\n\n3x + 7 = 2x + 19\n\nThen find the value of 2x + 5.",
+          answer_type: "worked solution",
+          teacher_notes: "x = 12, then 2x + 5 = 29. Good answers show rearrangement."
+        },
+        {
+          id: "geography",
+          subject: "Geography",
+          level: "Year 8–9 challenge",
+          xp: 20,
+          title: "Climate reasoning",
+          prompt: "Why does northern Australia receive more monsoon rainfall than southern Australia?\n\nWrite 2 short reasons.",
+          answer_type: "short explanation",
+          teacher_notes: "Strong answers mention tropical location, seasonal winds, and moisture from warm oceans."
+        },
+        {
+          id: "science",
+          subject: "Science",
+          level: "Year 8–9 reasoning",
+          xp: 20,
+          title: "Density mystery",
+          prompt: "Three cubes are placed in water.\n\nCube A sinks.\nCube B floats halfway.\nCube C floats high on the surface.\n\nWhich cube has the highest density? Explain why in one or two sentences.",
+          answer_type: "short response",
+          teacher_notes: "Cube A has the highest density. Strong responses link sinking with density greater than water."
+        },
+        {
+          id: "creative",
+          subject: "Creative Thinking",
+          level: "Stretch task",
+          xp: 30,
+          title: "Explorer writing",
+          prompt: "Imagine you discovered a new island in the Pacific Ocean.\n\nWrite 4 to 6 sentences describing:\n- the environment\n- the climate\n- one unusual animal\n- one challenge for explorers",
+          answer_type: "creative writing",
+          teacher_notes: "Reward imagination, clear detail, and strong descriptive writing."
+        }
+      ]
+    };
+  }
+
+  function parseQuestJson(text){
+    try { return JSON.parse(text); } catch {}
+    const match = text.match(/\{[\s\S]*\}$/);
+    if(match){
+      try { return JSON.parse(match[0]); } catch {}
+    }
+    return fallbackQuest();
+  }
+
+  function normalizeQuest(raw){
+    if(!raw || !raw.cards || !Array.isArray(raw.cards) || !raw.cards.length){
+      return fallbackQuest();
+    }
+    return {
+      date: raw.date || todayKey(),
+      title: raw.title || "Today's Quest",
+      intro: raw.intro || "A mixed challenge quest for Sienna.",
+      cards: raw.cards.slice(0,5).map((c, i) => ({
+        id: c.id || `card-${i+1}`,
+        subject: c.subject || "Challenge",
+        level: c.level || "Mixed",
+        xp: Number(c.xp || [10,20,20,20,30][i] || 20),
+        title: c.title || `Question ${i+1}`,
+        prompt: c.prompt || "No question provided.",
+        answer_type: c.answer_type || "written answer",
+        teacher_notes: c.teacher_notes || ""
+      }))
+    };
+  }
+
+  function recentQuestPromptSummary(){
+    const recent = loadRecentQuestHistory();
+    if(!recent.length) return "No recent quests stored.";
+    return recent.map((q, i) => {
+      const cards = q.cards.map((c, j) => `- ${j+1}. [${c.subject}] ${c.title}: ${c.prompt}`).join("\n");
+      return `Recent quest ${i+1} (${q.date})\n${cards}`;
+    }).join("\n\n");
+  }
+
+  async function generateQuest(force = false){
+    const existing = localStorage.getItem(localQuestKey());
+    if(existing && !force){
+      try{
+        questData = normalizeQuest(JSON.parse(existing));
+        progress = loadProgress();
+        setStatus("ok", "Loaded today's quest");
+        renderAll();
+        return;
+      }catch{}
+    }
+
+    setStatus("", "Generating quest...");
+
+    const system = `Create a daily learning quest for a very bright Year 7 student in Australia.
+
 Requirements:
 - Mix Year 7 foundations with Year 8 to Year 9 challenge.
 - Exactly 5 cards.
@@ -166,7 +772,9 @@ Requirements:
 - Card 5 = creative stretch task.
 - Use concise, clear wording.
 - Keep each card answerable in 3 to 8 minutes.
+- VERY IMPORTANT: avoid repeating or closely reusing question ideas, numbers, prompts, topics, or wording from the recent quest history.
 - Return JSON only.
+
 JSON format:
 {
   "date": "YYYY-MM-DD",
@@ -175,18 +783,91 @@ JSON format:
   "cards": [
     {
       "id": "string",
-      "subject": "Mathematics/English/Science/Geography/History/Creative thinking",
+      "subject": "Mathematics/English/Science/Geography/History/Creative Thinking",
       "level": "Year 7 foundation / Year 8-9 challenge / Stretch task",
       "xp": 10,
-      "color": "pink|blue|violet|yellow",
       "title": "...",
       "prompt": "...",
       "answer_type": "...",
       "teacher_notes": "private rubric for feedback"
     }
   ]
-}`; const user=`Generate today's quest for ${todayKey()}. Themes can include mathematics, English, science, geography, history, and creative thinking.`; try{const raw=await callAI(system,user); questData=normalizeQuest(parseQuestJson(raw))}catch{questData=fallbackQuest()} localStorage.setItem(localQuestKey(),JSON.stringify(questData)); progress=loadProgress(); setStatus("ok","Quest ready"); renderAll()}
-  async function checkCurrentAnswer(){const card=questData.cards[currentIndex]; const textarea=byId("answerBox"); const answer=textarea.value.trim(); progress.answers[card.id]=answer; saveProgress(); if(!answer) return; byId("checkBtn").disabled=true; byId("checkBtn").textContent="Checking..."; try{const system=`You are giving feedback to a very bright Year 7 student doing a mixed Year 7 to Year 9 quest.
+}`;
+
+    const user = `Generate today's quest for ${todayKey()}.
+
+Recent quest history that must not be repeated or closely copied:
+${recentQuestPromptSummary()}`;
+
+    try{
+      const raw = await callAI(system, user);
+      questData = normalizeQuest(parseQuestJson(raw));
+    }catch{
+      questData = fallbackQuest();
+    }
+
+    localStorage.setItem(localQuestKey(), JSON.stringify(questData));
+    updateRecentQuestHistory(questData);
+    progress = loadProgress();
+    setStatus("ok", "Quest ready");
+    renderAll();
+  }
+
+  function totalXP(){
+    return Object.values(progress?.xpByCard || {}).reduce((a,b) => a + Number(b || 0), 0);
+  }
+
+  function completedCount(){
+    return Object.values(progress?.checked || {}).filter(Boolean).length;
+  }
+
+  function rewardText(){
+    const streak = progress?.correctStreak || 0;
+    if(streak >= 5) return "🏆 Amazing streak! 5+ correct in a row. Big reward unlocked.";
+    if(streak === 4) return "🌟 4 in a row! One more and you unlock the big reward.";
+    if(streak === 3) return "🎁 3 in a row! Reward unlocked: bonus XP on this question.";
+    if(streak === 2) return "✨ 2 in a row! Nice streak — keep going.";
+    if(streak === 1) return "🌱 Great start. You are on a 1-question streak.";
+    return "🌱 Start your streak by getting the first question right.";
+  }
+
+  function applyRewardLogic(feedback, card){
+    const scoreMatch = feedback.match(/Score:\s*(\d+)\s*\/\s*(\d+)/i);
+    let score = Math.round(card.xp * 0.7);
+    if(scoreMatch){
+      score = Math.min(card.xp, Number(scoreMatch[1]));
+    }
+
+    const isCorrect = score >= Math.ceil(card.xp * 0.75);
+
+    if(isCorrect){
+      progress.correctStreak += 1;
+      progress.maxStreak = Math.max(progress.maxStreak || 0, progress.correctStreak);
+
+      if(progress.correctStreak === 3){
+        score += 5;
+      } else if(progress.correctStreak >= 5){
+        score += 10;
+      }
+    } else {
+      progress.correctStreak = 0;
+    }
+
+    progress.xpByCard[card.id] = score;
+  }
+
+  async function checkCurrentAnswer(){
+    const card = questData.cards[currentIndex];
+    const answer = byId("answerBox").value.trim();
+    progress.answers[card.id] = answer;
+    saveProgress();
+    if(!answer) return;
+
+    byId("checkBtn").disabled = true;
+    byId("checkBtn").textContent = "Checking...";
+
+    try{
+      const system = `You are giving feedback to a very bright Year 7 student doing a mixed Year 7 to Year 9 quest.
 Use the teacher notes privately to judge the answer.
 Be encouraging but honest.
 Output exactly:
@@ -197,23 +878,168 @@ What to improve:
 - ...
 Next step:
 - ...
-`; const user=`Question:
+`;
+      const user = `Question:
 ${card.prompt}
 
 Teacher notes:
 ${card.teacher_notes}
 
 Student answer:
-${answer}`; const feedback=await callAI(system,user); progress.feedback[card.id]=feedback; progress.checked[card.id]=true; const scoreMatch=feedback.match(/Score:\s*(\d+)\s*\/\s*(\d+)/i); progress.xpByCard[card.id]=scoreMatch?Math.min(card.xp,Number(scoreMatch[1])):Math.round(card.xp*0.7); saveProgress(); renderAll()}catch(err){progress.feedback[card.id]="AI error: "+err.message; saveProgress(); renderAll()} finally{byId("checkBtn").disabled=false; byId("checkBtn").textContent="Check with AI"}}
-  function totalXP(){return Object.values(progress?.xpByCard||{}).reduce((a,b)=>a+Number(b||0),0)}
-  function completedCount(){return Object.values(progress?.checked||{}).filter(Boolean).length}
-  function renderQuestCard(){const wrap=byId("challengeWrap"); wrap.innerHTML=""; if(!questData){wrap.innerHTML='<div class="empty">No quest loaded yet.</div>'; return;} const card=questData.cards[currentIndex]; const section=document.createElement("div"); section.className=`card sticky ${card.color||"pink"}`; section.innerHTML=`<div class="pill-row"><span class="pill subject">${card.subject}</span><span class="pill level">${card.level}</span><span class="pill">XP ${card.xp}</span></div><div class="challenge-title" style="margin-top:12px">${card.title}</div><div class="challenge-text" style="margin-top:10px">${card.prompt}</div><div class="card-sub" style="margin-top:10px">Expected answer style: ${card.answer_type}</div><textarea id="answerBox" style="margin-top:12px" placeholder="Write your answer here...">${progress.answers[card.id]||""}</textarea><div class="btn-row" style="margin-top:10px"><button id="checkBtn" class="btn btn-violet">Check with AI</button><button id="saveAnswerBtn" class="btn btn-soft">Save draft</button></div><div id="feedbackBox" class="feedback" style="margin-top:12px">${progress.feedback[card.id]||"No feedback yet."}</div>`; wrap.appendChild(section); byId("answerBox").addEventListener("input",e=>{progress.answers[card.id]=e.target.value; saveProgress()}); byId("saveAnswerBtn").onclick=()=>{progress.answers[card.id]=byId("answerBox").value; saveProgress(); setStatus("ok","Draft saved")}; byId("checkBtn").onclick=checkCurrentAnswer}
-  function renderMap(){const wrap=byId("mapWrap"); wrap.innerHTML=""; if(!questData){wrap.innerHTML='<div class="empty">No quest map yet.</div>'; return;} questData.cards.forEach((card,idx)=>{const done=!!progress.checked[card.id]; const item=document.createElement("div"); item.className="card"; item.style.padding="12px"; item.innerHTML=`<div class="pill-row"><span class="pill">${idx+1}</span><span class="pill subject">${card.subject}</span><span class="pill">${done?"Done":"Not checked yet"}</span></div><div style="font-size:14px;font-weight:900;margin-top:8px">${card.title}</div><div class="card-sub">${card.level}</div>`; item.onclick=()=>{currentIndex=idx; renderAll()}; wrap.appendChild(item)})}
-  function renderTop(){if(!questData){byId("questTitle").textContent="Today's Quest"; byId("questIntro").textContent="Generate a quest to begin."; byId("questDateChip").textContent="No quest yet"; byId("currentStepChip").textContent="Step 0 / 0"; byId("xpChip").textContent="XP 0"; byId("progressBar").style.width="0%"; byId("completedCount").textContent="0"; byId("xpTotal").textContent="0"; return;} byId("questTitle").textContent=questData.title; byId("questIntro").textContent=questData.intro; byId("questDateChip").textContent=questData.date; byId("currentStepChip").textContent=`Step ${currentIndex+1} / ${questData.cards.length}`; byId("xpChip").textContent=`XP ${totalXP()}`; byId("completedCount").textContent=String(completedCount()); byId("xpTotal").textContent=String(totalXP()); const pct=Math.round((completedCount()/questData.cards.length)*100); byId("progressBar").style.width=pct+"%"; byId("prevBtn").disabled=currentIndex===0; byId("nextBtn").disabled=currentIndex>=questData.cards.length-1}
-  function renderAll(){renderTop(); renderQuestCard(); renderMap()}
-  async function attemptLogin(){const password=byId("passwordInput").value; byId("loginError").textContent=""; try{await callLogin(password); plannerPassword=password; sessionStorage.setItem(PASSWORD_STORAGE,password); byId("loginScreen").classList.add("hidden"); byId("appScreen").classList.remove("hidden"); await generateQuest(false)}catch(err){byId("loginError").textContent=err.message}}
-  function bind(){byId("loginBtn").onclick=attemptLogin; byId("passwordInput").addEventListener("keydown",e=>{if(e.key==="Enter") attemptLogin()}); byId("logoutBtn").onclick=()=>{sessionStorage.removeItem(PASSWORD_STORAGE); location.reload()}; byId("newQuestBtn").onclick=async()=>{localStorage.removeItem(localQuestKey()); localStorage.removeItem(localProgressKey()); currentIndex=0; await generateQuest(true)}; byId("prevBtn").onclick=()=>{if(currentIndex>0){currentIndex-=1; renderAll()}}; byId("nextBtn").onclick=()=>{if(questData&&currentIndex<questData.cards.length-1){currentIndex+=1; renderAll()}}}
-  async function boot(){bind(); const savedPassword=sessionStorage.getItem(PASSWORD_STORAGE); if(savedPassword){byId("passwordInput").value=savedPassword; await attemptLogin()}}
+${answer}`;
+
+      const feedback = await callAI(system, user);
+      progress.feedback[card.id] = feedback;
+      progress.checked[card.id] = true;
+      applyRewardLogic(feedback, card);
+      saveProgress();
+      renderAll();
+    }catch(err){
+      progress.feedback[card.id] = "AI error: " + err.message;
+      saveProgress();
+      renderAll();
+    }finally{
+      byId("checkBtn").disabled = false;
+      byId("checkBtn").textContent = "Check with AI";
+    }
+  }
+
+  function renderTop(){
+    if(!questData) return;
+    byId("questTitle").textContent = questData.title;
+    byId("questIntro").textContent = questData.intro;
+    byId("questDateChip").textContent = questData.date;
+    byId("stepChip").textContent = `Step ${currentIndex + 1} / ${questData.cards.length}`;
+    byId("xpChip").textContent = `XP ${totalXP()}`;
+    byId("streakChip").textContent = `Streak ${progress.correctStreak || 0}`;
+    byId("completedValue").textContent = String(completedCount());
+    byId("totalXpValue").textContent = String(totalXP());
+    byId("rewardBox").textContent = rewardText();
+
+    const pct = Math.round((completedCount() / questData.cards.length) * 100);
+    byId("progressBar").style.width = pct + "%";
+
+    byId("prevBtn").disabled = currentIndex === 0;
+    byId("nextBtn").disabled = currentIndex >= questData.cards.length - 1;
+  }
+
+  function renderQuestion(){
+    if(!questData) return;
+    const card = questData.cards[currentIndex];
+    byId("subjectChip").textContent = card.subject;
+    byId("levelChip").textContent = card.level;
+    byId("questionXpChip").textContent = `XP ${card.xp}`;
+    byId("questionTitle").textContent = card.title;
+    byId("questionText").textContent = card.prompt;
+    byId("answerBox").value = progress.answers[card.id] || "";
+    byId("feedbackBox").textContent = progress.feedback[card.id] || "No feedback yet.";
+  }
+
+  function renderMap(){
+    const wrap = byId("mapWrap");
+    wrap.innerHTML = "";
+    if(!questData) return;
+
+    questData.cards.forEach((card, idx) => {
+      const item = document.createElement("div");
+      item.className = "map-item" + (idx === currentIndex ? " active" : "");
+      const done = progress.checked[card.id] ? "Done" : "Not checked yet";
+      item.innerHTML = `
+        <div class="chips">
+          <span class="chip">${idx + 1}</span>
+          <span class="chip subject">${card.subject}</span>
+        </div>
+        <div style="font-size:14px;font-weight:900;margin-top:8px">${card.title}</div>
+        <div class="card-sub">${card.level} · ${done}</div>
+      `;
+      item.onclick = () => {
+        currentIndex = idx;
+        renderAll();
+      };
+      wrap.appendChild(item);
+    });
+  }
+
+  function renderAll(){
+    renderTop();
+    renderQuestion();
+    renderMap();
+  }
+
+  async function attemptLogin(){
+    const password = byId("passwordInput").value;
+    byId("loginError").textContent = "";
+    try{
+      await callLogin(password);
+      plannerPassword = password;
+      sessionStorage.setItem(PASSWORD_STORAGE, password);
+      byId("loginScreen").classList.add("hidden");
+      byId("appScreen").classList.remove("hidden");
+      await generateQuest(false);
+    }catch(err){
+      byId("loginError").textContent = err.message;
+    }
+  }
+
+  function bind(){
+    byId("loginBtn").onclick = attemptLogin;
+    byId("passwordInput").addEventListener("keydown", e => {
+      if(e.key === "Enter") attemptLogin();
+    });
+
+    byId("logoutBtn").onclick = () => {
+      sessionStorage.removeItem(PASSWORD_STORAGE);
+      location.reload();
+    };
+
+    byId("newQuestBtn").onclick = async () => {
+      localStorage.removeItem(localQuestKey());
+      localStorage.removeItem(localProgressKey());
+      currentIndex = 0;
+      await generateQuest(true);
+    };
+
+    byId("prevBtn").onclick = () => {
+      if(currentIndex > 0){
+        currentIndex -= 1;
+        renderAll();
+      }
+    };
+
+    byId("nextBtn").onclick = () => {
+      if(questData && currentIndex < questData.cards.length - 1){
+        currentIndex += 1;
+        renderAll();
+      }
+    };
+
+    byId("saveBtn").onclick = () => {
+      if(!questData) return;
+      const card = questData.cards[currentIndex];
+      progress.answers[card.id] = byId("answerBox").value;
+      saveProgress();
+      setStatus("ok", "Draft saved");
+    };
+
+    byId("checkBtn").onclick = checkCurrentAnswer;
+
+    byId("answerBox").addEventListener("input", () => {
+      if(!questData) return;
+      const card = questData.cards[currentIndex];
+      progress.answers[card.id] = byId("answerBox").value;
+      saveProgress();
+    });
+  }
+
+  async function boot(){
+    bind();
+    const savedPassword = sessionStorage.getItem(PASSWORD_STORAGE);
+    if(savedPassword){
+      byId("passwordInput").value = savedPassword;
+      await attemptLogin();
+    }
+  }
+
   boot();
 })();
 </script>
