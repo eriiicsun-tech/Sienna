@@ -20,6 +20,8 @@
       --blue-soft:#f1fbff;
       --gold:#ffd979;
       --gold-soft:#fff8e7;
+      --green:#7ad7b7;
+      --green-soft:#edfdf7;
       --shadow:0 18px 44px rgba(117,92,144,.10);
     }
 
@@ -296,6 +298,33 @@
       color:#4f4962;
     }
 
+    .result-box{
+      border-radius:18px;
+      padding:12px 14px;
+      font-size:14px;
+      font-weight:800;
+      border:1px solid var(--line);
+      background:#fff;
+    }
+
+    .result-correct{
+      background:var(--green-soft);
+      border-color:#cdeedd;
+      color:#187a5c;
+    }
+
+    .result-partly{
+      background:var(--gold-soft);
+      border-color:#f2dfaa;
+      color:#9a6800;
+    }
+
+    .result-wrong{
+      background:#fff3f5;
+      border-color:#ffd7e0;
+      color:#b13f5e;
+    }
+
     .feedback{
       border:1px solid var(--line);
       border-radius:18px;
@@ -345,6 +374,17 @@
       text-align:center;
       font-size:14px;
       line-height:1.6;
+      min-height:56px;
+    }
+
+    .reward-pop{
+      animation:popReward .55s ease;
+    }
+
+    @keyframes popReward{
+      0%{transform:scale(.94); opacity:.5}
+      45%{transform:scale(1.04); opacity:1}
+      100%{transform:scale(1); opacity:1}
     }
 
     @media (max-width:700px){
@@ -414,7 +454,7 @@
 
           <div class="stack">
             <div class="center" style="font-weight:800;">Topic (optional)</div>
-            <input id="topicInput" type="text" placeholder="Examples: algebra, volcanoes, ancient Egypt, persuasive writing" />
+            <input id="topicInput" type="text" placeholder="Examples: surd, algebra, volcanoes, ancient Egypt" />
           </div>
 
           <div class="btn-row">
@@ -429,7 +469,7 @@
           <div class="card light-card stack">
             <div>
               <h2 id="questTitle">Today's Quest</h2>
-              <div id="questIntro" class="card-sub">Quest ready.</div>
+              <div id="questIntro" class="tiny">Quest ready.</div>
             </div>
 
             <div class="soft-strip">
@@ -458,6 +498,7 @@
               <button id="newQuestBtn" class="btn btn-soft">New Quest</button>
             </div>
 
+            <div id="resultBox" class="result-box hidden"></div>
             <div id="feedbackBox" class="feedback">No feedback yet.</div>
 
             <div class="nav-row">
@@ -473,7 +514,7 @@
 
           <div class="card light-card stack">
             <h2>Quest Map</h2>
-            <div class="card-sub">A soft little path through today's questions.</div>
+            <div class="tiny">A soft little path through today's questions.</div>
             <div id="mapWrap" class="map-list"></div>
           </div>
         </div>
@@ -484,9 +525,9 @@
 <script>
 (() => {
   const PASSWORD_STORAGE = "siennaPlannerPassword";
-  const QUEST_PREFIX = "sienna-quest-v4-";
-  const PROGRESS_PREFIX = "sienna-quest-progress-v4-";
-  const RECENT_QUESTS_KEY = "sienna-quest-recent-history-v4";
+  const QUEST_PREFIX = "sienna-quest-v5-";
+  const PROGRESS_PREFIX = "sienna-quest-progress-v5-";
+  const RECENT_QUESTS_KEY = "sienna-quest-recent-history-v5";
 
   let plannerPassword = "";
   let selectedMood = "Normal";
@@ -537,6 +578,7 @@
       answers: {},
       feedback: {},
       checked: {},
+      result: {},
       correctStreak: 0,
       maxStreak: 0
     };
@@ -608,7 +650,69 @@
     return data.output_text || "No output returned.";
   }
 
+  function fallbackSurdQuest(){
+    return {
+      date: todayKey(),
+      mood: selectedMood,
+      theme: selectedTheme,
+      topic: selectedTopic,
+      title: "Surd Quest",
+      intro: "A mixed quest built around surds.",
+      cards: [
+        {
+          id: "surd-1",
+          subject: "Mathematics",
+          level: "Year 8–9 challenge",
+          title: "Simplify a surd",
+          prompt: "Simplify √50 into the form a√b, where a and b are whole numbers and b is as small as possible.",
+          answer_type: "short response with working",
+          teacher_notes: "Correct answer is 5√2. Strong responses factor 50 = 25 × 2 and then use √25 = 5."
+        },
+        {
+          id: "surd-2",
+          subject: "Mathematics",
+          level: "Year 8–9 challenge",
+          title: "Another surd step",
+          prompt: "Simplify √72 into the form a√b, where a and b are whole numbers and b is as small as possible.",
+          answer_type: "short response with working",
+          teacher_notes: "Correct answer is 6√2. Strong responses use 72 = 36 × 2."
+        },
+        {
+          id: "surd-3",
+          subject: "Mathematics",
+          level: "Year 8–9 challenge",
+          title: "Compare surds",
+          prompt: "Which is greater: 3√5 or √50?\n\nExplain your answer clearly.",
+          answer_type: "short explanation",
+          teacher_notes: "Since √50 = 5√2 ≈ 7.07 and 3√5 ≈ 6.71, √50 is greater. Good responses may simplify or estimate."
+        },
+        {
+          id: "surd-4",
+          subject: "Mathematics",
+          level: "Year 7 foundation",
+          title: "Square roots review",
+          prompt: "What is √81?\n\nThen explain why 81 is called a perfect square.",
+          answer_type: "short explanation",
+          teacher_notes: "Correct answer is 9. Strong responses explain that 81 = 9 × 9."
+        },
+        {
+          id: "surd-5",
+          subject: "Creative Thinking",
+          level: "Stretch task",
+          title: "Math reflection",
+          prompt: "Write 3 or 4 sentences explaining a good method for simplifying surds so another student could follow it.",
+          answer_type: "short reflection",
+          teacher_notes: "Reward clarity, correct use of factor pairs, and mention of the largest square factor."
+        }
+      ]
+    };
+  }
+
   function fallbackQuest(){
+    if (selectedTopic.trim().toLowerCase() === "surd" || selectedTopic.trim().toLowerCase() === "surds") {
+      return fallbackSurdQuest();
+    }
+
     const topicText = selectedTopic.trim() ? selectedTopic.trim() : (selectedTheme === "Any" ? "general ideas" : selectedTheme.toLowerCase());
     return {
       date: todayKey(),
@@ -740,6 +844,7 @@ Requirements:
 - Adjust tone slightly for the student's mood.
 - Use the chosen theme.
 - If a topic is provided, use it strongly across the quest.
+- SPECIAL RULE: if the topic is "surd" or "surds", generate a real surd-focused quest. Include at least one question asking to simplify a surd such as simplifying √50 into a√b form.
 - VERY IMPORTANT: avoid repeating or closely reusing question ideas, numbers, prompts, topics, structure, or wording from the recent quest history.
 - Return JSON only.
 
@@ -804,16 +909,46 @@ ${recentQuestPromptSummary()}`;
     return "🌱 Start your streak by getting the first question right.";
   }
 
-  function completedCount(){
-    return Object.values(progress?.checked || {}).filter(Boolean).length;
+  function showRewardAnimation(text){
+    const box = byId("rewardBox");
+    box.textContent = text;
+    box.classList.remove("reward-pop");
+    void box.offsetWidth;
+    box.classList.add("reward-pop");
   }
 
-  function isStrongAnswer(feedback){
-    const scoreMatch = feedback.match(/Score:\s*(\d+)\s*\/\s*(\d+)/i);
-    if(!scoreMatch) return false;
-    const score = Number(scoreMatch[1]);
-    const total = Number(scoreMatch[2]);
-    return score >= Math.ceil(total * 0.75);
+  function renderDirectResult(resultType, message){
+    const box = byId("resultBox");
+    box.className = "result-box";
+    box.classList.remove("hidden", "result-correct", "result-partly", "result-wrong");
+
+    if(resultType === "correct"){
+      box.classList.add("result-correct");
+    } else if(resultType === "partly"){
+      box.classList.add("result-partly");
+    } else {
+      box.classList.add("result-wrong");
+    }
+
+    box.textContent = message;
+  }
+
+  function parseEvaluation(feedback){
+    const lower = feedback.toLowerCase();
+
+    let correctness = "partly";
+    if (lower.includes("correct") && !lower.includes("not correct")) correctness = "correct";
+    if (lower.includes("not correct") || lower.includes("incorrect")) correctness = "wrong";
+    if (lower.includes("partly correct")) correctness = "partly";
+
+    let methodQuality = "missing";
+    if (lower.includes("clear working") || lower.includes("good explanation") || lower.includes("strong explanation") || lower.includes("well explained") || lower.includes("good method")) {
+      methodQuality = "strong";
+    } else if (lower.includes("some working") || lower.includes("basic explanation") || lower.includes("partial explanation")) {
+      methodQuality = "partial";
+    }
+
+    return { correctness, methodQuality };
   }
 
   async function checkCurrentAnswer(){
@@ -827,18 +962,50 @@ ${recentQuestPromptSummary()}`;
     byId("checkBtn").textContent = "Checking...";
 
     try{
-      const system = `You are giving feedback to a very bright Year 7 student doing a mixed Year 7 to Year 9 quest.
-Use the teacher notes privately to judge the answer.
-Be encouraging but honest.
-Output exactly:
-Score: X/10
+      const isMath = /math/i.test(card.subject);
+
+      const system = isMath
+        ? `You are giving feedback to a very bright Year 7 student.
+Judge the mathematical answer very directly.
+
+Use the teacher notes privately.
+First decide if the final answer is:
+- Correct
+- Partly correct
+- Not correct yet
+
+Then judge the working/explanation:
+- Strong
+- Partial
+- Missing
+
+Output exactly in this format:
+
+Result: Correct / Partly correct / Not correct yet
+Working: Strong / Partial / Missing
 What went well:
 - ...
 What to improve:
 - ...
 Next step:
 - ...
-`;
+
+Be direct and clear.`
+        : `You are giving feedback to a very bright Year 7 student.
+Use the teacher notes privately.
+Output exactly in this format:
+
+Result: Correct / Partly correct / Not correct yet
+Working: Strong / Partial / Missing
+What went well:
+- ...
+What to improve:
+- ...
+Next step:
+- ...
+
+Be direct and encouraging.`;
+
       const user = `Question:
 ${card.prompt}
 
@@ -852,11 +1019,25 @@ ${answer}`;
       progress.feedback[card.id] = feedback;
       progress.checked[card.id] = true;
 
-      if(isStrongAnswer(feedback)){
+      const parsed = parseEvaluation(feedback);
+      progress.result[card.id] = parsed;
+
+      if(parsed.correctness === "correct"){
         progress.correctStreak += 1;
         progress.maxStreak = Math.max(progress.maxStreak || 0, progress.correctStreak);
+
+        if(parsed.methodQuality === "strong"){
+          showRewardAnimation("🏆 Excellent — correct answer and strong explanation.");
+        } else {
+          showRewardAnimation("✨ Correct answer — nice work. Add working next time for a bigger reward.");
+        }
       } else {
         progress.correctStreak = 0;
+        if(parsed.correctness === "partly"){
+          showRewardAnimation("🌱 Close — you are partly right. Keep going.");
+        } else {
+          showRewardAnimation("🌱 Keep trying — you can fix this.");
+        }
       }
 
       saveProgress();
@@ -878,7 +1059,9 @@ ${answer}`;
     byId("questDateBadge").textContent = questData.date;
     byId("stepBadge").textContent = `Step ${currentIndex + 1} / ${questData.cards.length}`;
     byId("streakBadge").textContent = `Streak ${progress.correctStreak || 0}`;
-    byId("rewardBox").textContent = rewardText();
+    if (!byId("rewardBox").textContent.trim()) {
+      byId("rewardBox").textContent = rewardText();
+    }
   }
 
   function renderQuestion(){
@@ -890,6 +1073,25 @@ ${answer}`;
     byId("questionText").textContent = card.prompt;
     byId("answerBox").value = progress.answers[card.id] || "";
     byId("feedbackBox").textContent = progress.feedback[card.id] || "No feedback yet.";
+
+    const result = progress.result[card.id];
+    if(result){
+      if(result.correctness === "correct"){
+        if(result.methodQuality === "strong"){
+          renderDirectResult("correct", "Correct — and your working/explanation is strong.");
+        } else if(result.methodQuality === "partial"){
+          renderDirectResult("correct", "Correct — your answer is right. Add a clearer method for a bigger reward.");
+        } else {
+          renderDirectResult("correct", "Correct — your answer is right. Add working next time.");
+        }
+      } else if(result.correctness === "partly"){
+        renderDirectResult("partly", "Partly correct — you are close, but something still needs fixing.");
+      } else {
+        renderDirectResult("wrong", "Not correct yet — try again using the feedback below.");
+      }
+    } else {
+      byId("resultBox").classList.add("hidden");
+    }
   }
 
   function renderMap(){
@@ -901,7 +1103,7 @@ ${answer}`;
     questData.cards.forEach((card, idx) => {
       const item = document.createElement("div");
       item.className = "map-item" + (idx === currentIndex ? " active" : "");
-      const done = progress.checked[card.id] ? "Done" : "Not checked yet";
+      const done = progress.checked[card.id] ? "Checked" : "Not checked yet";
       item.innerHTML = `
         <div class="badges">
           <span class="badge">${idx + 1}</span>
@@ -988,6 +1190,7 @@ ${answer}`;
       localStorage.removeItem(localQuestKey());
       localStorage.removeItem(localProgressKey());
       currentIndex = 0;
+      byId("resultBox").classList.add("hidden");
       await generateQuest(true);
     };
 
