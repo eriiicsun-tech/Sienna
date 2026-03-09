@@ -311,6 +311,46 @@ textarea.reflection-ta{min-height:72px}
   text-transform:uppercase;letter-spacing:.3px;
   width:100%;margin-bottom:2px;
 }
+
+/* ── MCQ MODE ── */
+.mode-toggle{
+  display:flex;gap:0;border:1.5px solid var(--line);border-radius:12px;
+  overflow:hidden;background:#fff;margin-bottom:14px;
+}
+.mode-btn{
+  flex:1;padding:9px 12px;border:none;background:transparent;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;
+  color:var(--muted);cursor:pointer;transition:all .15s;
+}
+.mode-btn.active{background:var(--blue-dark);color:#fff;}
+.mode-btn:first-child{border-radius:10px 0 0 10px;}
+.mode-btn:last-child{border-radius:0 10px 10px 0;}
+
+.mcq-options{display:grid;gap:9px;margin-bottom:14px;}
+.mcq-opt{
+  display:flex;align-items:center;gap:12px;
+  border:1.5px solid var(--line);border-radius:14px;
+  padding:12px 14px;background:#fff;cursor:pointer;
+  font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;
+  transition:border-color .15s,background .15s;
+  text-align:left;width:100%;
+}
+.mcq-opt:hover{border-color:var(--blue);background:var(--blue-xlight);}
+.mcq-opt.selected{border-color:var(--blue-dark);background:var(--blue-xlight);font-weight:700;}
+.mcq-opt.correct{border-color:var(--sage-dark);background:var(--sage-light);color:var(--sage-dark);}
+.mcq-opt.wrong{border-color:var(--rose);background:var(--rose-light);color:#a04040;}
+.mcq-opt.reveal-correct{border-color:var(--sage-dark);background:var(--sage-light);color:var(--sage-dark);opacity:.85;}
+.mcq-letter{
+  width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;flex-shrink:0;color:var(--muted);
+  background:#f8f9fb;transition:all .15s;
+}
+.mcq-opt.selected .mcq-letter{border-color:var(--blue-dark);color:var(--blue-dark);background:var(--blue-xlight);}
+.mcq-opt.correct .mcq-letter{border-color:var(--sage-dark);color:var(--sage-dark);background:var(--sage-light);}
+.mcq-opt.wrong .mcq-letter{border-color:var(--rose);color:var(--rose);background:var(--rose-light);}
+.mcq-opt.reveal-correct .mcq-letter{border-color:var(--sage-dark);color:var(--sage-dark);}
+.mcq-opt[disabled]{cursor:default;pointer-events:none;}
 </style>
 </head>
 <body>
@@ -516,6 +556,23 @@ textarea.reflection-ta{min-height:72px}
             <button class="sym-btn" data-sym="∴" title="therefore">∴</button>
           </div>
         </div>
+
+        <!-- mode toggle: Written / Multiple Choice -->
+        <div class="mode-toggle" id="modeToggle">
+          <button class="mode-btn active" id="modeBtnWritten" onclick="setMode('written')">✏️ Written</button>
+          <button class="mode-btn" id="modeBtnMCQ" onclick="setMode('mcq')">🔲 Multiple Choice</button>
+        </div>
+
+        <!-- MCQ options (shown in mcq mode) -->
+        <div id="mcqArea" class="hidden">
+          <div id="mcqOptions" class="mcq-options"></div>
+          <div class="check-btn-wrap" id="mcqCheckWrap">
+            <div class="btn-row">
+              <button class="btn btn-blue" id="mcqCheckBtn" onclick="checkMCQ()">Check Answer</button>
+            </div>
+          </div>
+        </div>
+        <div id="writtenArea">
         <!-- working -->
         <div style="margin-bottom:14px">
           <div class="working-label">
@@ -546,6 +603,7 @@ textarea.reflection-ta{min-height:72px}
           </div>
 
         </div>
+        </div><!-- /writtenArea -->
 
         <div class="result-box" id="resultBox"></div>
         <div class="feedback-box hidden" id="feedbackBox"></div>
@@ -632,6 +690,8 @@ const UNLOCK_KEY  = "siennaQuestUnlocked2";
 const STORE_KEY   = "siennaQuestData_v3";
 const BANK_PFX    = "sienna-bank-v3-";
 const PROG_PFX    = "sienna-prog-v3-";
+// Clear any stale bank caches on load — validators are functions and cannot survive JSON
+try{ Object.keys(localStorage).filter(k=>k.startsWith(BANK_PFX)).forEach(k=>localStorage.removeItem(k)); }catch{}
 const WORKING_MIN = 35;
 
 /* ══════════════════════════════════════════
@@ -1053,10 +1113,11 @@ function generateBank(forceNew=false,mode='normal'){
   selectedTopic=document.getElementById('topicInput').value.trim()||document.getElementById('strandSelect').value;
   selectedStr=deriveStrand(); diffMode=mode;
   const key=bankKey('maths',selectedStr,selectedTopic,diffMode);
-  if(!forceNew){ const ex=localStorage.getItem(key); if(ex){ try{ bankData=JSON.parse(ex); progress=loadProgress('maths',selectedStr,selectedTopic,diffMode); currentIdx=0; setStatus('maths','Resumed saved bank.'); showQuest('maths'); renderAll(); return; }catch{} } }
+  // Always rebuild bank fresh — validators are functions and cannot survive JSON serialisation.
+  // Progress (answers, working, reflections) is stored separately and restored below.
   bankData=buildMathsBank(selectedStr,selectedTopic,diffMode,10);
-  localStorage.setItem(key,JSON.stringify(bankData));
   progress=loadProgress('maths',selectedStr,selectedTopic,diffMode); currentIdx=0; appendCtr=1;
+  mcqSelected=null; mcqChecked=false;
   setStatus('maths','Ready! Show your working before checking.');
   showQuest('maths'); renderAll();
 }
@@ -1064,10 +1125,10 @@ function generateEngBank(forceNew=false){
   selectedTopic=document.getElementById('engTopicInput').value.trim()||document.getElementById('engStrandSelect').value;
   selectedStr=document.getElementById('engStrandSelect').value; diffMode='normal';
   const key=bankKey('english',selectedStr,selectedTopic,'normal');
-  if(!forceNew){ const ex=localStorage.getItem(key); if(ex){ try{ bankData=JSON.parse(ex); progress=loadProgress('english',selectedStr,selectedTopic,'normal'); currentIdx=0; setStatus('english','Resumed saved bank.'); showQuest('english'); renderAll(); return; }catch{} } }
+  // Always rebuild bank fresh — validators are functions and cannot survive JSON serialisation.
   bankData=buildEngBank(selectedStr,selectedTopic,10);
-  localStorage.setItem(key,JSON.stringify(bankData));
   progress=loadProgress('english',selectedStr,selectedTopic,'normal'); currentIdx=0; appendCtr=1;
+  mcqSelected=null; mcqChecked=false;
   setStatus('english','Ready! Plan your answer before writing.');
   showQuest('english'); renderAll();
 }
@@ -1078,7 +1139,7 @@ function moreQuestions(){
   if(currentSubj==='maths') extra=buildMathsBank(selectedStr,selectedTopic,diffMode,10);
   else extra=buildEngBank(selectedStr,selectedTopic,10);
   bankData.questions=bankData.questions.concat(extra.questions.map((q,i)=>({...q,id:`${q.id}-m${appendCtr}-${i}`})));
-  appendCtr++; localStorage.setItem(bankKey(currentSubj,selectedStr,selectedTopic,diffMode),JSON.stringify(bankData));
+  appendCtr++;
   setStatus(currentSubj,'Added 10 more questions.'); renderAll();
 }
 function setStatus(subj,t){ const el=document.getElementById(subj==='english'?'engStatus':'mathsStatus'); if(el) el.textContent=t; }
@@ -1140,6 +1201,193 @@ function showSymPad(visible){
   const pad = document.getElementById('symPad');
   if(visible) pad.classList.add('visible');
   else        pad.classList.remove('visible');
+}
+
+
+/* ══════════════════════════════════════════
+   MCQ MODE
+══════════════════════════════════════════ */
+let practiceMode = 'written'; // 'written' | 'mcq'
+let mcqSelected  = null;      // index of selected option
+let mcqChecked   = false;
+
+function setMode(mode){
+  practiceMode = mode;
+  mcqSelected  = null;
+  mcqChecked   = false;
+  document.getElementById('modeBtnWritten').classList.toggle('active', mode==='written');
+  document.getElementById('modeBtnMCQ').classList.toggle('active',    mode==='mcq');
+  document.getElementById('writtenArea').classList.toggle('hidden',   mode==='mcq');
+  document.getElementById('mcqArea').classList.toggle('hidden',       mode==='written');
+  // hide result/feedback when switching
+  document.getElementById('resultBox').textContent='';
+  document.getElementById('feedbackBox').classList.add('hidden');
+  document.getElementById('reflectionSection').classList.add('hidden');
+  if(mode==='mcq' && bankData) renderMCQ();
+}
+
+/* Generate plausible wrong answers for a question */
+function makeMCQOptions(q){
+  const correct = q.notes.match(/(?:Correct(?:\s+answer)?(?:\s+is)?:?\s*)(.+?)(?:\.|$)/i)?.[1]?.trim()
+                  || q.notes.split('.')[0].replace(/^Correct[^:]*:/i,'').trim();
+
+  // distractors: number-based mutation + generic wrong answers
+  const distractors = generateDistractors(correct, q);
+  // pick 3 unique distractors
+  const wrongs = [];
+  for(const d of distractors){
+    if(d && d !== correct && !wrongs.includes(d)) wrongs.push(d);
+    if(wrongs.length===3) break;
+  }
+  while(wrongs.length<3) wrongs.push(['Cannot be determined','Not enough information','None of the above'][wrongs.length]);
+
+  const opts = [correct, ...wrongs];
+  // shuffle
+  for(let i=opts.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [opts[i],opts[j]]=[opts[j],opts[i]]; }
+  return { opts, correctIdx: opts.indexOf(correct) };
+}
+
+function generateDistractors(correct, q){
+  const distractors = [];
+  const num = parseFloat(correct);
+
+  if(!isNaN(num)){
+    // numeric answer — offset by small amounts
+    const offsets = [1, -1, 2, -2, 0.5, num*2, num+10, num-10, num*0.5];
+    for(const off of offsets){
+      const candidate = String(Math.round((num+off)*100)/100);
+      if(candidate !== correct && Number(candidate)>0) distractors.push(candidate);
+    }
+  }
+
+  // unit-based answer (e.g. "24 cm")
+  const unitMatch = correct.match(/^(-?[\d.]+)\s*([a-zA-Z²³%]+)$/);
+  if(unitMatch){
+    const v=parseFloat(unitMatch[1]), u=unitMatch[2];
+    const alts=[v+1,v-1,v*2,v/2,v+5,v-5].filter(x=>x>0&&x!==v);
+    alts.forEach(a=>distractors.push(`${Math.round(a*100)/100} ${u}`));
+    // wrong unit distractor
+    const wrongUnits={'cm':'mm','m':'cm','km':'m','cm²':'m²','°':'rad'};
+    if(wrongUnits[u]) distractors.push(`${v} ${wrongUnits[u]}`);
+  }
+
+  // fraction (e.g. "3/4")
+  const fracMatch = correct.match(/^(-?\d+)\/(\d+)$/);
+  if(fracMatch){
+    const n=parseInt(fracMatch[1]),d=parseInt(fracMatch[2]);
+    distractors.push(`${n+1}/${d}`,`${n}/${d+1}`,`${n-1}/${d}`,`${d}/${n}`);
+  }
+
+  // surd (e.g. "5√2")
+  const surdMatch = correct.match(/^(\d+)√(\d+)$/);
+  if(surdMatch){
+    const a=parseInt(surdMatch[1]),b=parseInt(surdMatch[2]);
+    distractors.push(`${a+1}√${b}`,`${a-1}√${b}`,`${a}√${b+1}`,`${a*2}√${b}`);
+  }
+
+  // degree answer (e.g. "65°")
+  const degMatch = correct.match(/^(\d+)°$/);
+  if(degMatch){
+    const v=parseInt(degMatch[1]);
+    [v+10,v-10,v+15,v-15,180-v,90-v].filter(x=>x>0&&x!==v).forEach(x=>distractors.push(`${x}°`));
+  }
+
+  // English / text answer — use contextual alternatives from notes
+  if(isNaN(num) && !unitMatch && !fracMatch && !surdMatch && !degMatch){
+    // Pull multi-word phrases from the question notes as distractors
+    const noteWords = q.notes.split(/[.,;]/);
+    noteWords.forEach(phrase=>{
+      const t = phrase.replace(/^[^:]*:/,'').trim();
+      if(t && t!==correct && t.length>1 && t.length<80) distractors.push(t);
+    });
+    // generic fallback
+    distractors.push('Cannot be determined','Not enough information','All of the above','None of the above');
+  }
+
+  return distractors;
+}
+
+function renderMCQ(){
+  const q = bankData.questions[currentIdx];
+  const { opts, correctIdx } = makeMCQOptions(q);
+  // store on question for checking
+  q._mcqOpts = opts;
+  q._mcqCorrect = correctIdx;
+  mcqSelected = null;
+  mcqChecked  = false;
+
+  const container = document.getElementById('mcqOptions');
+  container.innerHTML = '';
+  const letters = ['A','B','C','D'];
+  opts.forEach((opt,i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'mcq-opt';
+    btn.innerHTML = `<span class="mcq-letter">${letters[i]}</span><span>${opt}</span>`;
+    btn.onclick = ()=>{ if(mcqChecked) return; selectMCQ(i); };
+    container.appendChild(btn);
+  });
+
+  document.getElementById('mcqCheckBtn').disabled = true;
+  document.getElementById('resultBox').textContent='';
+  document.getElementById('feedbackBox').classList.add('hidden');
+  document.getElementById('reflectionSection').classList.add('hidden');
+}
+
+function selectMCQ(idx){
+  if(mcqChecked) return;
+  mcqSelected = idx;
+  document.querySelectorAll('.mcq-opt').forEach((btn,i)=>{
+    btn.classList.toggle('selected', i===idx);
+  });
+  document.getElementById('mcqCheckBtn').disabled = false;
+}
+
+function checkMCQ(){
+  if(mcqSelected===null || mcqChecked) return;
+  mcqChecked = true;
+
+  const q    = bankData.questions[currentIdx];
+  const correct = q._mcqCorrect;
+  const userPicked = mcqSelected;
+  const isCorrect  = userPicked === correct;
+
+  // style buttons
+  document.querySelectorAll('.mcq-opt').forEach((btn,i)=>{
+    btn.classList.remove('selected');
+    btn.setAttribute('disabled','');
+    if(i===correct && isCorrect)       btn.classList.add('correct');
+    else if(i===userPicked && !isCorrect){ btn.classList.add('wrong'); }
+    else if(i===correct && !isCorrect) btn.classList.add('reveal-correct');
+  });
+
+  // result box
+  const rb = document.getElementById('resultBox');
+  if(isCorrect){
+    rb.textContent='✓ Correct!';
+    rb.style.cssText='padding:12px 16px;border-radius:12px;font-weight:800;background:var(--sage-light);color:var(--sage-dark);border:1.5px solid #b0d8b8;margin-bottom:10px;';
+    progress.sessionStreak=(progress.sessionStreak||0)+1;
+    progress.sessionMax=Math.max(progress.sessionMax||0,progress.sessionStreak);
+  } else {
+    rb.textContent='✗ Not quite — the correct answer is highlighted in green.';
+    rb.style.cssText='padding:12px 16px;border-radius:12px;font-weight:700;background:var(--rose-light);color:#a04040;border:1.5px solid #f0c0c0;margin-bottom:10px;';
+    progress.sessionStreak=0;
+    saveMistake(q, q._mcqOpts[userPicked], currentSubj);
+  }
+
+  // feedback
+  const fb = document.getElementById('feedbackBox');
+  fb.textContent = q.notes;
+  fb.classList.remove('hidden');
+
+  // mark in progress
+  progress.result[q.id]  = isCorrect ? 'correct' : 'wrong';
+  progress.answers[q.id] = q._mcqOpts[userPicked];
+  saveProgress();
+  markDayDone();
+  updateSessionBadge();
+
+  // show reflection
+  document.getElementById('reflectionSection').classList.remove('hidden');
 }
 
 
@@ -1259,6 +1507,7 @@ function saveDraft(){
   saveProgress(); showToast('Draft saved.');
 }
 function navigate(dir){
+  mcqSelected=null; mcqChecked=false;
   if(!bankData) return;
   const nxt=currentIdx+dir;
   if(nxt<0||nxt>=bankData.questions.length) return;
@@ -1297,6 +1546,8 @@ function renderQuestion(){
   // label text
   document.getElementById('workingLabelText').textContent=currentSubj==='english'?'Plan your answer':'Show your working';
   showSymPad(currentSubj==='maths');
+  // refresh MCQ options for the new question
+  if(practiceMode==='mcq') renderMCQ();
   document.getElementById('answerLabel').textContent=q.qtype==='extended'?'Your response':'Final answer';
 
   // restore working
