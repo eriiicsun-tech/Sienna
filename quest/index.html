@@ -1,156 +1,1293 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sienna Maths Bank</title>
-  <style>
-    :root{--bg1:#fff9fc;--bg2:#f2fbff;--card:#ffffffee;--line:#efe5f4;--text:#302d3e;--muted:#837b94;--pink:#ff98cb;--violet:#a286ff;--green:#7ad7b7;--gold:#ffd979;--shadow:0 18px 44px rgba(117,92,144,.10);--green-soft:#edfdf7;--gold-soft:#fff8e7}
-    *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--text);background:radial-gradient(circle at top left,#ffe7f2 0%,transparent 26%),radial-gradient(circle at top right,#e5f8ff 0%,transparent 28%),linear-gradient(180deg,var(--bg1),var(--bg2));min-height:100vh}
-    .sparkles::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.35;background-image:radial-gradient(circle,#fff 1px,transparent 1.5px),radial-gradient(circle,#ffd9ec 1px,transparent 1.5px),radial-gradient(circle,#dff7ff 1px,transparent 1.5px);background-size:100px 100px,140px 140px,180px 180px;background-position:0 0,30px 40px,70px 20px}
-    .hidden{display:none!important}.page{max-width:960px;margin:0 auto;padding:18px}.shell{background:rgba(255,255,255,.78);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.75);border-radius:34px;overflow:hidden;box-shadow:var(--shadow)}
-    .hero{position:relative;padding:24px 18px 20px;text-align:center;background:linear-gradient(105deg,rgba(255,239,246,.96),rgba(245,242,255,.96),rgba(237,251,255,.96));border-bottom:1px solid rgba(237,229,244,.9)} .hero-stars{position:absolute;right:14px;top:10px;font-size:24px;opacity:.8}
-    .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)} h1{margin:10px 0 0;font-size:34px;line-height:1.02;font-weight:900}.sub{margin-top:10px;color:#655f77;font-size:14px;line-height:1.65}
-    .content{padding:16px;display:grid;gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:16px;box-shadow:0 8px 20px rgba(122,98,152,.04)} .light-card{background:linear-gradient(180deg,#fffdfd,#fff)}
-    .magic-card{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,.9)),linear-gradient(135deg,#fff4f9,#f4f0ff,#effbff)} .magic-card::before{content:"";position:absolute;top:12px;right:16px;width:52px;height:16px;border-radius:999px;background:rgba(255,255,255,.72);transform:rotate(-6deg);box-shadow:0 2px 8px rgba(80,80,110,.07)}
-    .stack{display:grid;gap:12px}.center{text-align:center} input,textarea,button,select{font:inherit} input[type=password],input[type=text],select,textarea{width:100%;border:1px solid var(--line);border-radius:18px;padding:12px 14px;background:#fff;color:var(--text);outline:none} textarea{min-height:130px;resize:vertical}
-    .btn{border:none;border-radius:18px;padding:12px 16px;cursor:pointer;font-weight:800;transition:.15s ease}.btn:hover{transform:translateY(-1px)} .btn-primary{background:linear-gradient(135deg,var(--pink),#ff75ae);color:#fff}.btn-violet{background:linear-gradient(135deg,var(--violet),#8c62ff);color:#fff}.btn-soft{background:#fff;color:#5f5972;border:1px solid var(--line)}
-    .btn-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}.btn-row-left{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-start}.status{font-size:13px;color:var(--muted);text-align:center;min-height:20px}
-    .badges{display:flex;flex-wrap:wrap;gap:8px}.badge{display:inline-block;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:800;border:1px solid var(--line);background:#fff;color:#675f77}.badge.subject{background:#ecf9ff;color:#12759d}.badge.level{background:#f0ebff;color:#6949dd}.badge.streak{background:var(--gold-soft);color:#9d6900}
-    .question-title{font-size:25px;line-height:1.2;font-weight:900}.question-text{white-space:pre-wrap;font-size:15px;line-height:1.85;color:#4f4962}
-    .result-box{border-radius:18px;padding:12px 14px;font-size:14px;font-weight:800;border:1px solid var(--line);background:#fff}.result-correct{background:var(--green-soft);border-color:#cdeedd;color:#187a5c}.result-partly{background:var(--gold-soft);border-color:#f2dfaa;color:#9a6800}.result-wrong{background:#fff3f5;border-color:#ffd7e0;color:#b13f5e}
-    .feedback{border:1px solid var(--line);border-radius:18px;padding:12px;background:#fff;white-space:pre-wrap;font-size:13px;line-height:1.7;color:#4d4760} .nav-row{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
-    .map-list{display:grid;gap:10px}.map-item{border:1px solid var(--line);border-radius:18px;padding:12px;background:#fff;cursor:pointer}.map-item.active{border-color:#8c62ff;box-shadow:0 0 0 3px rgba(140,98,255,.08)} .tiny{font-size:12px;color:var(--muted)}
-    .reward-box{border:1px dashed #ffd8ea;border-radius:20px;padding:14px;background:#fff9fc;text-align:center;font-size:14px;line-height:1.6;min-height:56px}.reward-pop{animation:popReward .55s ease}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    @keyframes popReward{0%{transform:scale(.94);opacity:.5}45%{transform:scale(1.04);opacity:1}100%{transform:scale(1);opacity:1}}
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Sienna · Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#f4f7fb;
+  --blue:#3b7dd8;
+  --blue-dark:#2558a8;
+  --blue-light:#ddeeff;
+  --blue-mid:#5b94e8;
+  --blue-xlight:#eef5ff;
+  --rose:#c87b7b;
+  --rose-light:#f5e8e8;
+  --gold:#c9a84c;
+  --gold-light:#fdf5e0;
+  --sage:#7a9e87;
+  --sage-light:#e8f0eb;
+  --sage-dark:#4d7a5e;
+  --ink:#1e2535;
+  --ink-soft:#3d4a62;
+  --muted:#8090aa;
+  --line:#d8e4f0;
+  --card:#ffffff;
+  --shadow:0 4px 24px rgba(30,50,100,.07);
+  --shadow-md:0 8px 36px rgba(30,50,100,.12);
+  --r:18px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 5% 0%,rgba(59,125,216,.10) 0%,transparent 60%),
+    radial-gradient(ellipse 45% 35% at 95% 8%,rgba(91,148,232,.08) 0%,transparent 55%),
+    radial-gradient(ellipse 35% 30% at 85% 95%,rgba(122,158,135,.07) 0%,transparent 55%);
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(59,125,216,.025) 28px);
+}
+.hidden{display:none!important}
+.wrap{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:20px 18px 80px}
+
+/* ── LOCK ── */
+#lockScreen{
+  position:fixed;inset:0;z-index:200;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(160deg,#0f1e3d 0%,#1a3060 45%,#162a4a 100%)}
+#lockScreen.out{animation:fadeOut .45s ease forwards}
+@keyframes fadeOut{to{opacity:0;transform:scale(1.02);pointer-events:none}}
+.lock-box{
+  width:min(400px,90vw);padding:44px 36px 38px;text-align:center;
+  background:rgba(255,255,255,.06);backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.12);border-radius:24px;
+  animation:riseIn .6s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes riseIn{from{opacity:0;transform:translateY(20px) scale(.94)}to{opacity:1;transform:none}}
+.lock-mono{
+  font-family:'Playfair Display',serif;font-size:56px;font-style:italic;
+  color:rgba(255,255,255,.92);margin-bottom:10px;display:block;
+  animation:floatM 3s ease-in-out infinite}
+@keyframes floatM{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.lock-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:rgba(255,255,255,.95);margin-bottom:4px}
+.lock-sub{font-size:13px;color:rgba(255,255,255,.45);font-weight:500;margin-bottom:24px}
+.lock-input{
+  width:100%;padding:12px 16px;border-radius:12px;
+  border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);
+  color:#fff;font-family:'DM Sans',sans-serif;font-size:17px;font-weight:600;
+  letter-spacing:3px;text-align:center;outline:none;transition:border-color .2s;margin-bottom:10px}
+.lock-input:focus{border-color:rgba(91,148,232,.8)}
+.lock-input::placeholder{letter-spacing:1px;font-size:13px;opacity:.3;font-weight:400}
+.lock-btn{
+  width:100%;padding:12px;border:none;border-radius:12px;
+  background:linear-gradient(135deg,var(--blue-mid),var(--blue-dark));
+  color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;
+  cursor:pointer;transition:transform .15s,box-shadow .15s;
+  box-shadow:0 4px 18px rgba(37,88,168,.35)}
+.lock-btn:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(37,88,168,.45)}
+.lock-err{color:#f5a0a0;font-size:12px;font-weight:600;margin-top:8px;min-height:16px}
+.lock-err.shake{animation:shakeErr .35s ease}
+@keyframes shakeErr{0%,100%{transform:none}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+/* ── TOPBAR ── */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  margin-bottom:20px;padding:12px 18px;
+  background:var(--card);border-radius:var(--r);border:1px solid var(--line);box-shadow:var(--shadow)}
+.brand{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--ink)}
+.brand span{color:var(--blue-dark)}
+.topbtns{display:flex;gap:8px;flex-wrap:wrap}
+.tbtn{
+  padding:7px 13px;border:1.5px solid var(--line);border-radius:100px;
+  font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;
+  color:var(--ink-soft);background:var(--bg);cursor:pointer;transition:all .15s}
+.tbtn:hover{border-color:var(--blue);color:var(--blue-dark);background:var(--blue-xlight)}
+.tbtn.active-tab{background:var(--blue-light);border-color:var(--blue);color:var(--blue-dark)}
+.tbtn.danger{color:var(--rose);border-color:#e8c8c8}
+.tbtn.danger:hover{background:var(--rose-light)}
+
+/* ── STREAK BANNER ── */
+.streak-banner{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  padding:14px 18px;margin-bottom:18px;
+  background:linear-gradient(135deg,var(--blue-xlight),#f0f6ff);
+  border:1.5px solid var(--blue-light);border-radius:var(--r);
+  box-shadow:0 3px 14px rgba(59,125,216,.08)}
+.streak-item{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:60px}
+.streak-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--blue-dark)}
+.streak-lab{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.streak-divider{width:1px;height:36px;background:var(--line)}
+.streak-msg{flex:1;font-size:13px;font-weight:600;color:var(--ink-soft);line-height:1.6}
+
+/* ── SUBJECT TOGGLE ── */
+.subj-toggle{
+  display:flex;gap:0;background:var(--bg);border:1.5px solid var(--line);
+  border-radius:14px;overflow:hidden;margin-bottom:16px;width:fit-content}
+.subj-btn{
+  padding:10px 22px;border:none;background:transparent;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;
+  color:var(--muted);cursor:pointer;transition:all .2s}
+.subj-btn.active{background:var(--blue-dark);color:#fff}
+
+/* ── SECTION HEADING ── */
+.sec-head{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.sec-head small{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--muted)}
+
+/* ── CARD ── */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:20px;margin-bottom:16px}
+.card.accent-blue{border-top:3px solid var(--blue)}
+.card.accent-rose{border-top:3px solid var(--rose)}
+.card.accent-gold{border-top:3px solid var(--gold)}
+.card.accent-sage{border-top:3px solid var(--sage)}
+
+/* ── CONTROLS ── */
+.lbl{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px;letter-spacing:.3px;text-transform:uppercase}
+select,input[type=text]{
+  width:100%;padding:10px 13px;border:1.5px solid var(--line);border-radius:11px;
+  background:#f9fbfe;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;
+  color:var(--ink);outline:none;appearance:none;transition:border-color .2s,box-shadow .2s}
+select:focus,input[type=text]:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,125,216,.12)}
+.sel-wrap{position:relative}
+.sel-wrap::after{content:'▾';position:absolute;right:11px;top:50%;transform:translateY(-50%);color:var(--blue);pointer-events:none;font-size:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.grid2{grid-template-columns:1fr}}
+
+/* ── BUTTONS ── */
+.btn{padding:10px 18px;border:none;border-radius:11px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s}
+.btn-blue{background:linear-gradient(135deg,var(--blue-mid),var(--blue-dark));color:#fff;box-shadow:0 3px 14px rgba(37,88,168,.2)}
+.btn-blue:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(37,88,168,.3)}
+.btn-rose{background:linear-gradient(135deg,#d4898e,var(--rose));color:#fff}
+.btn-gold{background:linear-gradient(135deg,#d4aa5c,var(--gold));color:#fff}
+.btn-ghost{background:var(--bg);border:1.5px solid var(--line);color:var(--ink-soft)}
+.btn-ghost:hover{border-color:var(--blue);color:var(--blue-dark);background:var(--blue-xlight)}
+.btn-row{display:flex;gap:9px;flex-wrap:wrap}
+.status-text{font-size:12px;color:var(--muted);font-weight:600;margin-top:8px;min-height:16px}
+
+/* ── BADGE ── */
+.badge{display:inline-block;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700;border:1px solid var(--line);color:var(--muted)}
+.badge.blue{background:var(--blue-xlight);color:var(--blue-dark);border-color:var(--blue-light)}
+.badge.rose{background:var(--rose-light);color:var(--rose);border-color:#e8c8c8}
+.badge.gold{background:var(--gold-light);color:#8a6820;border-color:#e8d8a0}
+.badge.sage{background:var(--sage-light);color:var(--sage-dark);border-color:#c0d8c8}
+.badge.eng{background:#f0ebff;color:#5c3db5;border-color:#d0c5f0}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+
+/* ── QUESTION CARD ── */
+.q-header{
+  padding:20px 20px 16px;
+  background:linear-gradient(135deg,#0f1e3d,#1a3a70);
+  border-radius:var(--r) var(--r) 0 0;color:#fff;margin:-20px -20px 18px}
+.q-header.english{background:linear-gradient(135deg,#2a1060,#4030a0)}
+.q-num{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:.5;margin-bottom:6px}
+.q-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;line-height:1.35;margin-bottom:6px}
+.q-sub{font-size:11px;font-weight:600;opacity:.5}
+.q-body{font-size:15px;line-height:1.85;color:var(--ink-soft);white-space:pre-wrap;
+  padding:16px;background:#f9fbfe;border-radius:11px;border:1px solid var(--line);margin-bottom:16px}
+.q-body.english{background:#faf8ff;border-color:#d8d0f0}
+
+/* ── WORKING ── */
+.working-label{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px}
+.working-req{font-size:11px;font-weight:600;color:var(--rose);background:var(--rose-light);border-radius:100px;padding:2px 8px;border:1px solid #e8c8c8}
+.working-req.met{color:var(--sage-dark);background:var(--sage-light);border-color:#c0d8c8}
+textarea{
+  width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:11px;
+  background:#f9fbfe;font-family:'DM Sans',sans-serif;font-size:14px;
+  color:var(--ink);outline:none;resize:vertical;transition:border-color .2s,box-shadow .2s;line-height:1.7}
+textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,125,216,.10)}
+textarea.working-ta{min-height:110px}
+textarea.answer-ta{min-height:60px}
+textarea.reflection-ta{min-height:72px}
+.check-btn-wrap.locked .lock-hint{display:block;font-size:11px;color:var(--rose);font-weight:600;margin-top:5px}
+.lock-hint{display:none}
+.check-btn-wrap.locked .btn-blue{opacity:.45;cursor:not-allowed;transform:none!important}
+.working-meter{height:3px;border-radius:3px;background:var(--line);margin-top:5px;overflow:hidden}
+.working-meter-fill{height:100%;border-radius:3px;background:var(--rose);transition:width .3s,background .3s}
+
+/* ── ENGLISH EXTENDED ANSWER ── */
+.ext-note{font-size:12px;font-weight:600;color:#5c3db5;background:#f0ebff;border-radius:8px;padding:8px 12px;margin-bottom:10px;border-left:3px solid #8b6ddd;line-height:1.6}
+.keyword-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.kchip{padding:3px 9px;border-radius:100px;background:var(--blue-xlight);border:1px solid var(--blue-light);font-size:11px;font-weight:700;color:var(--blue-dark)}
+.kchip.found{background:#e8f5ec;border-color:#a0d8b0;color:#2a7a40}
+.kchip.missing{background:#fff0f0;border-color:#f0b0b0;color:#a03030}
+
+/* ── RESULT ── */
+.result-box{padding:12px 14px;border-radius:11px;font-size:14px;font-weight:700;border:1.5px solid var(--line);margin-bottom:12px;display:none;line-height:1.6}
+.result-box.correct{background:var(--sage-light);border-color:#c0d8c8;color:var(--sage-dark)}
+.result-box.partly{background:var(--gold-light);border-color:#e8d8a0;color:#8a6820}
+.result-box.wrong{background:var(--rose-light);border-color:#e8c8c8;color:var(--rose)}
+.feedback-box{padding:13px 15px;border-radius:11px;border:1px solid var(--line);background:#f9fbfe;font-size:13px;line-height:1.8;color:var(--ink-soft);white-space:pre-wrap;margin-bottom:14px}
+
+/* ── REFLECTION ── */
+.reflection-section{padding:15px 16px;border-radius:13px;background:linear-gradient(135deg,var(--blue-xlight),#f0f6ff);border:1.5px solid var(--blue-light);margin-bottom:14px}
+.reflection-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--blue-dark);margin-bottom:12px;font-style:italic}
+.confidence-row{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.conf-btn{padding:7px 14px;border-radius:100px;border:1.5px solid var(--line);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--ink-soft);background:#fff;cursor:pointer;transition:all .15s}
+.conf-btn:hover{border-color:var(--blue)}
+.conf-btn.selected-1{background:#fee2e2;border-color:#f87171;color:#b91c1c}
+.conf-btn.selected-2{background:var(--gold-light);border-color:#fbbf24;color:#92400e}
+.conf-btn.selected-3{background:var(--blue-xlight);border-color:var(--blue);color:var(--blue-dark)}
+.reflection-prompt{font-size:12px;font-weight:600;color:var(--ink-soft);margin-bottom:6px}
+
+/* ── NAV ── */
+.nav-row{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:4px}
+
+/* ── MAP ── */
+.map-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+@media(max-width:500px){.map-grid{grid-template-columns:repeat(4,1fr)}}
+.map-pip{aspect-ratio:1;border-radius:9px;border:1.5px solid var(--line);background:#f9fbfe;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--muted);transition:all .18s}
+.map-pip:hover{border-color:var(--blue);color:var(--blue-dark)}
+.map-pip.active{border-color:var(--ink);background:var(--ink);color:#fff}
+.map-pip.correct{background:var(--sage-light);border-color:var(--sage);color:var(--sage-dark)}
+.map-pip.partly{background:var(--gold-light);border-color:var(--gold);color:#8a6820}
+.map-pip.wrong{background:var(--rose-light);border-color:var(--rose);color:var(--rose)}
+
+/* ── JOURNAL ── */
+.mistake-entry{padding:15px 16px;border-radius:13px;background:#f9fbfe;border:1.5px solid var(--line);margin-bottom:11px}
+.mistake-q{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.mistake-hint{font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.5}
+.save-reflection-btn{margin-top:7px;padding:6px 12px;border:1.5px solid var(--blue);border-radius:8px;background:var(--blue-xlight);color:var(--blue-dark);font-size:12px;font-weight:700;cursor:pointer;transition:all .15s}
+.save-reflection-btn:hover{background:var(--blue);color:#fff}
+.reflection-saved{font-size:11px;color:var(--sage-dark);font-weight:600;margin-top:4px;display:none}
+.subj-filter-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.subj-filter-btn{padding:6px 13px;border-radius:100px;border:1.5px solid var(--line);font-size:12px;font-weight:700;color:var(--muted);background:var(--bg);cursor:pointer;transition:all .15s}
+.subj-filter-btn.on{background:var(--blue-dark);border-color:var(--blue-dark);color:#fff}
+
+/* ── STREAK ── */
+.cal-row{display:flex;gap:5px;flex-wrap:wrap}
+.cal-day{width:28px;height:28px;border-radius:6px;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--muted)}
+.cal-day.done{background:var(--blue);border-color:var(--blue-dark);color:#fff}
+.cal-day.today{border-color:var(--gold);color:var(--gold)}
+.cal-day.today.done{background:var(--gold);border-color:#b8923a;color:#fff}
+
+/* ── TOAST ── */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 20px;border-radius:100px;font-size:13px;font-weight:700;box-shadow:0 6px 24px rgba(0,0,0,.2);z-index:300;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── MISC ── */
+.divider{height:1px;background:var(--line);margin:16px 0}
+.empty-state{text-align:center;padding:28px;color:var(--muted);font-size:14px;font-style:italic}
+</style>
 </head>
-<body class="sparkles">
-<div id="loginScreen" class="page"><div class="shell"><div class="hero"><div class="hero-stars">✨📚✨</div><div class="eyebrow">private quest space</div><h1>Sienna Maths Bank</h1><div class="sub">Years 8–9 maths topic bank with direct marking.</div></div><div class="content"><div class="card light-card stack" style="max-width:420px;margin:0 auto;"><div class="center" style="font-size:34px;">🗺️🌷</div><input id="passwordInput" type="password" placeholder="Enter password" /><button id="loginBtn" class="btn btn-primary">Enter</button><div id="loginError" class="status" style="color:#c23d62;"></div></div></div></div></div>
-<div id="appScreen" class="page hidden"><div class="shell"><div class="hero"><div class="hero-stars">✨🧠➗</div><div class="eyebrow">siennasun.com.au / quest</div><h1>Sienna Maths Bank</h1><div class="sub">Built-in NSW Years 8–9 mathematics-style coverage, with one topic bank at a time.</div></div><div class="content"><div class="card magic-card stack"><div class="center"><h2 style="margin:0 0 6px 0;">Build a maths topic bank</h2><div class="tiny">Choose a strand or type a topic. The bank is built from the internal question library, not AI-generated placeholders.</div></div><div class="grid2"><div class="stack"><div class="center" style="font-weight:800;">Strand</div><select id="strandSelect"><option value="all">All mathematics</option><option value="number">Number & arithmetic</option><option value="fractions">Fractions, decimals & percentages</option><option value="ratio">Ratio & rate</option><option value="integers">Integers & indices</option><option value="algebra">Algebra & equations</option><option value="graphs">Patterns & graphing</option><option value="surds">Surds</option><option value="pythagoras">Pythagoras</option><option value="measurement">Measurement</option><option value="geometry">Geometry & angles</option><option value="stats">Statistics & probability</option></select></div><div class="stack"><div class="center" style="font-weight:800;">Topic (optional)</div><input id="topicInput" type="text" placeholder="Examples: algebra, surd, percentages, linear equations" /></div></div><div class="btn-row"><button id="generateBankBtn" class="btn btn-primary">Generate Topic Bank</button><button id="logoutBtn" class="btn btn-soft">Lock</button></div><div id="statusText" class="status">Ready</div></div>
-<div id="questArea" class="hidden stack"><div class="card light-card stack"><div><h2 id="bankTitle">Topic Bank</h2><div id="bankIntro" class="tiny">Ready.</div></div><div class="badges"><span id="topicBadge" class="badge subject">Topic</span><span id="stepBadge" class="badge">Question 1 / 10</span><span id="streakBadge" class="badge streak">Streak 0</span></div></div>
-<div class="card magic-card stack"><div class="badges"><span id="subjectBadge" class="badge subject">Subject</span><span id="levelBadge" class="badge level">Level</span></div><div id="questionTitle" class="question-title">Question</div><div id="questionText" class="question-text">Your question will appear here.</div><textarea id="answerBox" placeholder="Write your answer here. Put your final answer clearly."></textarea><div class="btn-row-left"><button id="checkBtn" class="btn btn-violet">Check Answer</button><button id="saveBtn" class="btn btn-soft">Save Draft</button><button id="newBankBtn" class="btn btn-soft">New Bank</button></div><div class="btn-row-left"><button id="easierBtn" class="btn btn-soft">Same topic, easier</button><button id="harderBtn" class="btn btn-soft">Same topic, harder</button><button id="moreBtn" class="btn btn-soft">Generate 10 more</button></div><div id="resultBox" class="result-box hidden"></div><div id="feedbackBox" class="feedback">No feedback yet.</div><div class="nav-row"><button id="prevBtn" class="btn btn-soft">← Previous</button><button id="nextBtn" class="btn btn-primary">Next Question →</button></div></div>
-<div class="card light-card stack"><h2>Little reward</h2><div id="rewardBox" class="reward-box">🌱 Start your streak by getting the first question right.</div></div><div class="card light-card stack"><h2>Question List</h2><div class="tiny">Different questions in the same topic bank.</div><div id="mapWrap" class="map-list"></div></div></div></div></div></div>
+<body>
+
+<div id="toast"></div>
+
+<!-- ═══ LOCK ═══ -->
+<div id="lockScreen">
+  <div class="lock-box">
+    <span class="lock-mono">S</span>
+    <div class="lock-title">Sienna's Practice Space</div>
+    <div class="lock-sub">Year 8–9 Maths &amp; English · Daily Habit</div>
+    <input class="lock-input" type="password" id="pwInput" placeholder="password"
+      onkeydown="if(event.key==='Enter')unlock()">
+    <button class="lock-btn" onclick="unlock()">Enter →</button>
+    <div class="lock-err" id="lockErr"></div>
+  </div>
+</div>
+
+<!-- ═══ APP ═══ -->
+<div id="app" class="hidden">
+<div class="wrap">
+
+  <!-- topbar -->
+  <div class="topbar">
+    <div class="brand">Sienna · <span>Practice</span></div>
+    <div class="topbtns">
+      <button class="tbtn" id="tbPractice" onclick="showTab('practice')">Practice</button>
+      <button class="tbtn" id="tbJournal" onclick="showTab('journal')">📒 Mistake Journal</button>
+      <button class="tbtn" id="tbStreak" onclick="showTab('streak')">🔥 Streak</button>
+      <button class="tbtn danger" onclick="doLock()">Lock</button>
+    </div>
+  </div>
+
+  <!-- streak banner -->
+  <div class="streak-banner">
+    <div class="streak-item"><div class="streak-val" id="sBannerStreak">0</div><div class="streak-lab">Day Streak</div></div>
+    <div class="streak-divider"></div>
+    <div class="streak-item"><div class="streak-val" id="sBannerToday">0</div><div class="streak-lab">Today</div></div>
+    <div class="streak-divider"></div>
+    <div class="streak-item"><div class="streak-val" id="sBannerTotal">0</div><div class="streak-lab">All Time</div></div>
+    <div class="streak-msg" id="streakMsg">Welcome back! Time to practise. 📖</div>
+  </div>
+
+  <!-- ═══ PRACTICE TAB ═══ -->
+  <div id="tabPractice">
+    <!-- subject toggle -->
+    <div class="subj-toggle">
+      <button class="subj-btn active" id="subjMaths" onclick="switchSubject('maths')">📐 Maths</button>
+      <button class="subj-btn" id="subjEnglish" onclick="switchSubject('english')">📖 English</button>
+    </div>
+
+    <!-- MATHS controls -->
+    <div id="mathsControls" class="card accent-blue">
+      <div class="sec-head">Choose your maths topic</div>
+      <div class="grid2">
+        <div>
+          <label class="lbl">Strand</label>
+          <div class="sel-wrap">
+            <select id="strandSelect">
+              <option value="all">All mathematics</option>
+              <option value="number">Number &amp; arithmetic</option>
+              <option value="fractions">Fractions, decimals &amp; percentages</option>
+              <option value="ratio">Ratio &amp; rate</option>
+              <option value="integers">Integers &amp; indices</option>
+              <option value="algebra">Algebra &amp; equations</option>
+              <option value="graphs">Patterns &amp; graphing</option>
+              <option value="surds">Surds</option>
+              <option value="pythagoras">Pythagoras</option>
+              <option value="measurement">Measurement</option>
+              <option value="geometry">Geometry &amp; angles</option>
+              <option value="stats">Statistics &amp; probability</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="lbl">Topic (optional)</label>
+          <input type="text" id="topicInput" placeholder="e.g. algebra, surds, percentages…"/>
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top:13px">
+        <button class="btn btn-blue" onclick="generateBank(false,'normal')">Start Practice</button>
+        <button class="btn btn-ghost" onclick="generateBank(true,'easier')">Easier</button>
+        <button class="btn btn-ghost" onclick="generateBank(true,'harder')">Harder</button>
+      </div>
+      <div class="status-text" id="mathsStatus">Ready to begin.</div>
+    </div>
+
+    <!-- ENGLISH controls -->
+    <div id="englishControls" class="card accent-blue hidden">
+      <div class="sec-head">Choose your English topic</div>
+      <div class="grid2">
+        <div>
+          <label class="lbl">Skill area</label>
+          <div class="sel-wrap">
+            <select id="engStrandSelect">
+              <option value="all_eng">All English</option>
+              <option value="grammar">Grammar &amp; punctuation</option>
+              <option value="vocabulary">Vocabulary &amp; word choice</option>
+              <option value="techniques">Literary techniques &amp; analysis</option>
+              <option value="teel">Writing structure (TEEL)</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="lbl">Topic (optional)</label>
+          <input type="text" id="engTopicInput" placeholder="e.g. metaphor, semicolons, TEEL…"/>
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top:13px">
+        <button class="btn btn-blue" onclick="generateEngBank(false)">Start Practice</button>
+        <button class="btn btn-ghost" onclick="generateEngBank(true)">New bank</button>
+      </div>
+      <div class="status-text" id="engStatus">Ready to begin.</div>
+    </div>
+
+    <!-- question area (shared) -->
+    <div id="questArea" class="hidden">
+      <div class="card" style="padding:14px 18px">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+          <div>
+            <div class="badges">
+              <span class="badge blue" id="topicBadge">Topic</span>
+              <span class="badge" id="qCountBadge">Q 1 / 10</span>
+              <span class="badge gold" id="sessionStreakBadge">Session streak 0</span>
+            </div>
+            <div style="font-size:13px;font-weight:600;color:var(--muted)" id="bankIntro"></div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-ghost" style="font-size:12px;padding:7px 12px" id="newBankBtn" onclick="newBank()">New bank</button>
+            <button class="btn btn-ghost" style="font-size:12px;padding:7px 12px" id="moreBtn" onclick="moreQuestions()">+ 10 more</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card accent-blue" id="qCard">
+        <div class="q-header" id="qHeader">
+          <div class="q-num" id="qNum">Question 1 of 10</div>
+          <div class="q-title" id="qTitle">—</div>
+          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+            <span class="badge" style="background:rgba(255,255,255,.12);color:rgba(255,255,255,.75);border-color:transparent" id="subjectBadge">Subject</span>
+            <span class="badge" style="background:rgba(255,255,255,.12);color:rgba(255,255,255,.75);border-color:transparent" id="levelBadge">Level</span>
+          </div>
+        </div>
+
+        <!-- English extended note (shown only for extended Eng questions) -->
+        <div id="extNoteBox" class="ext-note hidden"></div>
+
+        <div class="q-body" id="qBody">Question here.</div>
+
+        <!-- working (required) -->
+        <div style="margin-bottom:14px">
+          <div class="working-label">
+            <span id="workingLabelText">Show your working / planning</span>
+            <span class="working-req" id="workingReq">required before checking</span>
+          </div>
+          <textarea class="working-ta" id="workingBox"
+            placeholder="Write your working step-by-step here. Show each step clearly."
+            oninput="onWorkingInput()"></textarea>
+          <div class="working-meter"><div class="working-meter-fill" id="workingMeter" style="width:0%"></div></div>
+        </div>
+
+        <!-- final answer -->
+        <div style="margin-bottom:14px">
+          <div class="working-label" style="margin-bottom:7px" id="answerLabel">Final answer</div>
+          <textarea class="answer-ta" id="answerBox"
+            placeholder="Write your final answer clearly here."></textarea>
+          <!-- keyword chips for English extended -->
+          <div id="keywordRow" class="hidden" style="margin-top:8px">
+            <div style="font-size:11px;font-weight:600;color:var(--muted);margin-bottom:5px">Key elements to include:</div>
+            <div class="keyword-chips" id="keywordChips"></div>
+          </div>
+        </div>
+
+        <div class="check-btn-wrap locked" id="checkBtnWrap">
+          <div class="btn-row">
+            <button class="btn btn-blue" id="checkBtn" onclick="checkAnswer()">Check Answer</button>
+            <button class="btn btn-ghost" onclick="saveDraft()">Save Draft</button>
+          </div>
+          <div class="lock-hint">✏️ Add your working / planning above before checking</div>
+        </div>
+
+        <div class="result-box" id="resultBox"></div>
+        <div class="feedback-box hidden" id="feedbackBox"></div>
+
+        <!-- reflection -->
+        <div class="reflection-section hidden" id="reflectionSection">
+          <div class="reflection-title">Reflect on this question</div>
+          <div class="reflection-prompt">How confident did you feel?</div>
+          <div class="confidence-row">
+            <button class="conf-btn" onclick="setConfidence(1)" id="conf1">😟 Not sure</button>
+            <button class="conf-btn" onclick="setConfidence(2)" id="conf2">🤔 Somewhat</button>
+            <button class="conf-btn" onclick="setConfidence(3)" id="conf3">😊 Confident</button>
+          </div>
+          <div class="reflection-prompt">What did you notice or learn from this question?</div>
+          <textarea class="reflection-ta" id="reflectionBox"
+            placeholder="Write one or two sentences. What was tricky? What would you do differently?"
+            oninput="saveReflection()"></textarea>
+        </div>
+
+        <div class="nav-row">
+          <button class="btn btn-ghost" id="prevBtn" onclick="navigate(-1)">← Previous</button>
+          <button class="btn btn-blue" id="nextBtn" onclick="navigate(1)">Next →</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="sec-head">Progress map <small>click to jump</small></div>
+        <div class="map-grid" id="mapGrid"></div>
+      </div>
+    </div>
+  </div><!-- /tabPractice -->
+
+  <!-- ═══ JOURNAL TAB ═══ -->
+  <div id="tabJournal" class="hidden">
+    <div class="card accent-rose">
+      <div class="sec-head">📒 Mistake Journal</div>
+      <p style="font-size:13px;color:var(--ink-soft);line-height:1.7;margin-bottom:14px">
+        Every mistake is a lesson. Write a reflection on each one — what you misunderstood, and how to fix it next time.
+      </p>
+      <div class="subj-filter-row">
+        <button class="subj-filter-btn on" id="jfAll" onclick="setJournalFilter('all')">All</button>
+        <button class="subj-filter-btn" id="jfMaths" onclick="setJournalFilter('maths')">📐 Maths only</button>
+        <button class="subj-filter-btn" id="jfEnglish" onclick="setJournalFilter('english')">📖 English only</button>
+      </div>
+      <div id="journalContent"></div>
+    </div>
+  </div>
+
+  <!-- ═══ STREAK TAB ═══ -->
+  <div id="tabStreak" class="hidden">
+    <div class="card accent-gold">
+      <div class="sec-head">🔥 Daily Streak</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px">
+        <div style="text-align:center;padding:16px;background:var(--blue-xlight);border-radius:13px;border:1.5px solid var(--blue-light)">
+          <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--blue-dark)" id="streakCurrentBig">0</div>
+          <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:3px">Current streak</div>
+        </div>
+        <div style="text-align:center;padding:16px;background:var(--gold-light);border-radius:13px;border:1.5px solid #e8d8a0">
+          <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--gold)" id="streakBestBig">0</div>
+          <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:3px">Best streak</div>
+        </div>
+        <div style="text-align:center;padding:16px;background:var(--sage-light);border-radius:13px;border:1.5px solid #c0d8c8">
+          <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--sage-dark)" id="streakTotalDaysBig">0</div>
+          <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:3px">Days practiced</div>
+        </div>
+      </div>
+      <div class="sec-head" style="font-size:15px;margin-bottom:10px">Last 28 days</div>
+      <div class="cal-row" id="calGrid"></div>
+      <div class="divider"></div>
+      <div style="font-size:13px;font-weight:700;color:var(--ink-soft);margin-bottom:8px">Daily goal: answer at least 5 questions (Maths or English)</div>
+      <div id="goalProgress" style="font-size:13px;color:var(--muted)">Open the Practice tab to get started today.</div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /app -->
+
 <script>
-(()=>{
-const PASSWORD_STORAGE="siennaPlannerPassword",BANK_PREFIX="sienna-maths-bank-v3-",PROGRESS_PREFIX="sienna-maths-bank-progress-v3-";
-let plannerPassword="",selectedTopic="",selectedStrand="all",difficultyMode="normal",bankData=null,progress=null,currentIndex=0,appendCounter=0;
-const aliases={"four fundamental arithmetic":"number","arithmetic":"number","number":"number","number and arithmetic":"number","fractions":"fractions","decimals":"fractions","percentages":"fractions","ratio":"ratio","rate":"ratio","rates":"ratio","integers":"integers","indices":"integers","index laws":"integers","algebra":"algebra","linear equations":"algebra","equations":"algebra","graphs":"graphs","graphing":"graphs","patterns":"graphs","surd":"surds","surds":"surds","pythagoras":"pythagoras","measurement":"measurement","area":"measurement","volume":"measurement","surface area":"measurement","geometry":"geometry","angles":"geometry","transformations":"geometry","statistics":"stats","probability":"stats","data":"stats"};
-const byId=id=>document.getElementById(id), rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a, pick=arr=>arr[rand(0,arr.length-1)], shuffle=arr=>[...arr].sort(()=>Math.random()-.5);
-function setStatus(t){byId('statusText').textContent=t} function showQuestArea(){byId('questArea').classList.remove('hidden')}
-function safePart(text){return String(text||"").trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,50)||'none'}
-function bankKey(strand,topic,mode){return BANK_PREFIX+safePart(strand)+"-"+safePart(topic)+"-"+mode} function progressKey(strand,topic,mode){return PROGRESS_PREFIX+safePart(strand)+"-"+safePart(topic)+"-"+mode}
-function saveProgress(){localStorage.setItem(progressKey(selectedStrand,selectedTopic,difficultyMode),JSON.stringify(progress))}
-function loadProgress(){const raw=localStorage.getItem(progressKey(selectedStrand,selectedTopic,difficultyMode)); if(raw){try{return JSON.parse(raw)}catch{}} return {answers:{},feedback:{},checked:{},result:{},correctStreak:0,maxStreak:0}}
-async function callLogin(password){const res=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password})}); const data=await res.json().catch(()=>({})); if(!res.ok) throw new Error(data.error||'Wrong password.'); return data;}
-function gcd(a,b){while(b){[a,b]=[b,a%b]} return Math.abs(a)}
-function frac(n,d){const g=gcd(n,d); n/=g; d/=g; if(d<0){n=-n; d=-d} return d===1?String(n):`${n}/${d}`}
-function normalizeAns(s){return String(s||'').toLowerCase().replace(/\s+/g,'').replace(/\\/g,'').replace(/\*/g,'').replace(/\(/g,'').replace(/\)/g,'')}
-function hasWorking(t){t=String(t||''); return t.length>18 || /because|therefore|so|=|x|√|sqrt|\/|\+|-|\*/i.test(t)}
-const acceptedValidator=list=>{const set=new Set(list.map(normalizeAns)); return ans=>set.has(normalizeAns(ans))};
-const integerValidator=n=>ans=>normalizeAns(ans).replace(/^x=/,'')===String(n);
-const fractionValidator=str=>ans=>normalizeAns(ans).replace(/^x=/,'')===normalizeAns(str);
-const q=(subject,level,title,prompt,validator,notes)=>({id:`q-${Math.random().toString(36).slice(2,9)}`,subject,level,title,prompt,validator,notes});
-const LIB={
-number:[
-()=>{const a=rand(120,900),b=rand(20,90); return q('Mathematics','Year 8 foundation','Addition',`Calculate ${a} + ${b}.`,integerValidator(a+b),`Correct answer is ${a+b}.`)},
-()=>{const a=rand(300,900),b=rand(40,250); return q('Mathematics','Year 8 foundation','Subtraction',`Calculate ${a} - ${b}.`,integerValidator(a-b),`Correct answer is ${a-b}.`)},
-()=>{const a=rand(12,29),b=rand(3,12); return q('Mathematics','Year 8 foundation','Multiplication',`Calculate ${a} × ${b}.`,integerValidator(a*b),`Correct answer is ${a*b}.`)},
-()=>{const b=rand(3,12),v=rand(8,24),a=b*v; return q('Mathematics','Year 8 foundation','Division',`Calculate ${a} ÷ ${b}.`,integerValidator(v),`Correct answer is ${v}.`)},
-()=>{const a=rand(2,9),b=rand(2,5); return q('Mathematics','Year 8 challenge','Order of operations',`Evaluate ${a} + ${b} × ${a+1}.`,integerValidator(a+b*(a+1)),'Use multiplication before addition.')},
-()=>{const a=rand(2,9),b=rand(2,8),c=rand(2,6); return q('Mathematics','Year 8 challenge','Order of operations',`Evaluate (${a} + ${b}) × ${c}.`,integerValidator((a+b)*c),'Evaluate brackets first.')}
-],
-fractions:[
-()=>{const d=pick([3,4,5,6,8,10,12]), n=rand(1,d-1), qv=d*rand(3,9); return q('Mathematics','Year 8 foundation','Fraction of a quantity',`Find ${n}/${d} of ${qv}.`,integerValidator(n*qv/d),'Multiply the quantity by the fraction.')},
-()=>{const a=rand(1,4),b=pick([2,3,4,5,6,8]),c=rand(1,4),d=pick([b,b*2]); return q('Mathematics','Year 8 foundation','Add fractions',`Calculate ${a}/${b} + ${c}/${d}. Give your answer in simplest form.`,fractionValidator(frac(a*d+c*b,b*d)),'Find a common denominator and simplify.')},
-()=>{const n=rand(1,8),d=pick([2,4,5,8,10]); return q('Mathematics','Year 8 foundation','Fraction to decimal',`Write ${n}/${d} as a decimal.`,acceptedValidator([String(n/d)]),`Correct answer is ${n/d}.`)},
-()=>{const dec=pick([0.25,0.5,0.75,0.2,0.4,0.8,1.25]); return q('Mathematics','Year 8 challenge','Decimal to percentage',`Write ${dec} as a percentage.`,acceptedValidator([String(dec*100)+'%',String(dec*100)]),`Correct answer is ${dec*100}%.`)},
-()=>{const whole=rand(20,180),pct=pick([5,10,15,20,25,30,40,50]); return q('Mathematics','Year 8 challenge','Percentage of an amount',`Find ${pct}% of ${whole}.`,acceptedValidator([String(whole*pct/100)]),`Correct answer is ${whole*pct/100}.`)},
-()=>{const price=pick([40,60,80,120,150]),pct=pick([10,15,20,25]); return q('Mathematics','Year 9 challenge','Percentage decrease',`A price of $${price} is reduced by ${pct}%. What is the new price?`,acceptedValidator([String(price*(100-pct)/100),'$'+String(price*(100-pct)/100)]),`Correct answer is ${price*(100-pct)/100}.`)}
-],
-ratio:[
-()=>{const a=pick([2,3,4,5]),b=pick([3,4,5,6]),k=rand(3,8); return q('Mathematics','Year 8 challenge','Simplify a ratio',`Write ${a*k}:${b*k} in simplest form.`,acceptedValidator([`${a}:${b}`]),`Correct answer is ${a}:${b}.`)},
-()=>{const a=pick([2,3,4]),b=pick([5,6,7]),total=(a+b)*rand(3,7); return q('Mathematics','Year 8 challenge','Divide in a ratio',`Divide ${total} in the ratio ${a}:${b}. Give the two parts.`,acceptedValidator([`${total*a/(a+b)},${total*b/(a+b)}`,`${total*a/(a+b)}and${total*b/(a+b)}`]),`Correct parts are ${total*a/(a+b)} and ${total*b/(a+b)}.`)},
-()=>{const dist=rand(120,480),time=pick([2,3,4,5,6]); return q('Mathematics','Year 8 challenge','Unit rate',`A car travels ${dist} km in ${time} hours. What is the average speed in km/h?`,integerValidator(dist/time),`Correct answer is ${dist/time} km/h.`)},
-()=>{const grams=pick([250,500,750,1000]),price=pick([2.5,4.5,6,8]); return q('Mathematics','Year 9 challenge','Best buy rate',`An item costs $${price} for ${grams} g. What is the cost per 100 g?`,acceptedValidator([String((price/grams*100).toFixed(2)),String((price/grams*100).toFixed(1)),String(price/grams*100)]),'Compute price ÷ grams × 100.')}
-],
-integers:[
-()=>{const a=rand(-12,-2),b=rand(2,12); return q('Mathematics','Year 8 foundation','Integer addition',`Calculate ${a} + ${b}.`,integerValidator(a+b),`Correct answer is ${a+b}.`)},
-()=>{const a=rand(-12,-2),b=rand(-12,-2); return q('Mathematics','Year 8 foundation','Integer subtraction',`Calculate ${a} - (${b}).`,integerValidator(a-b),`Correct answer is ${a-b}.`)},
-()=>{const a=rand(-9,9)||4,b=pick([2,3,4]); return q('Mathematics','Year 8 challenge','Index notation',`Evaluate ${a}^${b}.`,integerValidator(a**b),`Correct answer is ${a**b}.`)},
-()=>{const a=pick([2,3,5]),m=pick([2,3,4]),n=pick([2,3]); return q('Mathematics','Year 9 challenge','Index laws',`Simplify ${a}^${m} × ${a}^${n}.`,acceptedValidator([`${a}^${m+n}`,String(a**(m+n))]),`Using index laws, add the powers to get ${a}^${m+n}.`)},
-()=>{const a=pick([2,3,5]),m=pick([4,5,6]),n=pick([2,3]); return q('Mathematics','Year 9 challenge','Index laws',`Simplify ${a}^${m} ÷ ${a}^${n}.`,acceptedValidator([`${a}^${m-n}`,String(a**(m-n))]),`Using index laws, subtract the powers to get ${a}^${m-n}.`)}
-],
-algebra:[
-()=>{const x=rand(3,15),b=rand(3,12); return q('Mathematics','Year 8 challenge','One-step equation',`Solve x + ${b} = ${x+b}.`,integerValidator(x),`Correct answer is x = ${x}.`)},
-()=>{const x=rand(3,15),a=pick([2,3,4,5]); return q('Mathematics','Year 8 challenge','One-step equation',`Solve ${a}x = ${a*x}.`,integerValidator(x),`Correct answer is x = ${x}.`)},
-()=>{const x=rand(2,12),a=pick([2,3,4]),b=rand(2,10); return q('Mathematics','Year 8–9 challenge','Two-step equation',`Solve ${a}x + ${b} = ${a*x+b}.`,integerValidator(x),`Correct answer is x = ${x}.`)},
-()=>{const x=rand(2,12),a=pick([2,3,4]),b=rand(2,10); return q('Mathematics','Year 8–9 challenge','Two-step equation',`Solve ${a}x - ${b} = ${a*x-b}.`,integerValidator(x),`Correct answer is x = ${x}.`)},
-()=>{const a=rand(2,8),b=rand(2,10); return q('Mathematics','Year 8 challenge','Expand expression',`Expand ${a}(x + ${b}).`,acceptedValidator([`${a}x+${a*b}`,`${a}x + ${a*b}`]),`Correct expansion is ${a}x + ${a*b}.`)},
-()=>{const a=pick([2,3,4]),b=pick([3,5,6]); return q('Mathematics','Year 8 challenge','Collect like terms',`Simplify ${a}x + ${b}x.`,acceptedValidator([`${a+b}x`,`${a+b} x`]),`Correct answer is ${(a+b)}x.`)},
-()=>{const x=rand(2,10),a=pick([2,3,4]),b=rand(1,8),c=pick([2,3]); return q('Mathematics','Year 9 challenge','Equation with x on both sides',`Solve ${a}x + ${b} = ${c}x + ${a*x+b-c*x}.`,integerValidator(x),`Correct answer is x = ${x}.`)}
-],
-graphs:[
-()=>{const m=pick([2,3,4]),c=pick([1,2,5,-1]); return q('Mathematics','Year 8–9 challenge','Slope from rule',`For y = ${m}x ${c>=0?'+':''}${c}, what is the gradient?`,integerValidator(m),`Correct answer is ${m}.`)},
-()=>{const m=pick([2,3,4]),c=pick([1,2,5,-1]); return q('Mathematics','Year 8–9 challenge','Y-intercept',`For y = ${m}x ${c>=0?'+':''}${c}, what is the y-intercept?`,integerValidator(c),`Correct answer is ${c}.`)},
-()=>{const a=rand(2,10); return q('Mathematics','Year 8 foundation','Pattern rule',`The pattern is ${a}, ${a+3}, ${a+6}, ${a+9}, ... What is the next term?`,integerValidator(a+12),`Add 3 each time, so the next term is ${a+12}.`)},
-()=>{const x=rand(2,7),m=pick([2,3,4]),c=pick([1,2,5]); return q('Mathematics','Year 8–9 challenge','Substitute into a rule',`If y = ${m}x + ${c}, find y when x = ${x}.`,integerValidator(m*x+c),`Correct answer is ${m*x+c}.`)}
-],
-surds:[
-()=> q('Mathematics','Year 8–9 challenge','Simplify a surd','Simplify √50 into the form a√b, where a and b are whole numbers and b is as small as possible.',acceptedValidator(['5√2','5sqrt2']),'Correct answer is 5√2.'),
-()=> q('Mathematics','Year 8–9 challenge','Simplify another surd','Simplify √72 into the form a√b, where a and b are whole numbers and b is as small as possible.',acceptedValidator(['6√2','6sqrt2']),'Correct answer is 6√2.'),
-()=> q('Mathematics','Year 8–9 challenge','Compare surds','Which is greater: 3√5 or √50?\n\nAnswer with the greater expression and explain briefly.',ans=>normalizeAns(ans).includes('√50')||normalizeAns(ans).includes('sqrt50'),'√50 is greater.'),
-()=> q('Mathematics','Year 8–9 challenge','Add surds','Simplify 2√3 + 5√3.',acceptedValidator(['7√3','7sqrt3']),'Correct answer is 7√3.'),
-()=> q('Mathematics','Year 8–9 challenge','Subtract surds','Simplify 9√2 - 4√2.',acceptedValidator(['5√2','5sqrt2']),'Correct answer is 5√2.'),
-()=> q('Mathematics','Year 8–9 challenge','Square factor','Simplify √98 into the form a√b.',acceptedValidator(['7√2','7sqrt2']),'Correct answer is 7√2.'),
-()=> q('Mathematics','Year 8 foundation','Perfect square review','What is √81?\n\nThen explain why 81 is called a perfect square.',integerValidator(9),'Correct answer is 9.'),
-()=> q('Mathematics','Year 8–9 challenge','Multiply surds','Simplify √3 × √12.',acceptedValidator(['6']),'Correct answer is 6.'),
-()=> q('Mathematics','Year 8–9 challenge','Mixed simplification','Simplify 3√8.',acceptedValidator(['6√2','6sqrt2']),'Correct answer is 6√2.'),
-()=> q('Mathematics','Stretch task','Explain the method','Write 3 or 4 sentences explaining a good method for simplifying surds so another student could follow it.',ans=>String(ans).trim().length>40,'Reward clarity and correct method.')
-],
-pythagoras:[
-()=> q('Mathematics','Year 8–9 challenge','Hypotenuse','A right triangle has shorter sides 3 cm and 4 cm. Find the hypotenuse.',acceptedValidator(['5','5cm']),'Using Pythagoras, the hypotenuse is 5.'),
-()=>{const t=pick([[5,12,13],[8,15,17],[7,24,25]]); return q('Mathematics','Year 8–9 challenge','Hypotenuse',`A right triangle has shorter sides ${t[0]} cm and ${t[1]} cm. Find the hypotenuse.`,acceptedValidator([String(t[2]),`${t[2]}cm`]),`Correct answer is ${t[2]}.`)},
-()=>{const t=pick([[5,12,13],[8,15,17],[7,24,25]]); return q('Mathematics','Year 8–9 challenge','Missing side',`A right triangle has hypotenuse ${t[2]} cm and one shorter side ${t[0]} cm. Find the other shorter side.`,acceptedValidator([String(t[1]),`${t[1]}cm`]),`Correct answer is ${t[1]}.`)}
-],
-measurement:[
-()=>{const l=rand(5,18),w=rand(4,15); return q('Mathematics','Year 8 foundation','Rectangle perimeter',`Find the perimeter of a rectangle with length ${l} cm and width ${w} cm.`,integerValidator(2*(l+w)),`Correct answer is ${2*(l+w)} cm.`)},
-()=>{const l=rand(5,18),w=rand(4,15); return q('Mathematics','Year 8 foundation','Rectangle area',`Find the area of a rectangle with length ${l} cm and width ${w} cm.`,integerValidator(l*w),`Correct answer is ${l*w} cm².`)},
-()=>{const l=rand(3,10),w=rand(3,10),h=rand(3,10); return q('Mathematics','Year 9 challenge','Volume',`Find the volume of a rectangular prism with dimensions ${l} cm, ${w} cm and ${h} cm.`,integerValidator(l*w*h),`Correct answer is ${l*w*h} cm³.`)},
-()=>{const l=rand(3,10),w=rand(3,10),h=rand(3,10); return q('Mathematics','Year 9 challenge','Surface area',`Find the surface area of a rectangular prism with dimensions ${l} cm, ${w} cm and ${h} cm.`,integerValidator(2*(l*w+l*h+w*h)),`Correct answer is ${2*(l*w+l*h+w*h)} cm².`)},
-()=>{const r=pick([3,4,5,6]); return q('Mathematics','Year 9 challenge','Circle circumference',`Use π = 3.14. Find the circumference of a circle with radius ${r} cm.`,acceptedValidator([String((2*3.14*r).toFixed(2)),String((2*3.14*r).toFixed(1)),String(2*3.14*r)]),'Use C = 2πr.')}
-],
-geometry:[
-()=>{const a=rand(30,120); return q('Mathematics','Year 8 foundation','Supplementary angles',`Two angles are supplementary. One angle is ${a}°. Find the other angle.`,integerValidator(180-a),`Correct answer is ${180-a}°.`)},
-()=>{const a=rand(30,80); return q('Mathematics','Year 8 foundation','Complementary angles',`Two angles are complementary. One angle is ${a}°. Find the other angle.`,integerValidator(90-a),`Correct answer is ${90-a}°.`)},
-()=>{const a=rand(50,80),b=rand(40,70); return q('Mathematics','Year 8–9 challenge','Angles in a triangle',`A triangle has angles ${a}° and ${b}°. Find the third angle.`,integerValidator(180-a-b),`Correct answer is ${180-a-b}°.`)},
-()=>{const n=pick([5,6,8]); return q('Mathematics','Year 8–9 challenge','Interior angle sum',`Find the sum of the interior angles of a ${n}-sided polygon.`,integerValidator((n-2)*180),`Correct answer is ${(n-2)*180}°.`)},
-()=> q('Mathematics','Year 8–9 challenge','Transformation','Describe the transformation that turns a shape half a turn about a point.',ans=>normalizeAns(ans).includes('rotation')||normalizeAns(ans).includes('180'),'A half-turn is a rotation of 180°.')
-],
-stats:[
-()=>{const arr=Array.from({length:5},()=>rand(2,20)).sort((a,b)=>a-b); return q('Mathematics','Year 8 foundation','Mean',`Find the mean of: ${arr.join(', ')}.`,acceptedValidator([String(arr.reduce((a,b)=>a+b,0)/arr.length)]),'Add the values and divide by 5.')},
-()=>{const arr=Array.from({length:5},()=>rand(2,20)).sort((a,b)=>a-b); return q('Mathematics','Year 8 foundation','Median',`Find the median of: ${arr.join(', ')}.`,integerValidator(arr[2]),`Correct answer is ${arr[2]}.`)},
-()=>{const repeated=rand(3,9); const arr=[repeated,repeated,rand(10,15),rand(16,20),rand(21,25)].sort((a,b)=>a-b); return q('Mathematics','Year 8 foundation','Mode',`Find the mode of: ${arr.join(', ')}.`,integerValidator(repeated),`Correct answer is ${repeated}.`)},
-()=>{const fav=pick(['red','blue','green','yellow']); return q('Mathematics','Year 8–9 challenge','Probability language',`A spinner has equal sections coloured red, blue, green and yellow. What is the probability of landing on ${fav}?`,acceptedValidator(['1/4','0.25','25%']),'With 4 equal outcomes, the probability is 1/4.')},
-()=>{const total=20,fav=pick([4,5,6,8,10]); return q('Mathematics','Year 8–9 challenge','Experimental probability',`A coin is tossed ${total} times and lands heads ${fav} times. What is the experimental probability of heads? Give your answer as a fraction in simplest form.`,fractionValidator(frac(fav,total)),`Correct answer is ${frac(fav,total)}.`)}
-]};
-function deriveStrand(){const t=byId('topicInput').value.trim().toLowerCase(); if(t && aliases[t]) return aliases[t]; return byId('strandSelect').value || 'all';}
-function makeQuestionPool(strand){return strand==='all' ? Object.values(LIB).flat() : (LIB[strand] || LIB.algebra)}
-function filterByDifficulty(pool,mode){if(mode==='normal') return pool; return pool.filter(fn=>{const qq=fn(); if(mode==='easier') return /foundation/i.test(qq.level); if(mode==='harder') return /challenge|stretch|year 9/i.test(qq.level); return true})}
-function buildBank(strand,topic,mode='normal',count=10){let pool=makeQuestionPool(strand); let chosen=filterByDifficulty(pool,mode); if(chosen.length<5) chosen=pool; const gens=shuffle(chosen); const questions=[]; let i=0; while(questions.length<count){questions.push(gens[i%gens.length]()); i++;} return {topic:topic||strand,title:`${topic||strand} Topic Bank`,intro:`A ${mode} bank covering ${topic||strand}.`,questions}}
-async function generateBank(forceNew=false,mode='normal'){selectedTopic=byId('topicInput').value.trim()||byId('strandSelect').value; selectedStrand=deriveStrand(); difficultyMode=mode; const key=bankKey(selectedStrand,selectedTopic,difficultyMode); if(!forceNew){const existing=localStorage.getItem(key); if(existing){try{bankData=JSON.parse(existing); progress=loadProgress(); currentIndex=0; setStatus('Loaded saved topic bank'); showQuestArea(); renderAll(); return;}catch{}}} setStatus('Generating topic bank...'); bankData=buildBank(selectedStrand,selectedTopic,difficultyMode,10); localStorage.setItem(key,JSON.stringify(bankData)); progress=loadProgress(); currentIndex=0; appendCounter=1; setStatus('Topic bank ready'); showQuestArea(); renderAll();}
-async function appendMoreQuestions(){if(!bankData) return; setStatus('Generating 10 more questions...'); const extra=buildBank(selectedStrand,selectedTopic,difficultyMode,10); bankData.questions=bankData.questions.concat(extra.questions.map((q,idx)=>({...q,id:`${q.id}-m${appendCounter}-${idx}`}))); appendCounter+=1; localStorage.setItem(bankKey(selectedStrand,selectedTopic,difficultyMode),JSON.stringify(bankData)); setStatus('Added 10 more questions'); renderAll();}
-function showRewardAnimation(text){const box=byId('rewardBox'); box.textContent=text; box.classList.remove('reward-pop'); void box.offsetWidth; box.classList.add('reward-pop');}
-function renderDirectResult(type,message){const box=byId('resultBox'); box.className='result-box'; box.classList.remove('hidden','result-correct','result-partly','result-wrong'); if(type==='correct') box.classList.add('result-correct'); else if(type==='partly') box.classList.add('result-partly'); else box.classList.add('result-wrong'); box.textContent=message;}
-async function checkCurrentAnswer(){const qq=bankData.questions[currentIndex], ans=byId('answerBox').value.trim(); progress.answers[qq.id]=ans; let correct=false; try{correct=qq.validator(ans)}catch{} const working=hasWorking(ans); progress.checked[qq.id]=true; if(correct){progress.correctStreak+=1; progress.maxStreak=Math.max(progress.maxStreak||0,progress.correctStreak); progress.result[qq.id]={correctness:'correct',methodQuality:working?'strong':'missing'}; if(working){progress.feedback[qq.id]=`Correct.\n\nWhat went well:\n- Your final answer is correct.\n- Your method/explanation is visible.\n\nWhat to improve:\n- Keep making each step neat and easy to follow.\n\nNext step:\n- Try the next question.`; showRewardAnimation('🏆 Excellent — correct answer and strong working.');} else {progress.feedback[qq.id]=`Correct.\n\nWhat went well:\n- Your final answer is correct.\n\nWhat to improve:\n- Add more working or explanation next time.\n\nNext step:\n- Try rewriting the method in one or two lines.`; showRewardAnimation('✨ Correct answer — nice work. Add working next time for a bigger reward.');}} else {const partly=ans.length>8; progress.correctStreak=0; progress.result[qq.id]={correctness:partly?'partly':'wrong',methodQuality:working?'partial':'missing'}; if(partly){progress.feedback[qq.id]=`Partly correct.\n\nWhat went well:\n- You have started the question and shown some thinking.\n\nWhat to improve:\n- The final answer is not correct yet.\n\nNext step:\n- Check the key step again.\n- Hint: ${qq.notes}`; showRewardAnimation('🌱 Close — you are partly right. Keep going.');} else {progress.feedback[qq.id]=`Not correct yet.\n\nWhat went well:\n- You attempted the question.\n\nWhat to improve:\n- The final answer is not correct yet.\n\nNext step:\n- Hint: ${qq.notes}`; showRewardAnimation('🌱 Keep trying — you can fix this.');}} saveProgress(); renderAll();}
-function renderTop(){if(!bankData) return; byId('bankTitle').textContent=bankData.title; byId('bankIntro').textContent=bankData.intro; byId('topicBadge').textContent=`${bankData.topic} · ${difficultyMode}`; byId('stepBadge').textContent=`Question ${currentIndex+1} / ${bankData.questions.length}`; byId('streakBadge').textContent=`Streak ${progress.correctStreak||0}`;}
-function renderQuestion(){if(!bankData) return; const qq=bankData.questions[currentIndex]; byId('subjectBadge').textContent=qq.subject; byId('levelBadge').textContent=qq.level; byId('questionTitle').textContent=qq.title; byId('questionText').textContent=qq.prompt; byId('answerBox').value=progress.answers[qq.id]||''; byId('feedbackBox').textContent=progress.feedback[qq.id]||'No feedback yet.'; const result=progress.result[qq.id]; if(result){if(result.correctness==='correct'){if(result.methodQuality==='strong') renderDirectResult('correct','Correct — and your working/explanation is strong.'); else renderDirectResult('correct','Correct — your answer is right. Add working next time.');} else if(result.correctness==='partly') renderDirectResult('partly','Partly correct — you are close, but something still needs fixing.'); else renderDirectResult('wrong','Not correct yet — try again using the feedback below.');} else byId('resultBox').classList.add('hidden');}
-function renderMap(){const wrap=byId('mapWrap'); wrap.innerHTML=''; if(!bankData) return; bankData.questions.forEach((qq,idx)=>{const item=document.createElement('div'); item.className='map-item'+(idx===currentIndex?' active':''); const done=progress.checked[qq.id]?'Checked':'Not checked yet'; item.innerHTML=`<div class="badges"><span class="badge">${idx+1}</span><span class="badge subject">${qq.subject}</span></div><div style="font-size:14px;font-weight:900;margin-top:8px">${qq.title}</div><div class="tiny">${qq.level} · ${done}</div>`; item.onclick=()=>{currentIndex=idx; renderAll()}; wrap.appendChild(item)})}
-function renderAll(){renderTop(); renderQuestion(); renderMap(); byId('prevBtn').disabled=currentIndex===0; byId('nextBtn').disabled=!bankData||currentIndex>=bankData.questions.length-1;}
-async function attemptLogin(){const password=byId('passwordInput').value; byId('loginError').textContent=''; try{await callLogin(password); plannerPassword=password; sessionStorage.setItem(PASSWORD_STORAGE,password); byId('loginScreen').classList.add('hidden'); byId('appScreen').classList.remove('hidden');}catch(err){byId('loginError').textContent=err.message}}
-function bind(){byId('loginBtn').onclick=attemptLogin; byId('passwordInput').addEventListener('keydown',e=>{if(e.key==='Enter') attemptLogin()}); byId('logoutBtn').onclick=()=>{sessionStorage.removeItem(PASSWORD_STORAGE); location.reload()}; byId('generateBankBtn').onclick=async()=>{await generateBank(false,'normal')}; byId('newBankBtn').onclick=async()=>{selectedTopic=byId('topicInput').value.trim()||byId('strandSelect').value; selectedStrand=deriveStrand(); localStorage.removeItem(bankKey(selectedStrand,selectedTopic,difficultyMode)); localStorage.removeItem(progressKey(selectedStrand,selectedTopic,difficultyMode)); currentIndex=0; await generateBank(true,difficultyMode)}; byId('easierBtn').onclick=async()=>{await generateBank(true,'easier')}; byId('harderBtn').onclick=async()=>{await generateBank(true,'harder')}; byId('moreBtn').onclick=async()=>{await appendMoreQuestions()}; byId('prevBtn').onclick=()=>{if(currentIndex>0){currentIndex-=1; renderAll()}}; byId('nextBtn').onclick=()=>{if(bankData&&currentIndex<bankData.questions.length-1){currentIndex+=1; renderAll()}}; byId('saveBtn').onclick=()=>{if(!bankData) return; const qq=bankData.questions[currentIndex]; progress.answers[qq.id]=byId('answerBox').value; saveProgress(); setStatus('Draft saved')}; byId('checkBtn').onclick=checkCurrentAnswer; byId('answerBox').addEventListener('input',()=>{if(!bankData) return; const qq=bankData.questions[currentIndex]; progress.answers[qq.id]=byId('answerBox').value; saveProgress()});}
-async function boot(){bind(); const savedPassword=sessionStorage.getItem(PASSWORD_STORAGE); if(savedPassword){byId('passwordInput').value=savedPassword; await attemptLogin()}}
-boot();
+/* ══════════════════════════════════════════
+   CONFIG
+══════════════════════════════════════════ */
+const PASSWORD    = "iamazing";
+const UNLOCK_KEY  = "siennaQuestUnlocked2";
+const STORE_KEY   = "siennaQuestData_v3";
+const BANK_PFX    = "sienna-bank-v3-";
+const PROG_PFX    = "sienna-prog-v3-";
+const WORKING_MIN = 35;
+
+/* ══════════════════════════════════════════
+   STATE
+══════════════════════════════════════════ */
+let plannerPass   = "";
+let currentSubj   = "maths";   // "maths" | "english"
+let selectedTopic = "";
+let selectedStr   = "all";
+let diffMode      = "normal";
+let bankData      = null;
+let progress      = null;
+let currentIdx    = 0;
+let appendCtr     = 1;
+let currentConf   = 0;
+let journalFilter = "all";
+
+/* ══════════════════════════════════════════
+   PERSIST
+══════════════════════════════════════════ */
+function loadGlobal(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY)||'{}'); }catch{ return {}; } }
+function saveGlobal(d){ localStorage.setItem(STORE_KEY, JSON.stringify(d)); }
+function getOrCreate(){
+  const d=loadGlobal();
+  if(!d.mistakes)   d.mistakes=[];
+  if(!d.streakDays) d.streakDays=[];
+  if(!d.bestStreak) d.bestStreak=0;
+  if(!d.totalQ)     d.totalQ=0;
+  if(!d.sessionsQ)  d.sessionsQ={};
+  return d;
+}
+function today(){ return new Date().toISOString().slice(0,10); }
+function markDayDone(){ const d=getOrCreate(); const t=today(); if(!d.streakDays.includes(t)){ d.streakDays.push(t); saveGlobal(d); } }
+function computeStreak(){
+  const d=getOrCreate(); const days=[...new Set(d.streakDays)].sort();
+  if(!days.length) return 0;
+  let streak=0; let cur=new Date(today());
+  for(let i=0;i<365;i++){
+    const s=cur.toISOString().slice(0,10);
+    if(days.includes(s)){ streak++; cur.setDate(cur.getDate()-1); }
+    else if(i===0) break;
+    else break;
+  }
+  return streak;
+}
+function incrementTodayQ(){
+  const d=getOrCreate(); const t=today();
+  d.totalQ=(d.totalQ||0)+1;
+  d.sessionsQ[t]=(d.sessionsQ[t]||0)+1;
+  if(d.sessionsQ[t]>=5) markDayDone();
+  saveGlobal(d);
+}
+function saveMistake(q, answerText, subj){
+  const d=getOrCreate();
+  if(!d.mistakes.some(m=>m.qId===q.id)){
+    d.mistakes.push({qId:q.id,title:q.title,prompt:q.prompt,notes:q.notes,myAnswer:answerText,level:q.level,subject:subj||currentSubj,reflection:"",date:today()});
+    saveGlobal(d);
+  }
+}
+
+/* ══════════════════════════════════════════
+   LOCK
+══════════════════════════════════════════ */
+function unlock(){
+  const v=document.getElementById('pwInput').value.trim();
+  const err=document.getElementById('lockErr');
+  if(v===PASSWORD){
+    plannerPass=v; sessionStorage.setItem(UNLOCK_KEY,v);
+    const ls=document.getElementById('lockScreen'); ls.classList.add('out');
+    setTimeout(()=>{ ls.style.display='none'; document.getElementById('app').classList.remove('hidden'); boot(); },430);
+  } else {
+    err.textContent='Incorrect password. Try again.';
+    err.classList.remove('shake'); void err.offsetWidth; err.classList.add('shake');
+    document.getElementById('pwInput').value=''; document.getElementById('pwInput').focus();
+  }
+}
+function doLock(){ sessionStorage.removeItem(UNLOCK_KEY); location.reload(); }
+
+/* ══════════════════════════════════════════
+   TABS
+══════════════════════════════════════════ */
+function showTab(name){
+  ['practice','journal','streak'].forEach(t=>{
+    document.getElementById('tab'+cap(t)).classList.add('hidden');
+    const tb=document.getElementById('tb'+cap(t));
+    if(tb) tb.classList.remove('active-tab');
+  });
+  document.getElementById('tab'+cap(name)).classList.remove('hidden');
+  const tb=document.getElementById('tb'+cap(name));
+  if(tb) tb.classList.add('active-tab');
+  if(name==='journal') renderJournal();
+  if(name==='streak')  renderStreakTab();
+}
+function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+
+/* ══════════════════════════════════════════
+   SUBJECT SWITCH
+══════════════════════════════════════════ */
+function switchSubject(subj){
+  currentSubj=subj;
+  document.getElementById('subjMaths').classList.toggle('active',subj==='maths');
+  document.getElementById('subjEnglish').classList.toggle('active',subj==='english');
+  document.getElementById('mathsControls').classList.toggle('hidden',subj!=='maths');
+  document.getElementById('englishControls').classList.toggle('hidden',subj!=='english');
+  document.getElementById('questArea').classList.add('hidden');
+  bankData=null; progress=null;
+}
+
+/* ══════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════ */
+let toastT=null;
+function showToast(msg){ const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove('show'),2400); }
+
+/* ══════════════════════════════════════════
+   STREAK BANNER
+══════════════════════════════════════════ */
+function renderBanner(){
+  const d=getOrCreate(); const streak=computeStreak(); const todayCount=d.sessionsQ[today()]||0;
+  document.getElementById('sBannerStreak').textContent=streak;
+  document.getElementById('sBannerToday').textContent=todayCount;
+  document.getElementById('sBannerTotal').textContent=d.totalQ||0;
+  document.getElementById('streakMsg').textContent=todayCount>=5
+    ? `Today: ✅ done! Streak: ${streak} days.`
+    : `Answer ${Math.max(0,5-todayCount)} more question${5-todayCount===1?'':'s'} to count today towards your streak.`;
+}
+
+/* ══════════════════════════════════════════
+   MATHS LIBRARY
+══════════════════════════════════════════ */
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const pick=arr=>arr[rand(0,arr.length-1)];
+const shuffleArr=arr=>[...arr].sort(()=>Math.random()-.5);
+function gcd(a,b){ while(b){[a,b]=[b,a%b];} return Math.abs(a); }
+function frac(n,d){ const g=gcd(n,d);n/=g;d/=g;if(d<0){n=-n;d=-d;} return d===1?String(n):`${n}/${d}`; }
+function normAns(s){ return String(s||"").toLowerCase().trim().replace(/\s+/g,'').replace(/\\/g,'').replace(/\*/g,'').replace(/,/g,'').replace(/−/g,'-'); }
+function stripVar(s){ return normAns(s).replace(/^[a-z]=/,''); }
+function extractNum(s){ const m=String(s||"").trim().toLowerCase().match(/^(-?\d+(?:\.\d+)?)\s*([a-z%²³\/]*)$/i); if(!m)return null; return{value:Number(m[1]),unit:m[2]||""}; }
+function evalFrac(str){ const m=String(str).match(/^(-?\d+)\/(\d+)$/); if(!m)return null; return Number(m[1])/Number(m[2]); }
+function surdNorm(s){ return normAns(s).replace(/sqrt\(/g,'√').replace(/sqrt/g,'√').replace(/\)/g,''); }
+const intVal=n=>ans=>stripVar(ans)===String(n);
+const decVal=(exp,tol=0.01)=>ans=>{ const v=Number(stripVar(ans)); return !isNaN(v)&&Math.abs(v-exp)<=tol; };
+const anyOf=list=>{ const s=new Set(list.map(normAns)); return ans=>s.has(normAns(ans)); };
+const numUnit=(exp,units=[])=>ans=>{ const p=extractNum(ans); if(!p){const v=Number(stripVar(ans));return !isNaN(v)&&Math.abs(v-exp)<1e-9;} if(Math.abs(p.value-exp)>=1e-9)return false; return !units.length||units.includes(p.unit); };
+const fracVal=str=>ans=>{ const raw=stripVar(ans); if(raw===normAns(str))return true; const p=extractNum(raw); if(p&&!p.unit){const t=evalFrac(str);return t!==null&&Math.abs(p.value-t)<1e-9;} if(raw.endsWith('%')){const v=Number(raw.replace('%',''));const t=evalFrac(str);return t!==null&&Math.abs(v/100-t)<1e-9;} return false; };
+const surdVal=list=>{ const s=new Set(list.map(surdNorm)); return ans=>s.has(surdNorm(ans)); };
+function hasWorking(text){ return String(text||"").trim().length>=WORKING_MIN; }
+function mq(subj,lvl,title,prompt,validator,notes,opts={}){
+  return{id:`mq-${Math.random().toString(36).slice(2,9)}`,subject:subj,level:lvl,title,prompt,validator,notes,expectedUnit:opts.expectedUnit||null,qtype:'maths'};
+}
+const MLIB={
+  number:[
+    ()=>{const a=rand(120,900),b=rand(20,90);return mq("Mathematics","Year 8 foundation","Addition",`Calculate ${a} + ${b}.`,intVal(a+b),`Correct answer is ${a+b}.`);},
+    ()=>{const a=rand(300,900),b=rand(40,250);return mq("Mathematics","Year 8 foundation","Subtraction",`Calculate ${a} - ${b}.`,intVal(a-b),`Correct answer is ${a-b}.`);},
+    ()=>{const a=rand(12,29),b=rand(3,12);return mq("Mathematics","Year 8 foundation","Multiplication",`Calculate ${a} × ${b}.`,intVal(a*b),`Correct answer is ${a*b}.`);},
+    ()=>{const b=rand(3,12),qv=rand(8,24);return mq("Mathematics","Year 8 foundation","Division",`Calculate ${b*qv} ÷ ${b}.`,intVal(qv),`Correct answer is ${qv}.`);},
+    ()=>{const a=rand(2,9),b=rand(2,5);return mq("Mathematics","Year 8 challenge","Order of operations",`Evaluate ${a} + ${b} × ${a+1}.`,intVal(a+b*(a+1)),"Use multiplication before addition.");},
+    ()=>{const a=rand(2,9),b=rand(2,8),c=rand(2,6);return mq("Mathematics","Year 8 challenge","Order of operations",`Evaluate (${a} + ${b}) × ${c}.`,intVal((a+b)*c),"Evaluate brackets first.");}
+  ],
+  fractions:[
+    ()=>{const d=pick([2,4,5,8,10]);const n=rand(1,d-1);return mq("Mathematics","Year 8 foundation","Fraction to decimal",`Write ${n}/${d} as a decimal.`,decVal(n/d,1e-9),`Correct answer is ${n/d}.`);},
+    ()=>{const dec=pick([0.25,0.5,0.75,0.2,0.4,0.8,1.25]);return mq("Mathematics","Year 8 challenge","Decimal to percentage",`Write ${dec} as a percentage.`,anyOf([`${dec*100}%`,`${dec*100}`]),`Correct answer is ${dec*100}%.`);},
+    ()=>{const whole=rand(20,180),pct=pick([5,10,15,20,25,30,40,50]);return mq("Mathematics","Year 8 challenge","Percentage of an amount",`Find ${pct}% of ${whole}.`,decVal(whole*pct/100,1e-9),`Correct answer is ${whole*pct/100}.`);},
+    ()=>{const price=pick([40,60,80,120,150]),pct=pick([10,15,20,25]);return mq("Mathematics","Year 9 challenge","Percentage decrease",`A price of $${price} is reduced by ${pct}%. What is the new price?`,decVal(price*(100-pct)/100,0.01),`Correct answer is $${price*(100-pct)/100}.`);},
+  ],
+  ratio:[
+    ()=>{const a=pick([2,3,4,5]),b=pick([3,4,5,6]),k=rand(3,8);return mq("Mathematics","Year 8 challenge","Simplify a ratio",`Write ${a*k}:${b*k} in simplest form.`,anyOf([`${a}:${b}`]),`Correct answer is ${a}:${b}.`);},
+    ()=>{const dist=rand(120,480),time=pick([2,3,4,5,6]);return mq("Mathematics","Year 8 challenge","Unit rate",`A car travels ${dist} km in ${time} hours. What is the average speed in km/h?`,numUnit(dist/time,["km/h","kmh"]),`Correct answer is ${dist/time} km/h.`,{expectedUnit:"km/h"});}
+  ],
+  integers:[
+    ()=>{const a=rand(-12,-2),b=rand(2,12);return mq("Mathematics","Year 8 foundation","Integer addition",`Calculate ${a} + ${b}.`,intVal(a+b),`Correct answer is ${a+b}.`);},
+    ()=>{const a=pick([2,3,5]),m=pick([2,3,4]),n=pick([2,3]);return mq("Mathematics","Year 9 challenge","Index laws",`Simplify ${a}^${m} × ${a}^${n}.`,anyOf([`${a}^${m+n}`,String(a**(m+n))]),`Using index laws: ${a}^${m+n}.`);},
+    ()=>{const a=pick([2,3,5]),m=pick([4,5,6]),n=pick([2,3]);return mq("Mathematics","Year 9 challenge","Index laws",`Simplify ${a}^${m} ÷ ${a}^${n}.`,anyOf([`${a}^${m-n}`,String(a**(m-n))]),`Using index laws: ${a}^${m-n}.`);}
+  ],
+  algebra:[
+    ()=>{const x=rand(3,15),b=rand(3,12);return mq("Mathematics","Year 8 challenge","One-step equation",`Solve x + ${b} = ${x+b}.`,intVal(x),`Correct answer is x = ${x}.`);},
+    ()=>{const x=rand(3,15),a=pick([2,3,4,5]);return mq("Mathematics","Year 8 challenge","One-step equation",`Solve ${a}x = ${a*x}.`,intVal(x),`Correct answer is x = ${x}.`);},
+    ()=>{const x=rand(2,12),a=pick([2,3,4]),b=rand(2,10);return mq("Mathematics","Year 8–9 challenge","Two-step equation",`Solve ${a}x + ${b} = ${a*x+b}.`,intVal(x),`Correct answer is x = ${x}.`);},
+    ()=>{const a=rand(2,8),b=rand(2,10);return mq("Mathematics","Year 8 challenge","Expand expression",`Expand ${a}(x + ${b}).`,anyOf([`${a}x+${a*b}`,`${a}x + ${a*b}`]),`Correct expansion is ${a}x + ${a*b}.`);},
+    ()=>{const a=pick([2,3,4]),b=pick([3,5,6]);return mq("Mathematics","Year 8 challenge","Collect like terms",`Simplify ${a}x + ${b}x.`,anyOf([`${a+b}x`,`${a+b} x`]),`Correct answer is ${a+b}x.`);},
+    ()=>{const x=rand(2,10),a=pick([2,3,4]),b=rand(1,8),c=pick([2,3]);return mq("Mathematics","Year 9 challenge","Equation with x on both sides",`Solve ${a}x + ${b} = ${c}x + ${a*x+b-c*x}.`,intVal(x),`Correct answer is x = ${x}.`);}
+  ],
+  graphs:[
+    ()=>{const m=pick([2,3,4]),c=pick([1,2,5,-1]);return mq("Mathematics","Year 8–9 challenge","Gradient from rule",`For y = ${m}x ${c>=0?'+':''}${c}, what is the gradient?`,intVal(m),`Correct answer is ${m}.`);},
+    ()=>{const a=rand(2,10);return mq("Mathematics","Year 8 foundation","Pattern rule",`The pattern is ${a}, ${a+3}, ${a+6}, ${a+9}, ... What is the next term?`,intVal(a+12),`Add 3 each time → ${a+12}.`);},
+    ()=>{const x=rand(2,7),m=pick([2,3,4]),c=pick([1,2,5]);return mq("Mathematics","Year 8–9 challenge","Substitute into a rule",`If y = ${m}x + ${c}, find y when x = ${x}.`,intVal(m*x+c),`Correct answer is ${m*x+c}.`);}
+  ],
+  surds:[
+    ()=>mq("Mathematics","Year 8–9 challenge","Simplify a surd","Simplify √50 into the form a√b.",surdVal(["5√2","5sqrt2"]),"Correct answer is 5√2."),
+    ()=>mq("Mathematics","Year 8–9 challenge","Simplify a surd","Simplify √72 into the form a√b.",surdVal(["6√2","6sqrt2"]),"Correct answer is 6√2."),
+    ()=>mq("Mathematics","Year 8–9 challenge","Add surds","Simplify 2√3 + 5√3.",surdVal(["7√3","7sqrt3"]),"Correct answer is 7√3."),
+    ()=>mq("Mathematics","Year 8–9 challenge","Subtract surds","Simplify 9√2 - 4√2.",surdVal(["5√2","5sqrt2"]),"Correct answer is 5√2."),
+    ()=>mq("Mathematics","Year 8–9 challenge","Multiply surds","Simplify √3 × √12.",anyOf(["6"]),"Correct answer is 6."),
+    ()=>mq("Mathematics","Year 8–9 challenge","Mixed simplification","Simplify 3√8.",surdVal(["6√2","6sqrt2"]),"Correct answer is 6√2.")
+  ],
+  pythagoras:[
+    ()=>{const t=pick([[3,4,5],[5,12,13],[8,15,17],[7,24,25]]);return mq("Mathematics","Year 8–9 challenge","Find the hypotenuse",`A right triangle has shorter sides ${t[0]} cm and ${t[1]} cm. Find the hypotenuse.`,numUnit(t[2],["cm"]),`Correct answer is ${t[2]} cm.`,{expectedUnit:"cm"});},
+    ()=>{const t=pick([[5,12,13],[8,15,17],[7,24,25]]);return mq("Mathematics","Year 8–9 challenge","Find a shorter side",`A right triangle has hypotenuse ${t[2]} cm and one shorter side ${t[0]} cm. Find the other shorter side.`,numUnit(t[1],["cm"]),`Correct answer is ${t[1]} cm.`,{expectedUnit:"cm"});}
+  ],
+  measurement:[
+    ()=>{const l=rand(5,18),w=rand(4,15);return mq("Mathematics","Year 8 foundation","Rectangle perimeter",`Find the perimeter of a rectangle: length ${l} cm, width ${w} cm.`,numUnit(2*(l+w),["cm"]),`Correct: ${2*(l+w)} cm.`,{expectedUnit:"cm"});},
+    ()=>{const l=rand(5,18),w=rand(4,15);return mq("Mathematics","Year 8 foundation","Rectangle area",`Find the area of a rectangle: length ${l} cm, width ${w} cm.`,numUnit(l*w,["cm²","cm2"]),`Correct: ${l*w} cm².`,{expectedUnit:"cm²"});},
+    ()=>{const l=rand(3,10),w=rand(3,10),h=rand(3,10);return mq("Mathematics","Year 9 challenge","Volume",`Find the volume of a rectangular prism: ${l} cm × ${w} cm × ${h} cm.`,numUnit(l*w*h,["cm³","cm3"]),`Correct: ${l*w*h} cm³.`,{expectedUnit:"cm³"});}
+  ],
+  geometry:[
+    ()=>{const a=rand(30,120);return mq("Mathematics","Year 8 foundation","Supplementary angles",`Two angles are supplementary. One is ${a}°. Find the other.`,intVal(180-a),`Correct: ${180-a}°.`);},
+    ()=>{const a=rand(30,80);return mq("Mathematics","Year 8 foundation","Complementary angles",`Two angles are complementary. One is ${a}°. Find the other.`,intVal(90-a),`Correct: ${90-a}°.`);},
+    ()=>{const a=rand(50,80),b=rand(40,70);return mq("Mathematics","Year 8–9 challenge","Angles in a triangle",`A triangle has angles ${a}° and ${b}°. Find the third angle.`,intVal(180-a-b),`Correct: ${180-a-b}°.`);},
+    ()=>{const n=pick([5,6,8]);return mq("Mathematics","Year 8–9 challenge","Interior angle sum",`Find the sum of interior angles of a ${n}-sided polygon.`,intVal((n-2)*180),`Correct: ${(n-2)*180}°.`);}
+  ],
+  stats:[
+    ()=>{const arr=Array.from({length:5},()=>rand(2,20)).sort((a,b)=>a-b);return mq("Mathematics","Year 8 foundation","Mean",`Find the mean of: ${arr.join(", ")}.`,decVal(arr.reduce((a,b)=>a+b,0)/5,1e-9),"Add all values and divide by 5.");},
+    ()=>{const arr=Array.from({length:5},()=>rand(2,20)).sort((a,b)=>a-b);return mq("Mathematics","Year 8 foundation","Median",`Find the median of: ${arr.join(", ")}.`,intVal(arr[2]),`Correct: ${arr[2]}.`);},
+    ()=>{const rep=rand(3,9);const arr=[rep,rep,rand(10,15),rand(16,20),rand(21,25)].sort((a,b)=>a-b);return mq("Mathematics","Year 8 foundation","Mode",`Find the mode of: ${arr.join(", ")}.`,intVal(rep),`Correct: ${rep}.`);}
+  ]
+};
+
+const MALIASES={
+  "arithmetic":"number","number":"number","fractions":"fractions","decimals":"fractions",
+  "percentages":"fractions","ratio":"ratio","rate":"ratio","integers":"integers","indices":"integers",
+  "algebra":"algebra","equations":"algebra","graphs":"graphs","surd":"surds","surds":"surds",
+  "pythagoras":"pythagoras","measurement":"measurement","geometry":"geometry","angles":"geometry",
+  "statistics":"stats","probability":"stats","data":"stats"
+};
+function deriveStrand(){
+  const t=document.getElementById('topicInput').value.trim().toLowerCase();
+  if(t&&MALIASES[t]) return MALIASES[t];
+  return document.getElementById('strandSelect').value||'all';
+}
+function makeMPool(strand){
+  if(strand==='all') return Object.values(MLIB).flat();
+  return MLIB[strand]||MLIB.algebra;
+}
+function filterDiff(pool,mode){
+  if(mode==='normal') return pool;
+  return pool.filter(fn=>{
+    let lvl=''; try{lvl=fn().level.toLowerCase();}catch{}
+    if(mode==='easier') return /foundation|year 8 f/i.test(lvl);
+    if(mode==='harder') return /challenge|year 9/i.test(lvl);
+    return true;
+  });
+}
+function buildMathsBank(strand,topic,mode,count=10){
+  let pool=makeMPool(strand);
+  let filt=filterDiff(pool,mode);
+  if(filt.length<5) filt=pool;
+  const gens=shuffleArr(filt); const qs=[]; let i=0;
+  while(qs.length<count){ qs.push(gens[i%gens.length]()); i++; }
+  return{topic:topic||strand,title:`${topic||strand} Topic Bank`,intro:`${mode} maths · ${topic||strand}`,questions:qs,subject:'maths'};
+}
+
+/* ══════════════════════════════════════════
+   ENGLISH LIBRARY
+══════════════════════════════════════════ */
+// qtype: 'short' (keyword validator) | 'extended' (keywords shown, AI-style feedback)
+function eq(lvl,title,prompt,validator,notes,opts={}){
+  return{
+    id:`eq-${Math.random().toString(36).slice(2,9)}`,
+    subject:'English',level:lvl,title,prompt,validator,notes,
+    qtype: opts.qtype||'short',
+    keywords: opts.keywords||[],
+    extNote: opts.extNote||null,
+    expectedUnit:null
+  };
+}
+// keyword checker — answer must contain N of the listed keywords (case-insensitive)
+function kwVal(keywords, minMatch){
+  return ans=>{
+    const t=ans.toLowerCase();
+    const found=keywords.filter(k=>t.includes(k.toLowerCase()));
+    return found.length>=minMatch;
+  };
+}
+// extended: always "passes" if length >= threshold (teacher reviews)
+function extVal(minLen=60){ return ans=>String(ans||"").trim().length>=minLen; }
+
+const ELIB={
+  grammar:[
+    ()=>eq("Year 8 foundation","Identify the error",
+      `Which sentence is punctuated correctly?\n\nA) The dog ran quickly, it jumped over the fence.\nB) The dog ran quickly; it jumped over the fence.\nC) The dog ran quickly it jumped over the fence.\n\nWrite the letter and explain why.`,
+      kwVal(["b","semicolon","semicolons","joins","independent","clause"],2),
+      "Answer: B. A semicolon correctly joins two independent clauses. A is a comma splice; C has no punctuation.",
+      {qtype:'short'}),
+    ()=>eq("Year 8 foundation","Apostrophes",
+      `Rewrite this sentence correctly:\n\n"Its a beautiful day and the childs laughter filled the park."\n\nFix all apostrophe errors.`,
+      kwVal(["it's","child's"],2),
+      "Correct: It's a beautiful day and the child's laughter filled the park.",
+      {qtype:'short'}),
+    ()=>eq("Year 8 challenge","Active and passive voice",
+      `Rewrite this sentence in the active voice:\n\n"The experiment was conducted by the scientists."\n\nThen explain in one sentence what the difference between active and passive voice is.`,
+      kwVal(["scientists","conducted","subject","active","performs","verb"],2),
+      "Active: The scientists conducted the experiment. Active voice: subject performs the action.",
+      {qtype:'short'}),
+    ()=>eq("Year 8 foundation","Sentence types",
+      `Label each sentence type: simple, compound, or complex.\n\n1) She laughed.\n2) She laughed and he smiled.\n3) Although she was tired, she kept working.\n\nWrite the labels in order.`,
+      kwVal(["simple","compound","complex"],3),
+      "1) Simple (one clause). 2) Compound (two main clauses joined by 'and'). 3) Complex (main clause + subordinate clause).",
+      {qtype:'short'}),
+    ()=>eq("Year 9 challenge","Subordinating conjunctions",
+      `Write three sentences using three different subordinating conjunctions (e.g. although, because, unless, while, since, if). Underline or label the conjunction in each.`,
+      extVal(50),
+      "Look for a range of conjunctions and check they begin subordinate clauses.",
+      {qtype:'extended',extNote:"Write three complete sentences, each using a different subordinating conjunction. Label or underline the conjunction.",keywords:["although","because","unless","while","since","if","when","after","before","until"]}),
+    ()=>eq("Year 8 challenge","Colons and semicolons",
+      `Explain the difference between a colon (:) and a semicolon (;). Give one example sentence for each.`,
+      kwVal(["colon","semicolon","list","example","introduces","joins","clause"],3),
+      "Colon introduces a list or explanation. Semicolon joins two related independent clauses.",
+      {qtype:'extended',extNote:"Your answer should explain both punctuation marks and include an example sentence for each.",keywords:["colon","semicolon","example","introduces","list","joins"]}),
+  ],
+  vocabulary:[
+    ()=>{
+      const pairs=[["benevolent","kind and generous"],["melancholy","a feeling of sadness"],["tenacious","determined and persistent"],["ambiguous","having more than one meaning"],["eloquent","expressing ideas clearly and fluently"],["resilient","able to recover quickly from difficulties"],["meticulous","extremely careful about details"],["profound","very deep or serious"]];
+      const [word,meaning]=pick(pairs);
+      return eq("Year 8 challenge","Word meaning",
+        `What does the word "${word}" mean?\n\nWrite the definition in your own words and use it in a sentence.`,
+        kwVal(meaning.split(" ").filter(w=>w.length>3),2),
+        `${word}: ${meaning}.`,
+        {qtype:'short'});
+    },
+    ()=>eq("Year 8 challenge","Formal vs informal",
+      `Rewrite this informal sentence in formal language:\n\n"We're gonna check out the results and get back to you ASAP."\n\nThen list two differences between formal and informal language.`,
+      kwVal(["formal","informal","will","results","examine","shortly","contact","review"],2),
+      "Example: 'We will review the results and contact you shortly.' Formal language avoids contractions and slang.",
+      {qtype:'short'}),
+    ()=>eq("Year 9 challenge","Connotation",
+      `The words 'slender', 'thin', and 'scrawny' all have similar meanings.\n\nExplain what connotation means, then explain the different connotations of these three words.`,
+      kwVal(["connotation","positive","negative","neutral","slender","scrawny","thin","implication","association"],3),
+      "Connotation: the implied meaning or feeling of a word. Slender = positive; thin = neutral; scrawny = negative.",
+      {qtype:'extended',extNote:"Explain connotation and describe whether each word has a positive, neutral or negative implication. Use evidence.",keywords:["connotation","positive","negative","neutral","implication"]}),
+    ()=>eq("Year 8 challenge","Synonyms and precision",
+      `Choose the more precise word for each context and explain your choice:\n\n1) The child (walked / trudged) home after a long day.\n2) She spoke (loudly / bellowed) across the stadium.\n3) He was (happy / elated) when he won the prize.`,
+      kwVal(["trudged","bellowed","elated","precise","connotation","specific","implies","suggests","stronger"],3),
+      "Trudged, bellowed, elated — all carry stronger, more precise meaning. Encourage explanation of connotation.",
+      {qtype:'short'}),
+    ()=>eq("Year 8 foundation","Prefixes and suffixes",
+      `For each word, identify the prefix or suffix and explain how it changes the meaning:\n\n1) unhappy\n2) careless\n3) preview\n4) government`,
+      kwVal(["prefix","suffix","un","less","pre","ment","meaning","changes","not","without","before"],3),
+      "un- = not; -less = without; pre- = before; -ment = state/result of an action.",
+      {qtype:'short'}),
+  ],
+  techniques:[
+    ()=>{
+      const techniques=[
+        {name:"simile",prompt:'Identify the technique and explain its effect:\n\n"Her smile was like the sun breaking through clouds after a storm."\n\nWhat technique is used? What does it make the reader feel?',keywords:["simile","comparison","like","as","effect","feel","warmth","hope","happiness","connects"]},
+        {name:"metaphor",prompt:'Identify the technique and explain its effect:\n\n"The classroom was a zoo."\n\nWhat technique is used? What does it suggest?',keywords:["metaphor","comparison","not literally","chaotic","noisy","wild","implies","suggests","effect"]},
+        {name:"personification",prompt:'Identify the technique and explain its effect:\n\n"The wind whispered secrets through the trees."\n\nWhat technique is used? Why might a writer use it?',keywords:["personification","human","quality","wind","atmosphere","mood","effect","vivid","whispered"]},
+        {name:"alliteration",prompt:'Identify the technique and explain its effect:\n\n"Peter Piper picked a peck of pickled peppers."\n\nWhat is the name of this technique and what effect does it create for a reader?',keywords:["alliteration","consonant","same","sound","rhythm","memorable","emphasis","effect"]},
+      ];
+      const t=pick(techniques);
+      return eq("Year 8 challenge","Identify the technique",t.prompt,kwVal(t.keywords,3),`Technique: ${t.name}. Look for an explanation of effect.`,{qtype:'short'});
+    },
+    ()=>eq("Year 9 challenge","Analyse a technique with evidence",
+      `Read the following passage and answer the question below:\n\n"The old house crouched at the end of the lane, its windows like hollow eyes staring into the dark."\n\nIdentify TWO techniques used. For each, quote the technique and explain what effect it creates on the reader.`,
+      kwVal(["personification","simile","crouched","eyes","effect","reader","creates","suggests","atmosphere","tension","fear","hollow"],4),
+      "Personification: 'crouched' — makes house seem threatening. Simile: 'like hollow eyes' — creates eerie, sinister feeling.",
+      {qtype:'extended',extNote:"Use the structure: Technique → Quote → Effect on reader. Do this twice for two different techniques.",keywords:["personification","simile","quote","effect","reader","creates","suggests"]}),
+    ()=>eq("Year 8 challenge","Effect of word choice",
+      `A writer describes a character as 'gazing' rather than 'looking'.\n\nExplain what the word 'gazing' suggests that 'looking' does not, and how this affects the reader's understanding of the character.`,
+      kwVal(["gazing","looking","suggests","implies","longer","thoughtful","deeper","focused","emotion","connotation","effect","reader"],3),
+      "'Gazing' implies a longer, more thoughtful look — suggests the character is emotional, distracted or deeply focused.",
+      {qtype:'short'}),
+    ()=>eq("Year 9 challenge","Discuss the use of imagery",
+      `What is imagery? Explain the difference between visual, auditory and tactile imagery, and give one original example of each.`,
+      kwVal(["imagery","visual","auditory","tactile","sight","sound","touch","sense","example","creates"],4),
+      "Imagery: language that appeals to the senses. Visual (sight), auditory (sound), tactile (touch). Each example should match its type.",
+      {qtype:'extended',extNote:"Define imagery, then explain and give an original example for: visual (sight), auditory (sound), tactile (touch).",keywords:["imagery","visual","auditory","tactile","example","sense"]}),
+  ],
+  teel:[
+    ()=>eq("Year 8 foundation","Understanding TEEL",
+      `Explain what TEEL stands for and what goes in each part of a TEEL paragraph. Use your own words.`,
+      kwVal(["topic","sentence","evidence","explain","link","teel","paragraph","structure","argument","supports"],4),
+      "TEEL: Topic sentence (main idea), Evidence (quote/example), Explain (analyse the evidence), Link (connect back to the argument).",
+      {qtype:'extended',extNote:"Explain each part of TEEL in your own words. You may use an example.",keywords:["topic sentence","evidence","explain","link","paragraph","argument"]}),
+    ()=>eq("Year 8 challenge","Write a TEEL paragraph",
+      `Write a TEEL paragraph responding to the following statement:\n\n"Social media has a negative effect on teenagers."\n\nMake sure your paragraph has a clear topic sentence, evidence or example, an explanation, and a linking sentence back to the argument.`,
+      extVal(80),
+      "Look for: clear topic sentence, specific evidence/example, explanation of how the evidence supports the argument, link sentence.",
+      {qtype:'extended',extNote:"Structure your paragraph clearly:\n• Topic sentence: state your point\n• Evidence: a statistic, example, or quote\n• Explain: analyse how the evidence proves your point\n• Link: connect back to the main argument",
+       keywords:["topic sentence","evidence","explain","link","social media","teenagers","argument","because","therefore"]}),
+    ()=>eq("Year 9 challenge","Improve a weak TEEL paragraph",
+      `Read this paragraph:\n\n"Social media is bad. Many people use it too much. It wastes time. So it is negative."\n\nThis paragraph is weak. Identify THREE problems with it and rewrite it as a strong TEEL paragraph.`,
+      extVal(80),
+      "Problems: no topic sentence with a clear argument, no specific evidence, no explanation, no proper link.",
+      {qtype:'extended',extNote:"First identify 3 specific problems. Then rewrite the full paragraph with a proper topic sentence, specific evidence, explanation, and link.",keywords:["topic sentence","evidence","explain","link","argument","specific","rewrite"]}),
+    ()=>eq("Year 8 challenge","Identify TEEL parts",
+      `Read the paragraph below. Label each sentence as: T (Topic), E (Evidence), E (Explain), or L (Link).\n\n"1) The author uses darkness as a symbol of danger throughout the novel. 2) For example, in Chapter 3, the protagonist says 'I feared what lay beyond the shadows.' 3) This suggests the character associates darkness with uncertainty and threat, creating tension for the reader. 4) Therefore, the use of darkness reinforces the novel's central theme of fear."`,
+      kwVal(["t","topic","e","evidence","explain","l","link","symbol","fear","tension","theme"],3),
+      "1) Topic: 'The author uses darkness as a symbol…' 2) Evidence: 'For example…' 3) Explain: 'This suggests…' 4) Link: 'Therefore…'",
+      {qtype:'short'}),
+  ],
+};
+
+const ENG_STRAND_MAP={'grammar':'grammar','vocabulary':'vocabulary','techniques':'techniques','teel':'teel'};
+function makeEPool(strand){
+  if(strand==='all_eng') return Object.values(ELIB).flat();
+  return ELIB[strand]||ELIB.techniques;
+}
+function buildEngBank(strand,topic,count=10){
+  const pool=shuffleArr(makeEPool(strand));
+  const qs=[]; let i=0;
+  while(qs.length<count){ qs.push(pool[i%pool.length]()); i++; }
+  return{topic:topic||strand||'English',title:`${topic||strand||'English'} Practice`,intro:`English · ${topic||strand||'all skills'}`,questions:qs,subject:'english'};
+}
+
+/* ══════════════════════════════════════════
+   BANK KEYS / PROGRESS
+══════════════════════════════════════════ */
+function safePart(s){ return String(s||"").toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,50)||'none'; }
+function bankKey(subj,str,topic,mode){ return BANK_PFX+subj+'-'+safePart(str)+'-'+safePart(topic)+'-'+mode; }
+function progKey(subj,str,topic,mode){ return PROG_PFX+subj+'-'+safePart(str)+'-'+safePart(topic)+'-'+mode; }
+function loadProgress(subj,str,topic,mode){ const raw=localStorage.getItem(progKey(subj,str,topic,mode)); if(raw){try{return JSON.parse(raw);}catch{}} return{answers:{},working:{},feedback:{},checked:{},result:{},reflections:{},sessionStreak:0,sessionMax:0}; }
+function saveProgress(){ localStorage.setItem(progKey(currentSubj,selectedStr,selectedTopic,diffMode),JSON.stringify(progress)); }
+
+/* ══════════════════════════════════════════
+   GENERATE
+══════════════════════════════════════════ */
+function generateBank(forceNew=false,mode='normal'){
+  selectedTopic=document.getElementById('topicInput').value.trim()||document.getElementById('strandSelect').value;
+  selectedStr=deriveStrand(); diffMode=mode;
+  const key=bankKey('maths',selectedStr,selectedTopic,diffMode);
+  if(!forceNew){ const ex=localStorage.getItem(key); if(ex){ try{ bankData=JSON.parse(ex); progress=loadProgress('maths',selectedStr,selectedTopic,diffMode); currentIdx=0; setStatus('maths','Resumed saved bank.'); showQuest('maths'); renderAll(); return; }catch{} } }
+  bankData=buildMathsBank(selectedStr,selectedTopic,diffMode,10);
+  localStorage.setItem(key,JSON.stringify(bankData));
+  progress=loadProgress('maths',selectedStr,selectedTopic,diffMode); currentIdx=0; appendCtr=1;
+  setStatus('maths','Ready! Show your working before checking.');
+  showQuest('maths'); renderAll();
+}
+function generateEngBank(forceNew=false){
+  selectedTopic=document.getElementById('engTopicInput').value.trim()||document.getElementById('engStrandSelect').value;
+  selectedStr=document.getElementById('engStrandSelect').value; diffMode='normal';
+  const key=bankKey('english',selectedStr,selectedTopic,'normal');
+  if(!forceNew){ const ex=localStorage.getItem(key); if(ex){ try{ bankData=JSON.parse(ex); progress=loadProgress('english',selectedStr,selectedTopic,'normal'); currentIdx=0; setStatus('english','Resumed saved bank.'); showQuest('english'); renderAll(); return; }catch{} } }
+  bankData=buildEngBank(selectedStr,selectedTopic,10);
+  localStorage.setItem(key,JSON.stringify(bankData));
+  progress=loadProgress('english',selectedStr,selectedTopic,'normal'); currentIdx=0; appendCtr=1;
+  setStatus('english','Ready! Plan your answer before writing.');
+  showQuest('english'); renderAll();
+}
+function newBank(){ if(currentSubj==='maths') generateBank(true,diffMode); else generateEngBank(true); }
+function moreQuestions(){
+  if(!bankData) return;
+  let extra;
+  if(currentSubj==='maths') extra=buildMathsBank(selectedStr,selectedTopic,diffMode,10);
+  else extra=buildEngBank(selectedStr,selectedTopic,10);
+  bankData.questions=bankData.questions.concat(extra.questions.map((q,i)=>({...q,id:`${q.id}-m${appendCtr}-${i}`})));
+  appendCtr++; localStorage.setItem(bankKey(currentSubj,selectedStr,selectedTopic,diffMode),JSON.stringify(bankData));
+  setStatus(currentSubj,'Added 10 more questions.'); renderAll();
+}
+function setStatus(subj,t){ const el=document.getElementById(subj==='english'?'engStatus':'mathsStatus'); if(el) el.textContent=t; }
+function showQuest(subj){
+  document.getElementById('questArea').classList.remove('hidden');
+  // update question card header colour for english
+  document.getElementById('qHeader').className='q-header'+(subj==='english'?' english':'');
+  document.getElementById('qBody').className='q-body'+(subj==='english'?' english':'');
+  document.getElementById('qCard').className='card accent-blue';
+}
+
+/* ══════════════════════════════════════════
+   WORKING GATE
+══════════════════════════════════════════ */
+function onWorkingInput(){
+  const val=document.getElementById('workingBox').value;
+  const len=val.trim().length;
+  const pct=Math.min(100,(len/WORKING_MIN)*100);
+  const fill=document.getElementById('workingMeter');
+  const req=document.getElementById('workingReq');
+  const wrap=document.getElementById('checkBtnWrap');
+  fill.style.width=pct+'%';
+  fill.style.background=pct>=100?'var(--sage)':pct>60?'var(--gold)':'var(--rose)';
+  if(pct>=100){ req.textContent='✓ ready'; req.classList.add('met'); wrap.classList.remove('locked'); }
+  else { req.textContent=`required (${Math.max(0,WORKING_MIN-len)} more chars)`; req.classList.remove('met'); wrap.classList.add('locked'); }
+  if(bankData){ const q=bankData.questions[currentIdx]; progress.working[q.id]=val; saveProgress(); }
+}
+
+/* ══════════════════════════════════════════
+   KEYWORD CHIP PREVIEW (English extended)
+══════════════════════════════════════════ */
+function updateKeywordChips(){
+  const q=bankData?.questions[currentIdx];
+  if(!q||!q.keywords||!q.keywords.length){ document.getElementById('keywordRow').classList.add('hidden'); return; }
+  if(q.qtype!=='extended'){ document.getElementById('keywordRow').classList.add('hidden'); return; }
+  document.getElementById('keywordRow').classList.remove('hidden');
+  const ans=document.getElementById('answerBox').value.toLowerCase();
+  const chips=document.getElementById('keywordChips'); chips.innerHTML='';
+  q.keywords.forEach(k=>{
+    const found=ans.includes(k.toLowerCase());
+    const c=document.createElement('span');
+    c.className='kchip '+(found?'found':'missing');
+    c.textContent=(found?'✓ ':'○ ')+k;
+    chips.appendChild(c);
+  });
+}
+
+/* ══════════════════════════════════════════
+   CONFIDENCE + REFLECTION
+══════════════════════════════════════════ */
+function setConfidence(n){
+  currentConf=n;
+  [1,2,3].forEach(i=>{ const b=document.getElementById('conf'+i); b.className='conf-btn'; if(i===n) b.classList.add('selected-'+n); });
+  saveReflection();
+}
+function saveReflection(){
+  if(!bankData) return;
+  const q=bankData.questions[currentIdx];
+  const text=document.getElementById('reflectionBox').value;
+  progress.reflections[q.id]={confidence:currentConf,text};
+  saveProgress();
+}
+
+/* ══════════════════════════════════════════
+   CHECK ANSWER
+══════════════════════════════════════════ */
+async function checkAnswer(){
+  const wrap=document.getElementById('checkBtnWrap');
+  if(wrap.classList.contains('locked')){ showToast('Add your working / planning first.'); return; }
+  const q=bankData.questions[currentIdx];
+  const working=document.getElementById('workingBox').value.trim();
+  const answer=document.getElementById('answerBox').value.trim();
+  if(!answer){ showToast('Write your answer first.'); return; }
+  progress.working[q.id]=working; progress.answers[q.id]=answer;
+
+  let correct=false;
+  try{ correct=q.validator(answer); }catch{}
+
+  let resultType='wrong', resultMsg='', feedbackText='';
+
+  if(q.qtype==='extended'){
+    // Extended: pass if length threshold met; give keyword-based feedback
+    const kwHit=q.keywords?q.keywords.filter(k=>answer.toLowerCase().includes(k.toLowerCase())):[];
+    const kwTotal=q.keywords?q.keywords.length:0;
+    const ratio=kwTotal>0?kwHit.length/kwTotal:1;
+    if(correct && ratio>=0.5){
+      resultType='correct'; resultMsg='✓ Good response — well developed.';
+      feedbackText=`Your answer is well-developed.\n\n${q.notes}\n\nKey elements included: ${kwHit.join(', ')||'several'}.`;
+      progress.sessionStreak=(progress.sessionStreak||0)+1;
+    } else if(correct){
+      resultType='partly'; resultMsg='Your answer has enough length but could include more key ideas.';
+      const missing=q.keywords.filter(k=>!answer.toLowerCase().includes(k.toLowerCase())).slice(0,4);
+      feedbackText=`Good start — your answer has some length but could be more complete.\n\n${q.notes}\n\nTry to include ideas around: ${missing.join(', ')}.`;
+      progress.sessionStreak=0;
+    } else {
+      resultType='wrong'; resultMsg='Your answer needs more development — keep writing.';
+      feedbackText=`Your answer is too brief for this question.\n\n${q.notes}\n\nAim for at least 3–4 full sentences.`;
+      progress.sessionStreak=0; saveMistake(q,answer,currentSubj);
+    }
+  } else {
+    // Short: keyword / exact match
+    const unitOk=!q.expectedUnit||/[a-z%²³]/.test(answer.trim().toLowerCase().replace(/\d+\.?\d*/g,'').trim());
+    if(correct){
+      if(!unitOk){ resultType='partly'; resultMsg='✓ Correct value — include the unit ('+q.expectedUnit+').'; feedbackText=`Your numerical answer is right, but add the unit.\n${q.notes}`; progress.sessionStreak=0; }
+      else{ resultType='correct'; resultMsg='✓ Correct!'; feedbackText=`Correct!\n\n${q.notes}\n\nKeep showing clear working.`; progress.sessionStreak=(progress.sessionStreak||0)+1; progress.sessionMax=Math.max(progress.sessionMax||0,progress.sessionStreak); }
+    } else {
+      resultType='wrong'; resultMsg='Not correct yet — check your working.';
+      feedbackText=`Not correct.\n\nHint: ${q.notes}\n\nLook through your working to find the error.`;
+      progress.sessionStreak=0; saveMistake(q,answer,currentSubj);
+    }
+  }
+
+  progress.feedback[q.id]=feedbackText; progress.checked[q.id]=true; progress.result[q.id]={correctness:resultType};
+  incrementTodayQ(); renderBanner(); saveProgress();
+  renderResult(resultType,resultMsg,feedbackText);
+  // show reflection
+  document.getElementById('reflectionSection').classList.remove('hidden');
+  currentConf=0; [1,2,3].forEach(i=>{document.getElementById('conf'+i).className='conf-btn';});
+  const saved=progress.reflections[q.id];
+  if(saved){ document.getElementById('reflectionBox').value=saved.text||''; if(saved.confidence) setConfidence(saved.confidence); }
+  else document.getElementById('reflectionBox').value='';
+  renderMap(); updateSessionBadge();
+  if(resultType==='correct') showToast('✓ Correct!');
+  else if(resultType==='partly') showToast('Almost there — check the feedback.');
+}
+
+function renderResult(type,msg,feedback){
+  const rb=document.getElementById('resultBox');
+  rb.className='result-box '+(type==='correct'?'correct':type==='partly'?'partly':'wrong');
+  rb.textContent=msg; rb.style.display='block';
+  const fb=document.getElementById('feedbackBox');
+  fb.textContent=feedback; fb.classList.remove('hidden');
+}
+
+/* ══════════════════════════════════════════
+   DRAFT / NAV
+══════════════════════════════════════════ */
+function saveDraft(){
+  if(!bankData) return;
+  const q=bankData.questions[currentIdx];
+  progress.working[q.id]=document.getElementById('workingBox').value;
+  progress.answers[q.id]=document.getElementById('answerBox').value;
+  saveProgress(); showToast('Draft saved.');
+}
+function navigate(dir){
+  if(!bankData) return;
+  const nxt=currentIdx+dir;
+  if(nxt<0||nxt>=bankData.questions.length) return;
+  currentIdx=nxt; currentConf=0; renderAll();
+  document.getElementById('qCard').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ══════════════════════════════════════════
+   RENDER
+══════════════════════════════════════════ */
+function renderAll(){
+  if(!bankData) return;
+  renderTopInfo(); renderQuestion(); renderMap(); updateSessionBadge();
+}
+function renderTopInfo(){
+  document.getElementById('topicBadge').textContent=bankData.topic+(currentSubj==='english'?' · English':' · '+diffMode);
+  document.getElementById('qCountBadge').textContent=`Q ${currentIdx+1} / ${bankData.questions.length}`;
+  document.getElementById('bankIntro').textContent=bankData.intro;
+}
+function updateSessionBadge(){
+  document.getElementById('sessionStreakBadge').textContent='Session streak: '+(progress?.sessionStreak||0);
+}
+function renderQuestion(){
+  const q=bankData.questions[currentIdx];
+  document.getElementById('qNum').textContent=`Question ${currentIdx+1} of ${bankData.questions.length}`;
+  document.getElementById('qTitle').textContent=q.title;
+  document.getElementById('subjectBadge').textContent=q.subject;
+  document.getElementById('levelBadge').textContent=q.level;
+  document.getElementById('qBody').textContent=q.prompt;
+
+  // english extended note
+  const extBox=document.getElementById('extNoteBox');
+  if(q.extNote){ extBox.classList.remove('hidden'); extBox.textContent='📝 '+q.extNote; }
+  else extBox.classList.add('hidden');
+
+  // label text
+  document.getElementById('workingLabelText').textContent=currentSubj==='english'?'Plan your answer':'Show your working';
+  document.getElementById('answerLabel').textContent=q.qtype==='extended'?'Your response':'Final answer';
+
+  // restore working
+  document.getElementById('workingBox').value=progress.working[q.id]||'';
+  onWorkingInput();
+  // restore answer
+  document.getElementById('answerBox').value=progress.answers[q.id]||'';
+  // keyword chips
+  if(q.qtype==='extended') document.getElementById('answerBox').oninput=updateKeywordChips;
+  else document.getElementById('answerBox').oninput=null;
+  updateKeywordChips();
+
+  // result / feedback
+  const result=progress.result[q.id];
+  const rb=document.getElementById('resultBox'); const fb=document.getElementById('feedbackBox');
+  if(result){
+    const type=result.correctness;
+    const msgs={correct:'✓ Previously answered correctly.',partly:'Partly correct — check feedback.',wrong:'✗ Not correct — try again.'};
+    rb.className='result-box '+(type==='correct'?'correct':type==='partly'?'partly':'wrong');
+    rb.textContent=msgs[type]||''; rb.style.display='block';
+    fb.textContent=progress.feedback[q.id]||''; fb.classList.remove('hidden');
+  } else { rb.style.display='none'; fb.classList.add('hidden'); }
+
+  // reflection
+  const refSec=document.getElementById('reflectionSection');
+  if(progress.checked[q.id]){
+    refSec.classList.remove('hidden');
+    const saved=progress.reflections[q.id]; currentConf=saved?.confidence||0;
+    document.getElementById('reflectionBox').value=saved?.text||'';
+    [1,2,3].forEach(i=>{ const b=document.getElementById('conf'+i); b.className='conf-btn'; if(i===currentConf) b.classList.add('selected-'+currentConf); });
+  } else refSec.classList.add('hidden');
+
+  document.getElementById('prevBtn').disabled=currentIdx===0;
+  document.getElementById('nextBtn').disabled=currentIdx>=bankData.questions.length-1;
+}
+function renderMap(){
+  const grid=document.getElementById('mapGrid'); grid.innerHTML='';
+  bankData.questions.forEach((q,i)=>{
+    const r=progress.result[q.id];
+    const pip=document.createElement('div');
+    let cls='map-pip';
+    if(i===currentIdx) cls+=' active';
+    else if(r?.correctness==='correct') cls+=' correct';
+    else if(r?.correctness==='partly') cls+=' partly';
+    else if(r?.correctness==='wrong') cls+=' wrong';
+    pip.className=cls; pip.textContent=i+1;
+    pip.onclick=()=>{ currentIdx=i; currentConf=0; renderAll(); };
+    grid.appendChild(pip);
+  });
+}
+
+/* ══════════════════════════════════════════
+   MISTAKE JOURNAL
+══════════════════════════════════════════ */
+function setJournalFilter(f){
+  journalFilter=f;
+  ['all','maths','english'].forEach(x=>{
+    document.getElementById('jf'+cap(x)).classList.toggle('on',x===f);
+  });
+  renderJournal();
+}
+function renderJournal(){
+  const d=getOrCreate(); let mistakes=d.mistakes;
+  if(journalFilter!=='all') mistakes=mistakes.filter(m=>m.subject===journalFilter);
+  const content=document.getElementById('journalContent');
+  if(!mistakes.length){ content.innerHTML='<div class="empty-state">No mistakes here yet. They appear automatically when you get a question wrong.</div>'; return; }
+  content.innerHTML='';
+  [...mistakes].reverse().forEach((m,idx)=>{
+    const realIdx=d.mistakes.indexOf(d.mistakes.find(x=>x.qId===m.qId));
+    const entry=document.createElement('div'); entry.className='mistake-entry';
+    const subjBadge=m.subject==='english'?'eng':'blue';
+    entry.innerHTML=`
+      <div class="badges">
+        <span class="badge rose">${m.date}</span>
+        <span class="badge ${subjBadge}">${m.subject==='english'?'📖 English':'📐 Maths'}</span>
+        <span class="badge">${m.level||'Year 8-9'}</span>
+      </div>
+      <div class="mistake-q">${m.title}</div>
+      <div class="mistake-hint" style="white-space:pre-wrap;font-size:13px;color:var(--ink-soft);margin-bottom:8px;line-height:1.6">${m.prompt.slice(0,200)}${m.prompt.length>200?'…':''}</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:10px">My answer: <em>${m.myAnswer||'—'}</em></div>
+      <div style="font-size:11px;font-weight:700;color:var(--rose);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px">Your reflection</div>
+      <textarea class="reflection-ta" placeholder="What did I misunderstand? What is the correct method? How will I remember this?">${m.reflection||''}</textarea>
+      <button class="save-reflection-btn" onclick="saveMR(${realIdx},this)">Save reflection</button>
+      <div class="reflection-saved">✓ Saved</div>`;
+    content.appendChild(entry);
+  });
+}
+function saveMR(idx,btn){
+  const d=getOrCreate();
+  const entry=btn.closest('.mistake-entry');
+  const ta=entry.querySelector('textarea');
+  d.mistakes[idx].reflection=ta.value;
+  saveGlobal(d);
+  const saved=btn.nextElementSibling;
+  saved.style.display='block'; setTimeout(()=>saved.style.display='none',2000);
+  showToast('Reflection saved.');
+}
+
+/* ══════════════════════════════════════════
+   STREAK TAB
+══════════════════════════════════════════ */
+function renderStreakTab(){
+  const d=getOrCreate(); const streak=computeStreak();
+  const best=Math.max(d.bestStreak||0,streak); if(streak>d.bestStreak){d.bestStreak=streak;saveGlobal(d);}
+  document.getElementById('streakCurrentBig').textContent=streak;
+  document.getElementById('streakBestBig').textContent=best;
+  document.getElementById('streakTotalDaysBig').textContent=d.streakDays.length;
+  const cal=document.getElementById('calGrid'); cal.innerHTML='';
+  for(let i=27;i>=0;i--){
+    const d2=new Date(); d2.setDate(d2.getDate()-i);
+    const ds=d2.toISOString().slice(0,10);
+    const done=d.streakDays.includes(ds); const isToday=ds===today();
+    const pip=document.createElement('div');
+    pip.className='cal-day'+(done?' done':'')+(isToday?' today':'');
+    pip.title=ds; pip.textContent=d2.getDate();
+    cal.appendChild(pip);
+  }
+  const todayQ=d.sessionsQ[today()]||0;
+  const goalEl=document.getElementById('goalProgress');
+  if(todayQ>=5) goalEl.innerHTML=`<span style="color:var(--sage-dark);font-weight:700">✅ Today's goal complete! (${todayQ} questions answered)</span>`;
+  else goalEl.textContent=`Today: ${todayQ} / 5 questions. ${5-todayQ} more to count towards your streak.`;
+}
+
+/* ══════════════════════════════════════════
+   BOOT
+══════════════════════════════════════════ */
+function boot(){ renderBanner(); showTab('practice'); switchSubject('maths'); }
+(function(){
+  const saved=sessionStorage.getItem(UNLOCK_KEY);
+  if(saved===PASSWORD){ plannerPass=saved; document.getElementById('lockScreen').style.display='none'; document.getElementById('app').classList.remove('hidden'); boot(); }
 })();
 </script>
 </body>
