@@ -1657,11 +1657,22 @@ function renderQuestion(){
   // label text
   document.getElementById('workingLabelText').textContent=currentSubj==='english'?'Plan your answer':'Show your working';
   showSymPad(currentSubj==='maths');
-  // Extended questions can't be MCQ — hide the toggle and force written mode
+  // Extended questions can't be MCQ — hide toggle and force written mode unconditionally
   const isExtended = q.qtype === 'extended';
   document.getElementById('modeToggle').style.display = isExtended ? 'none' : '';
-  if(isExtended && practiceMode === 'mcq') setMode('written');
-  else if(practiceMode==='mcq') renderMCQ();
+  if(isExtended){
+    // Force written regardless of current practiceMode
+    practiceMode = 'written';
+    document.getElementById('modeBtnWritten').classList.add('active');
+    document.getElementById('modeBtnMCQ').classList.remove('active');
+    document.getElementById('writtenArea').classList.remove('hidden');
+    document.getElementById('mcqArea').classList.add('hidden');
+    document.getElementById('resultBox').textContent='';
+    document.getElementById('feedbackBox').classList.add('hidden');
+    document.getElementById('reflectionSection').classList.add('hidden');
+  } else if(practiceMode==='mcq'){
+    renderMCQ();
+  }
   document.getElementById('answerLabel').textContent=q.qtype==='extended'?'Your response':'Final answer';
 
   // restore working
