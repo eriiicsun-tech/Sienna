@@ -263,6 +263,54 @@ textarea.reflection-ta{min-height:72px}
 /* ── MISC ── */
 .divider{height:1px;background:var(--line);margin:16px 0}
 .empty-state{text-align:center;padding:28px;color:var(--muted);font-size:14px;font-style:italic}
+
+/* ── SYMBOL PAD ── */
+#symPad{
+  display:none;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-bottom:12px;
+  padding:10px 12px;
+  background:var(--blue-xlight);
+  border:1.5px solid var(--blue-light);
+  border-radius:14px;
+}
+#symPad.visible{ display:flex; }
+.sym-group{
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px;
+  align-items:center;
+}
+.sym-divider{
+  width:1px;height:22px;
+  background:var(--line);
+  margin:0 3px;
+  flex-shrink:0;
+}
+.sym-btn{
+  padding:5px 9px;
+  border:1.5px solid var(--line);
+  border-radius:9px;
+  background:#fff;
+  font-size:15px;
+  font-family:'DM Sans',sans-serif;
+  cursor:pointer;
+  color:var(--ink);
+  line-height:1;
+  transition:background .12s,border-color .12s,transform .1s;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  min-width:34px;
+  text-align:center;
+}
+.sym-btn:hover{ background:var(--blue-light); border-color:var(--blue); }
+.sym-btn:active{ transform:scale(.92); background:var(--blue-light); }
+.sym-label{
+  font-size:10px;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.3px;
+  width:100%;margin-bottom:2px;
+}
 </style>
 </head>
 <body>
@@ -413,11 +461,65 @@ textarea.reflection-ta{min-height:72px}
 
         <div class="q-body" id="qBody">Question here.</div>
 
-        <!-- working (required) -->
+
+        <!-- maths symbol pad (shown only for maths questions) -->
+        <div id="symPad" aria-label="Maths symbol keyboard">
+          <div class="sym-label">Tap to insert</div>
+          <!-- Basic operations -->
+          <div class="sym-group">
+            <button class="sym-btn" data-sym="+" title="plus">+</button>
+            <button class="sym-btn" data-sym="−" title="minus">−</button>
+            <button class="sym-btn" data-sym="×" title="multiply">×</button>
+            <button class="sym-btn" data-sym="÷" title="divide">÷</button>
+            <button class="sym-btn" data-sym="=" title="equals">=</button>
+            <button class="sym-btn" data-sym="≠" title="not equal">≠</button>
+          </div>
+          <div class="sym-divider"></div>
+          <!-- Powers & roots -->
+          <div class="sym-group">
+            <button class="sym-btn" data-sym="²" title="squared">x²</button>
+            <button class="sym-btn" data-sym="³" title="cubed">x³</button>
+            <button class="sym-btn" data-sym="√" title="square root">√</button>
+            <button class="sym-btn" data-sym="∛" title="cube root">∛</button>
+            <button class="sym-btn" data-sym="^" title="power">xⁿ</button>
+          </div>
+          <div class="sym-divider"></div>
+          <!-- Fractions & ratio -->
+          <div class="sym-group">
+            <button class="sym-btn" data-sym="/" title="fraction">/</button>
+            <button class="sym-btn" data-sym=":" title="ratio">:</button>
+            <button class="sym-btn" data-sym="%" title="percent">%</button>
+          </div>
+          <div class="sym-divider"></div>
+          <!-- Inequalities -->
+          <div class="sym-group">
+            <button class="sym-btn" data-sym="<" title="less than">&lt;</button>
+            <button class="sym-btn" data-sym=">" title="greater than">&gt;</button>
+            <button class="sym-btn" data-sym="≤" title="less or equal">≤</button>
+            <button class="sym-btn" data-sym="≥" title="greater or equal">≥</button>
+          </div>
+          <div class="sym-divider"></div>
+          <!-- Geometry & angles -->
+          <div class="sym-group">
+            <button class="sym-btn" data-sym="°" title="degrees">°</button>
+            <button class="sym-btn" data-sym="∠" title="angle">∠</button>
+            <button class="sym-btn" data-sym="△" title="triangle">△</button>
+            <button class="sym-btn" data-sym="∥" title="parallel">∥</button>
+            <button class="sym-btn" data-sym="⊥" title="perpendicular">⊥</button>
+            <button class="sym-btn" data-sym="π" title="pi">π</button>
+          </div>
+          <div class="sym-divider"></div>
+          <!-- Algebra -->
+          <div class="sym-group">
+            <button class="sym-btn" data-sym="±" title="plus minus">±</button>
+            <button class="sym-btn" data-sym="∞" title="infinity">∞</button>
+            <button class="sym-btn" data-sym="∴" title="therefore">∴</button>
+          </div>
+        </div>
+        <!-- working -->
         <div style="margin-bottom:14px">
           <div class="working-label">
             <span id="workingLabelText">Show your working / planning</span>
-            <span class="working-req" id="workingReq">required before checking</span>
           </div>
           <textarea class="working-ta" id="workingBox"
             placeholder="Write your working step-by-step here. Show each step clearly."
@@ -442,7 +544,7 @@ textarea.reflection-ta{min-height:72px}
             <button class="btn btn-blue" id="checkBtn" onclick="checkAnswer()">Check Answer</button>
             <button class="btn btn-ghost" onclick="saveDraft()">Save Draft</button>
           </div>
-          <div class="lock-hint">✏️ Add your working / planning above before checking</div>
+
         </div>
 
         <div class="result-box" id="resultBox"></div>
@@ -630,6 +732,7 @@ function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
 ══════════════════════════════════════════ */
 function switchSubject(subj){
   currentSubj=subj;
+  showSymPad(subj==='maths');
   document.getElementById('subjMaths').classList.toggle('active',subj==='maths');
   document.getElementById('subjEnglish').classList.toggle('active',subj==='english');
   document.getElementById('mathsControls').classList.toggle('hidden',subj!=='maths');
@@ -995,14 +1098,50 @@ function onWorkingInput(){
   const len=val.trim().length;
   const pct=Math.min(100,(len/WORKING_MIN)*100);
   const fill=document.getElementById('workingMeter');
-  const req=document.getElementById('workingReq');
   const wrap=document.getElementById('checkBtnWrap');
   fill.style.width=pct+'%';
   fill.style.background=pct>=100?'var(--sage)':pct>60?'var(--gold)':'var(--rose)';
-  if(pct>=100){ req.textContent='✓ ready'; req.classList.add('met'); wrap.classList.remove('locked'); }
-  else { req.textContent=`required (${Math.max(0,WORKING_MIN-len)} more chars)`; req.classList.remove('met'); wrap.classList.add('locked'); }
+  // no gate — always allow checking
+  wrap.classList.remove('locked');
   if(bankData){ const q=bankData.questions[currentIdx]; progress.working[q.id]=val; saveProgress(); }
 }
+
+/* ══════════════════════════════════════════
+   SYMBOL PAD
+══════════════════════════════════════════ */
+(function initSymPad(){
+  // track which textarea was last focused
+  let lastFocused = null;
+  const targets = ['workingBox','answerBox'];
+  targets.forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.addEventListener('focus', ()=>{ lastFocused = el; });
+  });
+
+  // insert symbol at cursor
+  document.getElementById('symPad').addEventListener('click', e=>{
+    const btn = e.target.closest('.sym-btn');
+    if(!btn) return;
+    const sym = btn.dataset.sym;
+    const el = lastFocused || document.getElementById('workingBox');
+    if(!el) return;
+    el.focus();
+    const start = el.selectionStart;
+    const end   = el.selectionEnd;
+    el.value = el.value.slice(0,start) + sym + el.value.slice(end);
+    el.selectionStart = el.selectionEnd = start + sym.length;
+    // trigger oninput so working meter updates
+    el.dispatchEvent(new Event('input'));
+  });
+})();
+
+function showSymPad(visible){
+  const pad = document.getElementById('symPad');
+  if(visible) pad.classList.add('visible');
+  else        pad.classList.remove('visible');
+}
+
 
 /* ══════════════════════════════════════════
    KEYWORD CHIP PREVIEW (English extended)
@@ -1044,7 +1183,6 @@ function saveReflection(){
 ══════════════════════════════════════════ */
 async function checkAnswer(){
   const wrap=document.getElementById('checkBtnWrap');
-  if(wrap.classList.contains('locked')){ showToast('Add your working / planning first.'); return; }
   const q=bankData.questions[currentIdx];
   const working=document.getElementById('workingBox').value.trim();
   const answer=document.getElementById('answerBox').value.trim();
@@ -1158,6 +1296,7 @@ function renderQuestion(){
 
   // label text
   document.getElementById('workingLabelText').textContent=currentSubj==='english'?'Plan your answer':'Show your working';
+  showSymPad(currentSubj==='maths');
   document.getElementById('answerLabel').textContent=q.qtype==='extended'?'Your response':'Final answer';
 
   // restore working
