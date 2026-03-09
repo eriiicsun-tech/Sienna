@@ -975,113 +975,189 @@ const ELIB={
       `Which sentence is punctuated correctly?\n\nA) The dog ran quickly, it jumped over the fence.\nB) The dog ran quickly; it jumped over the fence.\nC) The dog ran quickly it jumped over the fence.\n\nWrite the letter and explain why.`,
       kwVal(["b","semicolon","semicolons","joins","independent","clause"],2),
       "Answer: B. A semicolon correctly joins two independent clauses. A is a comma splice; C has no punctuation.",
-      {qtype:'short'}),
+      {qtype:'short',
+       mcqOptions:["B — semicolon joins two independent clauses","A — the comma splice is correct","C — no punctuation is needed here","All three sentences are correct"],
+       mcqCorrect:0}),
+
     ()=>eq("Year 8 foundation","Apostrophes",
-      `Rewrite this sentence correctly:\n\n"Its a beautiful day and the childs laughter filled the park."\n\nFix all apostrophe errors.`,
+      `Which sentence uses apostrophes correctly?\n\nA) Its a beautiful day and the childs laughter filled the park.\nB) It's a beautiful day and the child's laughter filled the park.\nC) It's a beautiful day and the childs' laughter filled the park.\nD) Its' a beautiful day and the child's laughter filled the park.`,
       kwVal(["it's","child's"],2),
-      "Correct: It's a beautiful day and the child's laughter filled the park.",
-      {qtype:'short'}),
+      "Answer: B. 'It's' = it is (contraction). 'Child's' = belonging to the child (possessive).",
+      {qtype:'short',
+       mcqOptions:["B — it's and child's are both correct","A — no apostrophes are needed","C — it's is correct but childs' is wrong","D — its' and child's are both correct"],
+       mcqCorrect:0}),
+
     ()=>eq("Year 8 challenge","Active and passive voice",
-      `Rewrite this sentence in the active voice:\n\n"The experiment was conducted by the scientists."\n\nThen explain in one sentence what the difference between active and passive voice is.`,
+      `Which sentence is written in the active voice?\n\nA) The experiment was conducted by the scientists.\nB) The scientists conducted the experiment.\nC) The experiment has been conducted.\nD) It was the scientists who conducted it.`,
       kwVal(["scientists","conducted","subject","active","performs","verb"],2),
-      "Active: The scientists conducted the experiment. Active voice: subject performs the action.",
-      {qtype:'short'}),
+      "Answer: B. In active voice the subject (scientists) performs the action directly. A and C are passive.",
+      {qtype:'short',
+       mcqOptions:["B — subject performs the action directly","A — passive voice, subject receives the action","C — passive with no named subject","D — cleft sentence, not simple active voice"],
+       mcqCorrect:0}),
+
     ()=>eq("Year 8 foundation","Sentence types",
-      `Label each sentence type: simple, compound, or complex.\n\n1) She laughed.\n2) She laughed and he smiled.\n3) Although she was tired, she kept working.\n\nWrite the labels in order.`,
-      kwVal(["simple","compound","complex"],3),
-      "1) Simple (one clause). 2) Compound (two main clauses joined by 'and'). 3) Complex (main clause + subordinate clause).",
-      {qtype:'short'}),
+      `What type of sentence is this?\n\n"Although she was tired, she kept working."\n\nA) Simple  B) Compound  C) Complex  D) Compound-complex`,
+      kwVal(["complex","subordinate","clause","although"],2),
+      "Answer: C. Complex — it has a main clause and a subordinate clause introduced by 'although'.",
+      {qtype:'short',
+       mcqOptions:["C — Complex (main clause + subordinate clause)","A — Simple (one independent clause)","B — Compound (two main clauses joined by and/but/or)","D — Compound-complex (two main + one subordinate)"],
+       mcqCorrect:0}),
+
     ()=>eq("Year 9 challenge","Subordinating conjunctions",
       `Write three sentences using three different subordinating conjunctions (e.g. although, because, unless, while, since, if). Underline or label the conjunction in each.`,
       extVal(50),
       "Look for a range of conjunctions and check they begin subordinate clauses.",
-      {qtype:'extended',extNote:"Write three complete sentences, each using a different subordinating conjunction. Label or underline the conjunction.",keywords:["although","because","unless","while","since","if","when","after","before","until"]}),
+      {qtype:'extended',extNote:"Write three complete sentences, each using a different subordinating conjunction. Label or underline the conjunction.",
+       keywords:["although","because","unless","while","since","if","when","after","before","until"]}),
+
     ()=>eq("Year 8 challenge","Colons and semicolons",
-      `Explain the difference between a colon (:) and a semicolon (;). Give one example sentence for each.`,
+      `What is the main difference between a colon (:) and a semicolon (;)?\n\nA) A colon joins two main clauses; a semicolon introduces a list.\nB) A colon introduces a list or explanation; a semicolon joins two related independent clauses.\nC) They are interchangeable — both do the same job.\nD) A semicolon is used at the end of a sentence; a colon is used in the middle.`,
       kwVal(["colon","semicolon","list","example","introduces","joins","clause"],3),
-      "Colon introduces a list or explanation. Semicolon joins two related independent clauses.",
-      {qtype:'extended',extNote:"Your answer should explain both punctuation marks and include an example sentence for each.",keywords:["colon","semicolon","example","introduces","list","joins"]}),
+      "Answer: B. Colon introduces a list or explanation. Semicolon joins two related independent clauses.",
+      {qtype:'short',
+       mcqOptions:["B — colon introduces; semicolon joins clauses","A — the descriptions are swapped","C — they are interchangeable","D — semicolon ends sentences"],
+       mcqCorrect:0}),
   ],
+
   vocabulary:[
     ()=>{
-      const pairs=[["benevolent","kind and generous"],["melancholy","a feeling of sadness"],["tenacious","determined and persistent"],["ambiguous","having more than one meaning"],["eloquent","expressing ideas clearly and fluently"],["resilient","able to recover quickly from difficulties"],["meticulous","extremely careful about details"],["profound","very deep or serious"]];
-      const [word,meaning]=pick(pairs);
+      const pairs=[
+        ["benevolent",  "kind and generous",          ["cruel and selfish","uncertain and doubtful","loud and aggressive","kind and generous"]],
+        ["melancholy",  "a feeling of sadness",        ["a feeling of excitement","a feeling of sadness","a type of illness","extreme happiness"]],
+        ["tenacious",   "determined and persistent",   ["easily distracted","determined and persistent","calm and relaxed","shy and reserved"]],
+        ["ambiguous",   "having more than one meaning",["having only one clear meaning","having more than one meaning","being completely false","making no sense"]],
+        ["eloquent",    "expressing ideas clearly and fluently",["speaking very quietly","struggling to find words","expressing ideas clearly and fluently","writing in a very complicated way"]],
+        ["resilient",   "able to recover quickly from difficulties",["easily upset by challenges","unable to handle pressure","able to recover quickly from difficulties","avoiding all difficult situations"]],
+        ["meticulous",  "extremely careful about details",["extremely careless","very rushed","extremely careful about details","ignoring important information"]],
+        ["profound",    "very deep or serious",        ["very shallow or trivial","very deep or serious","very loud or noisy","very simple or basic"]],
+      ];
+      const [word,meaning,mcqOpts]=pick(pairs);
+      const correctIdx=mcqOpts.indexOf(meaning);
       return eq("Year 8 challenge","Word meaning",
-        `What does the word "${word}" mean?\n\nWrite the definition in your own words and use it in a sentence.`,
+        `What does the word "${word}" mean?\n\nChoose the best definition:`,
         kwVal(meaning.split(" ").filter(w=>w.length>3),2),
         `${word}: ${meaning}.`,
-        {qtype:'short'});
+        {qtype:'short', mcqOptions:mcqOpts, mcqCorrect:correctIdx});
     },
+
     ()=>eq("Year 8 challenge","Formal vs informal",
-      `Rewrite this informal sentence in formal language:\n\n"We're gonna check out the results and get back to you ASAP."\n\nThen list two differences between formal and informal language.`,
+      `Which sentence is written in formal language?\n\nA) We're gonna check out the results and get back to you ASAP.\nB) We will review the results and contact you shortly.\nC) We'll look at the results and let you know pretty soon.\nD) Hey, we checked the results — will tell you soon!`,
       kwVal(["formal","informal","will","results","examine","shortly","contact","review"],2),
-      "Example: 'We will review the results and contact you shortly.' Formal language avoids contractions and slang.",
-      {qtype:'short'}),
+      "Answer: B. Formal language avoids contractions, slang, and informal expressions.",
+      {qtype:'short',
+       mcqOptions:["B — formal, no contractions or slang","A — informal, uses 'gonna' and 'ASAP'","C — informal, uses 'pretty soon'","D — casual and conversational"],
+       mcqCorrect:0}),
+
     ()=>eq("Year 9 challenge","Connotation",
-      `The words 'slender', 'thin', and 'scrawny' all have similar meanings.\n\nExplain what connotation means, then explain the different connotations of these three words.`,
-      kwVal(["connotation","positive","negative","neutral","slender","scrawny","thin","implication","association"],3),
-      "Connotation: the implied meaning or feeling of a word. Slender = positive; thin = neutral; scrawny = negative.",
-      {qtype:'extended',extNote:"Explain connotation and describe whether each word has a positive, neutral or negative implication. Use evidence.",keywords:["connotation","positive","negative","neutral","implication"]}),
+      `Which word has the most NEGATIVE connotation?\n\nA) Slender  B) Thin  C) Scrawny  D) Slim`,
+      kwVal(["connotation","negative","scrawny","thin","slender"],2),
+      "Answer: C. 'Scrawny' implies an unpleasant, unhealthy thinness. 'Slender' and 'slim' are positive; 'thin' is neutral.",
+      {qtype:'short',
+       mcqOptions:["C — Scrawny (negative, implies unhealthy)","A — Slender (positive connotation)","B — Thin (neutral)","D — Slim (positive connotation)"],
+       mcqCorrect:0}),
+
     ()=>eq("Year 8 challenge","Synonyms and precision",
-      `Choose the more precise word for each context and explain your choice:\n\n1) The child (walked / trudged) home after a long day.\n2) She spoke (loudly / bellowed) across the stadium.\n3) He was (happy / elated) when he won the prize.`,
-      kwVal(["trudged","bellowed","elated","precise","connotation","specific","implies","suggests","stronger"],3),
-      "Trudged, bellowed, elated — all carry stronger, more precise meaning. Encourage explanation of connotation.",
-      {qtype:'short'}),
+      `Which word best completes this sentence and why?\n\n"The exhausted child _____ home after the long school day."\n\nA) walked  B) trudged  C) moved  D) went`,
+      kwVal(["trudged","precise","connotation","specific","implies","suggests","stronger"],2),
+      "Answer: B. 'Trudged' implies heavy, weary movement — it is the most precise and vivid choice.",
+      {qtype:'short',
+       mcqOptions:["B — trudged (implies heavy, weary movement)","A — walked (correct but not vivid)","C — moved (too vague)","D — went (too vague)"],
+       mcqCorrect:0}),
+
     ()=>eq("Year 8 foundation","Prefixes and suffixes",
-      `For each word, identify the prefix or suffix and explain how it changes the meaning:\n\n1) unhappy\n2) careless\n3) preview\n4) government`,
-      kwVal(["prefix","suffix","un","less","pre","ment","meaning","changes","not","without","before"],3),
-      "un- = not; -less = without; pre- = before; -ment = state/result of an action.",
-      {qtype:'short'}),
+      `What does the prefix 'un-' mean in the word 'unhappy'?\n\nA) very  B) not  C) before  D) after`,
+      kwVal(["prefix","un","not","meaning","changes"],2),
+      "Answer: B. The prefix 'un-' means 'not' — so unhappy means 'not happy'.",
+      {qtype:'short',
+       mcqOptions:["B — not (unhappy = not happy)","A — very (un- intensifies the word)","C — before (un- means before)","D — after (un- means after)"],
+       mcqCorrect:0}),
   ],
+
   techniques:[
     ()=>{
       const techniques=[
-        {name:"simile",prompt:'Identify the technique and explain its effect:\n\n"Her smile was like the sun breaking through clouds after a storm."\n\nWhat technique is used? What does it make the reader feel?',keywords:["simile","comparison","like","as","effect","feel","warmth","hope","happiness","connects"]},
-        {name:"metaphor",prompt:'Identify the technique and explain its effect:\n\n"The classroom was a zoo."\n\nWhat technique is used? What does it suggest?',keywords:["metaphor","comparison","not literally","chaotic","noisy","wild","implies","suggests","effect"]},
-        {name:"personification",prompt:'Identify the technique and explain its effect:\n\n"The wind whispered secrets through the trees."\n\nWhat technique is used? Why might a writer use it?',keywords:["personification","human","quality","wind","atmosphere","mood","effect","vivid","whispered"]},
-        {name:"alliteration",prompt:'Identify the technique and explain its effect:\n\n"Peter Piper picked a peck of pickled peppers."\n\nWhat is the name of this technique and what effect does it create for a reader?',keywords:["alliteration","consonant","same","sound","rhythm","memorable","emphasis","effect"]},
+        {name:"simile",
+         prompt:'What technique is used in this sentence?\n\n"Her smile was like the sun breaking through clouds after a storm."\n\nA) Metaphor  B) Personification  C) Simile  D) Alliteration',
+         opts:["C — Simile (uses 'like' to compare)","A — Metaphor (direct comparison, no 'like'/'as')","B — Personification (gives human qualities to non-human)","D — Alliteration (repeated consonant sounds)"],
+         correct:0,
+         notes:"Answer: C. A simile uses 'like' or 'as' to compare two things. Effect: creates warmth and hope."},
+        {name:"metaphor",
+         prompt:'What technique is used in this sentence?\n\n"The classroom was a zoo."\n\nA) Simile  B) Metaphor  C) Alliteration  D) Hyperbole',
+         opts:["B — Metaphor (direct comparison without 'like'/'as')","A — Simile (uses 'like' or 'as')","C — Alliteration (repeated consonant sounds)","D — Hyperbole (exaggeration for effect)"],
+         correct:0,
+         notes:"Answer: B. A metaphor makes a direct comparison — 'the classroom was a zoo' implies it was chaotic."},
+        {name:"personification",
+         prompt:'What technique is used in this sentence?\n\n"The wind whispered secrets through the trees."\n\nA) Simile  B) Metaphor  C) Onomatopoeia  D) Personification',
+         opts:["D — Personification (wind given the human action of whispering)","A — Simile (comparison using 'like' or 'as')","B — Metaphor (direct comparison)","C — Onomatopoeia (word sounds like what it describes)"],
+         correct:0,
+         notes:"Answer: D. Personification gives the wind a human quality (whispering). It creates atmosphere and mood."},
+        {name:"alliteration",
+         prompt:'What technique is used in this sentence?\n\n"Peter Piper picked a peck of pickled peppers."\n\nA) Assonance  B) Rhyme  C) Alliteration  D) Onomatopoeia',
+         opts:["C — Alliteration (repeated 'p' consonant sounds)","A — Assonance (repeated vowel sounds)","B — Rhyme (matching end sounds)","D — Onomatopoeia (word sounds like the thing)"],
+         correct:0,
+         notes:"Answer: C. Alliteration is the repetition of the same consonant sound at the start of nearby words."},
       ];
       const t=pick(techniques);
-      return eq("Year 8 challenge","Identify the technique",t.prompt,kwVal(t.keywords,3),`Technique: ${t.name}. Look for an explanation of effect.`,{qtype:'short'});
+      return eq("Year 8 challenge","Identify the technique",t.prompt,
+        kwVal([t.name,"technique","effect","creates","suggests","comparison"],2),
+        t.notes,
+        {qtype:'short', mcqOptions:t.opts, mcqCorrect:t.correct});
     },
+
     ()=>eq("Year 9 challenge","Analyse a technique with evidence",
       `Read the following passage and answer the question below:\n\n"The old house crouched at the end of the lane, its windows like hollow eyes staring into the dark."\n\nIdentify TWO techniques used. For each, quote the technique and explain what effect it creates on the reader.`,
       kwVal(["personification","simile","crouched","eyes","effect","reader","creates","suggests","atmosphere","tension","fear","hollow"],4),
       "Personification: 'crouched' — makes house seem threatening. Simile: 'like hollow eyes' — creates eerie, sinister feeling.",
-      {qtype:'extended',extNote:"Use the structure: Technique → Quote → Effect on reader. Do this twice for two different techniques.",keywords:["personification","simile","quote","effect","reader","creates","suggests"]}),
+      {qtype:'extended',extNote:"Use the structure: Technique → Quote → Effect on reader. Do this twice for two different techniques.",
+       keywords:["personification","simile","quote","effect","reader","creates","suggests"]}),
+
     ()=>eq("Year 8 challenge","Effect of word choice",
-      `A writer describes a character as 'gazing' rather than 'looking'.\n\nExplain what the word 'gazing' suggests that 'looking' does not, and how this affects the reader's understanding of the character.`,
-      kwVal(["gazing","looking","suggests","implies","longer","thoughtful","deeper","focused","emotion","connotation","effect","reader"],3),
-      "'Gazing' implies a longer, more thoughtful look — suggests the character is emotional, distracted or deeply focused.",
-      {qtype:'short'}),
+      `A writer uses the word 'gazing' instead of 'looking'. What does this suggest?\n\nA) The character glanced quickly and moved on.\nB) The character was not paying attention.\nC) The character looked for a long time, with thought or emotion.\nD) The character looked with anger or frustration.`,
+      kwVal(["gazing","looking","suggests","implies","longer","thoughtful","deeper","focused","emotion","connotation","effect","reader"],2),
+      "Answer: C. 'Gazing' implies a longer, more thoughtful look — suggests the character is emotional, distracted or deeply focused.",
+      {qtype:'short',
+       mcqOptions:["C — a long, thoughtful or emotional look","A — a quick, brief glance","B — not paying attention","D — looking with anger"],
+       mcqCorrect:0}),
+
     ()=>eq("Year 9 challenge","Discuss the use of imagery",
-      `What is imagery? Explain the difference between visual, auditory and tactile imagery, and give one original example of each.`,
-      kwVal(["imagery","visual","auditory","tactile","sight","sound","touch","sense","example","creates"],4),
-      "Imagery: language that appeals to the senses. Visual (sight), auditory (sound), tactile (touch). Each example should match its type.",
-      {qtype:'extended',extNote:"Define imagery, then explain and give an original example for: visual (sight), auditory (sound), tactile (touch).",keywords:["imagery","visual","auditory","tactile","example","sense"]}),
+      `Which of the following is an example of AUDITORY imagery?\n\nA) The golden sun melted into the horizon.\nB) The velvet petals were soft against her skin.\nC) The thunder cracked and rumbled across the valley.\nD) The icy wind stung her face.`,
+      kwVal(["imagery","auditory","sound","sense","creates"],2),
+      "Answer: C. Auditory imagery appeals to the sense of hearing. 'Cracked and rumbled' are sound words.",
+      {qtype:'short',
+       mcqOptions:["C — auditory: cracked and rumbled (sound)","A — visual: golden sun melting (sight)","B — tactile: velvet petals soft (touch)","D — tactile: icy wind stinging (touch)"],
+       mcqCorrect:0}),
   ],
+
   teel:[
     ()=>eq("Year 8 foundation","Understanding TEEL",
-      `Explain what TEEL stands for and what goes in each part of a TEEL paragraph. Use your own words.`,
-      kwVal(["topic","sentence","evidence","explain","link","teel","paragraph","structure","argument","supports"],4),
-      "TEEL: Topic sentence (main idea), Evidence (quote/example), Explain (analyse the evidence), Link (connect back to the argument).",
-      {qtype:'extended',extNote:"Explain each part of TEEL in your own words. You may use an example.",keywords:["topic sentence","evidence","explain","link","paragraph","argument"]}),
+      `What does the 'E' in TEEL stand for and what is its purpose?\n\nA) Explanation — it restates the topic sentence in different words.\nB) Evidence — it provides a quote, fact, or example to support the argument.\nC) Evaluation — it judges whether the argument is correct.\nD) Extension — it adds a new, unrelated idea.`,
+      kwVal(["topic","sentence","evidence","explain","link","teel","paragraph","structure","argument","supports"],3),
+      "Answer: B. The first E = Evidence (a quote, example, or fact). The second E = Explain (analyse how the evidence proves your point).",
+      {qtype:'short',
+       mcqOptions:["B — Evidence: a quote, fact, or example supporting the argument","A — Explanation that restates the topic sentence","C — Evaluation of whether the argument is correct","D — Extension adding a new, unrelated idea"],
+       mcqCorrect:0}),
+
     ()=>eq("Year 8 challenge","Write a TEEL paragraph",
       `Write a TEEL paragraph responding to the following statement:\n\n"Social media has a negative effect on teenagers."\n\nMake sure your paragraph has a clear topic sentence, evidence or example, an explanation, and a linking sentence back to the argument.`,
       extVal(80),
       "Look for: clear topic sentence, specific evidence/example, explanation of how the evidence supports the argument, link sentence.",
       {qtype:'extended',extNote:"Structure your paragraph clearly:\n• Topic sentence: state your point\n• Evidence: a statistic, example, or quote\n• Explain: analyse how the evidence proves your point\n• Link: connect back to the main argument",
        keywords:["topic sentence","evidence","explain","link","social media","teenagers","argument","because","therefore"]}),
+
     ()=>eq("Year 9 challenge","Improve a weak TEEL paragraph",
       `Read this paragraph:\n\n"Social media is bad. Many people use it too much. It wastes time. So it is negative."\n\nThis paragraph is weak. Identify THREE problems with it and rewrite it as a strong TEEL paragraph.`,
       extVal(80),
       "Problems: no topic sentence with a clear argument, no specific evidence, no explanation, no proper link.",
-      {qtype:'extended',extNote:"First identify 3 specific problems. Then rewrite the full paragraph with a proper topic sentence, specific evidence, explanation, and link.",keywords:["topic sentence","evidence","explain","link","argument","specific","rewrite"]}),
+      {qtype:'extended',extNote:"First identify 3 specific problems. Then rewrite the full paragraph with a proper topic sentence, specific evidence, explanation, and link.",
+       keywords:["topic sentence","evidence","explain","link","argument","specific","rewrite"]}),
+
     ()=>eq("Year 8 challenge","Identify TEEL parts",
-      `Read the paragraph below. Label each sentence as: T (Topic), E (Evidence), E (Explain), or L (Link).\n\n"1) The author uses darkness as a symbol of danger throughout the novel. 2) For example, in Chapter 3, the protagonist says 'I feared what lay beyond the shadows.' 3) This suggests the character associates darkness with uncertainty and threat, creating tension for the reader. 4) Therefore, the use of darkness reinforces the novel's central theme of fear."`,
-      kwVal(["t","topic","e","evidence","explain","l","link","symbol","fear","tension","theme"],3),
-      "1) Topic: 'The author uses darkness as a symbol…' 2) Evidence: 'For example…' 3) Explain: 'This suggests…' 4) Link: 'Therefore…'",
-      {qtype:'short'}),
+      `Which sentence from a TEEL paragraph is the LINK sentence?\n\nA) "The author uses darkness as a symbol of danger throughout the novel."\nB) "For example, in Chapter 3, the protagonist says 'I feared what lay beyond the shadows.'"\nC) "This suggests the character associates darkness with uncertainty and threat, creating tension."\nD) "Therefore, the use of darkness reinforces the novel's central theme of fear."`,
+      kwVal(["t","topic","e","evidence","explain","l","link","symbol","fear","tension","theme"],2),
+      "Answer: D. The Link sentence connects back to the overall argument, often starting with 'Therefore' or 'Thus'.",
+      {qtype:'short',
+       mcqOptions:["D — Therefore… (connects back to the argument)","A — Topic sentence (states the main idea)","B — Evidence (a quote from the text)","C — Explain (analyses the quote's effect)"],
+       mcqCorrect:0}),
   ],
 };
 
@@ -1228,23 +1304,48 @@ function setMode(mode){
 
 /* Generate plausible wrong answers for a question */
 function makeMCQOptions(q){
+  // ── Prefer explicitly authored options ──
+  if(q.mcqOptions && q.mcqOptions.length >= 2){
+    return { opts: q.mcqOptions, correctIdx: q.mcqCorrect || 0, embedded: false };
+  }
+
+  // ── Prompt has embedded A) B) C) options (maths/english questions written that way) ──
+  const embeddedOpts = extractEmbeddedOptions(q.prompt);
+  if(embeddedOpts.length >= 2){
+    const correctLetterMatch = q.notes.match(/\bAnswer[:\s]+([A-D])\b/i)
+                             || q.notes.match(/^\s*([A-D])[.)]/i);
+    const correctLetter = correctLetterMatch ? correctLetterMatch[1].toUpperCase() : 'A';
+    const correctIdx = Math.max(0, ['A','B','C','D'].indexOf(correctLetter));
+    return { opts: embeddedOpts, correctIdx, embedded: true };
+  }
+
+  // ── Maths: generate numeric distractors ──
   const correct = q.notes.match(/(?:Correct(?:\s+answer)?(?:\s+is)?:?\s*)(.+?)(?:\.|$)/i)?.[1]?.trim()
                   || q.notes.split('.')[0].replace(/^Correct[^:]*:/i,'').trim();
-
-  // distractors: number-based mutation + generic wrong answers
   const distractors = generateDistractors(correct, q);
-  // pick 3 unique distractors
   const wrongs = [];
   for(const d of distractors){
     if(d && d !== correct && !wrongs.includes(d)) wrongs.push(d);
     if(wrongs.length===3) break;
   }
   while(wrongs.length<3) wrongs.push(['Cannot be determined','Not enough information','None of the above'][wrongs.length]);
-
   const opts = [correct, ...wrongs];
-  // shuffle
   for(let i=opts.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [opts[i],opts[j]]=[opts[j],opts[i]]; }
-  return { opts, correctIdx: opts.indexOf(correct) };
+  return { opts, correctIdx: opts.indexOf(correct), embedded: false };
+}
+
+
+/* Extract A) B) C) D) options already written inside the prompt text */
+function extractEmbeddedOptions(prompt){
+  // Match patterns like: A) text  or  A. text  or  (A) text
+  const lines = prompt.split('\n');
+  const opts = [];
+  const re = /^\s*[\(]?([A-D])[\)\.]\s*(.+)/i;
+  for(const line of lines){
+    const m = line.match(re);
+    if(m) opts.push(m[2].trim());
+  }
+  return opts;
 }
 
 function generateDistractors(correct, q){
@@ -1309,12 +1410,22 @@ function generateDistractors(correct, q){
 
 function renderMCQ(){
   const q = bankData.questions[currentIdx];
-  const { opts, correctIdx } = makeMCQOptions(q);
-  // store on question for checking
-  q._mcqOpts = opts;
-  q._mcqCorrect = correctIdx;
+  const { opts, correctIdx, embedded } = makeMCQOptions(q);
+  q._mcqOpts      = opts;
+  q._mcqCorrect   = correctIdx;
+  q._mcqEmbedded  = embedded;
   mcqSelected = null;
   mcqChecked  = false;
+
+  // If the prompt already has A/B/C written into it, show the question body as-is
+  // but clean up the "Write the letter..." instruction line — tapping is enough.
+  const qBody = document.getElementById('qBody');
+  if(embedded){
+    // Strip trailing instruction like "Write the letter and explain why."
+    qBody.textContent = q.prompt.replace(/\n+Write the letter.*$/i,'').trim();
+  } else {
+    qBody.textContent = q.prompt;
+  }
 
   const container = document.getElementById('mcqOptions');
   container.innerHTML = '';
@@ -1546,8 +1657,11 @@ function renderQuestion(){
   // label text
   document.getElementById('workingLabelText').textContent=currentSubj==='english'?'Plan your answer':'Show your working';
   showSymPad(currentSubj==='maths');
-  // refresh MCQ options for the new question
-  if(practiceMode==='mcq') renderMCQ();
+  // Extended questions can't be MCQ — hide the toggle and force written mode
+  const isExtended = q.qtype === 'extended';
+  document.getElementById('modeToggle').style.display = isExtended ? 'none' : '';
+  if(isExtended && practiceMode === 'mcq') setMode('written');
+  else if(practiceMode==='mcq') renderMCQ();
   document.getElementById('answerLabel').textContent=q.qtype==='extended'?'Your response':'Final answer';
 
   // restore working
