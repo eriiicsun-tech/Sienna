@@ -46,6 +46,7 @@
         radial-gradient(circle at top right,#ede6ff 0%,transparent 28%),
         linear-gradient(180deg,var(--bg1),var(--bg2));
       min-height:100vh;
+      overflow-x:hidden;
     }
 
     /* subtle dot grid */
@@ -56,40 +57,47 @@
     }
 
     .hidden{display:none!important}
-    .app{max-width:1120px;margin:0 auto;padding:14px}
+
+    .app{max-width:1120px;margin:0 auto;padding:10px;}
     .screen{
       background:rgba(255,255,255,.76);backdrop-filter:blur(18px);
       border:1px solid rgba(255,255,255,.75);box-shadow:var(--shadow);
-      border-radius:32px;overflow:hidden;
+      border-radius:24px;overflow:hidden;
     }
 
     /* ── HERO ── */
     .hero{
-      position:relative;padding:20px 20px 16px;
+      position:relative;padding:16px 14px 14px;
       background:linear-gradient(110deg,#e8f2ff,#ece6ff,#e5f9ff);
       border-bottom:2px solid var(--blue-light);
     }
-    .sparkles{position:absolute;right:14px;top:10px;font-size:22px;opacity:.7}
-    .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
-    h1{margin:8px 0 0;font-size:30px;line-height:1.02;color:var(--blue-dark)}
-    .sub{margin-top:8px;color:#4a5580;font-size:14px;line-height:1.6;max-width:700px}
-    .hero-grid{display:grid;gap:10px;grid-template-columns:1fr 1fr;margin-top:12px}
+    .sparkles{position:absolute;right:12px;top:10px;font-size:18px;opacity:.7}
+    .eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+    h1{margin:6px 0 0;font-size:24px;line-height:1.1;color:var(--blue-dark)}
+    .sub{margin-top:6px;color:#4a5580;font-size:13px;line-height:1.55;max-width:700px}
+    .hero-grid{display:grid;gap:8px;grid-template-columns:1fr;margin-top:10px}
     .mini{
       border:1px solid rgba(59,125,216,.15);background:rgba(255,255,255,.7);
-      padding:11px 14px;border-radius:16px;
+      padding:10px 13px;border-radius:14px;
     }
     .mini .label{font-size:11px;color:var(--muted);font-weight:600}
     .mini .value{margin-top:3px;font-size:13px;font-weight:800}
-    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center}
 
-    /* ── LAYOUT ── */
-    .content{display:grid;gap:14px;padding:14px}
-    .left,.right{display:grid;gap:14px}
+    /* ── LAYOUT: mobile-first single column ── */
+    .content{display:grid;grid-template-columns:1fr;gap:12px;padding:12px;}
+    .left,.right{display:grid;gap:12px}
+    .row{display:grid;grid-template-columns:1fr;gap:10px}
+
     @media(min-width:860px){
       .app{padding:20px}
-      .content{grid-template-columns:1.05fr .95fr}
-      .row{grid-template-columns:1fr 1fr}
+      .screen{border-radius:32px}
       .hero{padding:22px 22px 18px}
+      h1{font-size:30px}
+      .hero-grid{grid-template-columns:1fr 1fr}
+      .content{grid-template-columns:1.05fr .95fr;gap:14px;padding:14px}
+      .left,.right{gap:14px}
+      .row{grid-template-columns:1fr 1fr}
     }
 
     /* ── CARD BASE ── */
@@ -170,17 +178,23 @@
 
     /* ── BUTTONS ── */
     .btn{
-      border:none;border-radius:16px;padding:10px 14px;cursor:pointer;
+      border:none;border-radius:16px;padding:11px 16px;cursor:pointer;
       font-weight:800;transition:.15s ease;font-size:13px;
+      /* minimum touch target */
+      min-height:44px;
+      display:inline-flex;align-items:center;justify-content:center;
     }
     .btn:hover{transform:translateY(-1px)}
+    .btn:active{transform:translateY(0);opacity:.9}
     .btn-primary{background:linear-gradient(135deg,#5b9ae8,var(--blue-dark));color:#fff;box-shadow:0 3px 12px rgba(37,88,168,.2)}
     .btn-violet{background:linear-gradient(135deg,#9b7cff,#6b42d8);color:#fff}
     .btn-teal{background:linear-gradient(135deg,#3cbfb0,var(--teal));color:#fff}
     .btn-amber{background:linear-gradient(135deg,#e8a050,var(--amber));color:#fff}
     .btn-soft{background:#fff;color:#4a5580;border:1.5px solid var(--line)}
     .btn-danger{background:#fff0f3;color:var(--rose);border:1.5px solid #ffd0db}
-    .btn-small{padding:7px 11px;border-radius:12px;font-size:12px}
+    .btn-small{padding:8px 12px;border-radius:12px;font-size:12px;min-height:36px}
+    /* button rows always wrap on mobile */
+    [style*="display:flex"][style*="gap:8px"]{flex-wrap:wrap}
 
     /* ── CHIPS ── */
     .chips{display:flex;gap:8px;overflow:auto;padding-bottom:2px;scrollbar-width:none}
@@ -262,25 +276,39 @@
 
     /* ── CALENDAR ── */
     .calendar-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
-    .calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:8px}
+    .calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:8px}
     .dow{font-size:10px;color:#8898b8;text-align:center;font-weight:800;padding:4px 0}
     .day{
-      min-height:52px;border:1.5px solid var(--line);border-radius:12px;
-      padding:5px;background:#fff;display:flex;flex-direction:column;
+      min-height:44px;border:1.5px solid var(--line);border-radius:10px;
+      padding:4px;background:#fff;display:flex;flex-direction:column;
       gap:2px;cursor:pointer;transition:border-color .15s;overflow:hidden;
+      /* ensure tap target is comfortable */
+      -webkit-tap-highlight-color:rgba(59,125,216,.1);
     }
-    .day:hover{border-color:var(--blue)}
+    .day:hover,.day:active{border-color:var(--blue)}
     .day.other{opacity:.3}
     .day.today{border-color:var(--blue-dark);border-width:2px}
     .day.has-event{background:#fffbf5}
-    .day-number{font-size:11px;font-weight:800;color:#4a5580}
+    .day-number{font-size:11px;font-weight:800;color:#4a5580;line-height:1}
     .day.today .day-number{color:var(--blue-dark)}
-    /* event label on calendar day */
+    /* event label — hidden text on mobile, dot only; shown on desktop */
     .cal-event-label{
-      font-size:9px;font-weight:700;line-height:1.25;
-      background:var(--amber-light);color:var(--amber);
-      border-radius:4px;padding:1px 3px;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+      font-size:0px;           /* hide text on mobile */
+      width:6px;height:6px;
+      border-radius:50%;
+      background:var(--amber);
+      flex-shrink:0;
+      margin:1px auto 0;
+    }
+    @media(min-width:500px){
+      .cal-event-label{
+        font-size:8px;font-weight:700;line-height:1.2;
+        width:auto;height:auto;border-radius:4px;
+        background:var(--amber-light);color:var(--amber);
+        padding:1px 3px;margin:0;
+        white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+      }
+      .day{min-height:52px;padding:5px;gap:2px}
     }
     .event-item{border:1.5px solid var(--line);border-radius:16px;padding:11px;background:#fff}
 
@@ -346,7 +374,7 @@
       <div class="left">
 
         <!-- TODAY / ADD TASK — Blue -->
-        <section class="card sec-blue">
+        <section class="card sec-blue" data-section="tasks">
           <div class="sec-tag">📋 Tasks</div>
           <h2>Today</h2>
           <div class="card-sub">Add only what matters today or this week.</div>
@@ -370,7 +398,7 @@
         </section>
 
         <!-- TASK LIST — Blue -->
-        <section class="card sec-blue">
+        <section class="card sec-blue" data-section="tasks">
           <div class="sec-tag">📋 Tasks</div>
           <h2>Task list</h2>
           <div class="card-sub">Keep this short. Use AI only when it helps.</div>
@@ -392,7 +420,7 @@
         </section>
 
         <!-- SCHOOL — Violet -->
-        <section class="card sec-violet">
+        <section class="card sec-violet" data-section="school">
           <div class="sec-tag">🎓 School</div>
           <h2>School</h2>
           <div class="card-sub">Use this for bigger homework, revision, or tests.</div>
@@ -420,7 +448,7 @@
       <div class="right">
 
         <!-- SOFIA / BALLET — Pink -->
-        <section class="card sec-pink sticky-section">
+        <section class="card sec-pink sticky-section" data-section="sofia">
           <div class="sec-tag">🩰 Sofia / Ballet</div>
           <h2>Sofia notes</h2>
           <div class="card-sub">Write only the main corrections from each lesson.</div>
@@ -441,7 +469,7 @@
         </section>
 
         <!-- ARTISTIC SWIMMING — Teal -->
-        <section class="card sec-teal sticky-section">
+        <section class="card sec-teal sticky-section" data-section="swim">
           <div class="sec-tag">🌊 Artistic Swimming</div>
           <h2>Artistic Swimming notes</h2>
           <div class="card-sub">Write what improved and what still needs work.</div>
@@ -462,7 +490,7 @@
         </section>
 
         <!-- CALENDAR — Amber -->
-        <section class="card sec-amber sticky-section">
+        <section class="card sec-amber sticky-section" data-section="calendar">
           <div class="sec-tag">📅 Calendar</div>
           <h2>Calendar</h2>
           <div class="card-sub">Tap a day, then add an important date below.</div>
@@ -491,12 +519,54 @@
           </div>
         </section>
 
+
       </div><!-- /right -->
     </div>
   </div>
 </div>
 
+<!-- MOBILE BOTTOM TAB BAR -->
+<nav id="mobileTabBar">
+  <button class="mtab active" data-tab="tasks"    onclick="switchTab('tasks')">  <span class="mtab-icon">📋</span><span class="mtab-label">Tasks</span></button>
+  <button class="mtab"        data-tab="school"   onclick="switchTab('school')"> <span class="mtab-icon">🎓</span><span class="mtab-label">School</span></button>
+  <button class="mtab"        data-tab="sofia"    onclick="switchTab('sofia')">  <span class="mtab-icon">🩰</span><span class="mtab-label">Sofia</span></button>
+  <button class="mtab"        data-tab="swim"     onclick="switchTab('swim')">   <span class="mtab-icon">🌊</span><span class="mtab-label">Swim</span></button>
+  <button class="mtab"        data-tab="calendar" onclick="switchTab('calendar')"><span class="mtab-icon">📅</span><span class="mtab-label">Calendar</span></button>
+</nav>
+
+<style>
+#mobileTabBar{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(14px);
+  border-top:1.5px solid var(--line);
+  padding:6px 0 max(6px, env(safe-area-inset-bottom));
+  z-index:100;
+  grid-template-columns:repeat(5,1fr);
+  box-shadow:0 -4px 20px rgba(40,70,130,.08);
+}
+.mtab{
+  border:none;background:transparent;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;padding:6px 2px;cursor:pointer;font-family:inherit;
+  -webkit-tap-highlight-color:transparent;transition:opacity .15s;
+}
+.mtab-icon{font-size:20px;line-height:1.1}
+.mtab-label{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.01em}
+.mtab.active .mtab-label{color:var(--blue-dark)}
+.mtab.active .mtab-icon{filter:drop-shadow(0 1px 4px rgba(59,125,216,.35))}
+
+@media(max-width:859px){
+  #mobileTabBar{display:grid}
+  .app{padding-bottom:80px}
+  section[data-section]{display:none !important}
+  section[data-section].tab-visible{display:block !important}
+}
+</style>
+
 <script>
+
 (()=>{
   /* ── STORAGE (same key as original — data preserved) ── */
   const STORAGE_KEY = "sienna-space-local-cache-v32";
@@ -608,8 +678,8 @@
           meta:         {...defaultState.meta,         ...(data.state.meta||{})}
         };
       }
-      saveLocalState(); remoteLoaded=true; setSyncStatus("ok","Synced"); renderAll();
-    }catch{ remoteLoaded=true; saveLocalState(); setSyncStatus("warn","Using local copy"); renderAll() }
+      saveLocalState(); remoteLoaded=true; setSyncStatus("ok","Synced"); renderAll(); initMobileTabs();
+    }catch{ remoteLoaded=true; saveLocalState(); setSyncStatus("warn","Using local copy"); renderAll(); initMobileTabs(); }
   }
   async function requireAuthAndCall(path,payload){
     const res=await fetch(path,{method:"POST",headers:{"Content-Type":"application/json","x-planner-password":plannerPassword},body:JSON.stringify(payload)});
@@ -1058,9 +1128,35 @@ Rules:
     byId("schoolBreakdownBtn").onclick= runSchoolBreakdown;
   }
 
+  /* ── MOBILE TAB SWITCHING ── */
+  let activeTab = "tasks";
+  function switchTab(tab){
+    activeTab = tab;
+    document.querySelectorAll('.mtab').forEach(btn=>{
+      btn.classList.toggle('active', btn.dataset.tab===tab);
+    });
+    const isMobile = window.innerWidth < 860;
+    if(isMobile){
+      document.querySelectorAll('section[data-section]').forEach(sec=>{
+        sec.classList.toggle('tab-visible', sec.dataset.section===tab);
+      });
+    }
+  }
+  function initMobileTabs(){
+    const isMobile = window.innerWidth < 860;
+    if(isMobile) switchTab('tasks');
+    else document.querySelectorAll('section[data-section]').forEach(sec=>sec.classList.add('tab-visible'));
+  }
+  window.switchTab = switchTab;
+  window.addEventListener('resize', ()=>{
+    if(window.innerWidth >= 860) document.querySelectorAll('section[data-section]').forEach(sec=>sec.classList.add('tab-visible'));
+    else switchTab(activeTab);
+  });
+
   /* ── BOOT ── */
   async function boot(){
     bind();
+    initMobileTabs();
     const saved=sessionStorage.getItem("siennaPlannerPassword");
     if(saved){ byId("passwordInput").value=saved; await attemptLogin() }
   }
